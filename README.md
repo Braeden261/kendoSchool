@@ -26,3 +26,19 @@ To launch application using localhost use the following command in git bash: nod
 on first launch of the application the Windows FireWall will likely prompt you to allow access, click Allow Access
 
 Open a web browser and enter the URL: localhost:8080
+
+Creating a Branch:
+
+git branch [BranchName]
+git checkout [BranchName]
+
+You are now on your branch and you can commit changes to the branch as you work
+
+Make your changes
+
+git add --all
+git commit -m "(message)"
+git push
+
+when your local branch is done, you can push the branch to origin with:
+git push -u origin [BranchName]
