@@ -42,3 +42,5 @@ git push
 
 when your local branch is done, you can push the branch to origin with:
 git push -u origin [BranchName]
+
+After this you can create a PR on GitHub.
