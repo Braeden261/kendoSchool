@@ -1,33 +1,46 @@
-# kendoSchool
-WebVR project for IMD3901B - Design Studio 3
+WebVR Term project for IMD3901B - Design Studio 3
 
-Setup:
+------------------ Kendo Gakkou ------------------
+
+
+--------- Environment Setup ---------
 
 Pre-Requisite Software:
 
-Ensure the following software is installed on your computer.
+Ensure the following software is installed on your computer:
 
 GitHub (Git Bash) https://desktop.github.com/
-
 Visual Studio Code https://code.visualstudio.com/
-
 Node.js https://nodejs.org/en/download/
 
-Set Up:
+**ALL commands are to be executed from the main part of the kendoSchool directory**
 
-After install the above software run the following commands:
 
+To grab the repository from github and have it on your computer, go to your PC User directory and create a Git folder. Navigate to that folder in git bash then input the following command:
+git clone https://github.com/Braeden261/kendoSchool.git [custom repo name]
+git checkout develop
+
+
+To initialize the actual application enter the following commands, esure the software listed above is all installed:
 npm init --yes
 npm install express --save
-Ensure you are inside the Repo folder on your local machine when executing commands that pertain to the application.
 
-To launch application using localhost use the following command in git bash: node app.js
 
-on first launch of the application the Windows FireWall will likely prompt you to allow access, click Allow Access
+To launch application using localhost use the following command in git bash: 
+node app.js
 
+on first launch of the application the Windows FireWall will likely prompt you to allow access, click Allow Access.
 Open a web browser and enter the URL: localhost:8080
 
-Creating a Branch:
+
+--------- Getting the Latest Develop Build ---------
+
+to fetch and checkout the latest develop build enter the following commands:
+git fetch origin
+git rebase origin/develop
+
+
+--------- Creating a Branch ---------
 
 git branch [BranchName]
 git checkout [BranchName]
