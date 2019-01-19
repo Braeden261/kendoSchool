@@ -6,10 +6,11 @@ WebVR Term project for IMD3901B - Design Studio 3
 ###Pre-Requisite Software:
 
 Ensure the following software is installed on your computer:
+```
 GitHub (Git Bash) https://desktop.github.com/
 Visual Studio Code https://code.visualstudio.com/
 Node.js https://nodejs.org/en/download/
-
+```
 ### **ALL commands are to be executed from the main part of the kendoSchool directory**
 
 
@@ -67,7 +68,7 @@ After this you can create a PR on GitHub.
 To fetch a PR, you need to add the person who created the PR as a remote. Go onto the PR page on GitHub, go down to the bottom and there is a text link that says "command line instructions".  Open the link and copy the repo URL, then input the following command in Git Bash:
 `git remote add [remoteName] [remoteLink]` (ensure the remoteName is the person`s name that you are pulling from)
 
-Then you can do "git remote -v" to see al your added remotes.
+Then you can do `git remote -v` to see al your added remotes.
 After this you can do the following commands to fetch the branch, and then checkout the branch:
 ```
 git fetch [remoteName]
