@@ -3,7 +3,7 @@ WebVR Term project for IMD3901B - Design Studio 3
 
 ## --------- Environment Setup ---------
 
-###Pre-Requisite Software:
+### Pre-Requisite Software:
 
 Ensure the following software is installed on your computer:
 
@@ -79,4 +79,6 @@ git checkout [remoteName]/[branchName]
 Now you can launch the application on your machine and test the feature/bug fix that was added in the branch.
 
 When you are done testing a remote branch, you can enter the following command to go back to your develop branch:
-`git checkout develop`
+```
+git checkout develop
+```
