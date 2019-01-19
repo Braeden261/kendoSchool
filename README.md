@@ -1,9 +1,7 @@
+# ------------------ Kendo Gakkou ------------------
 WebVR Term project for IMD3901B - Design Studio 3
 
-#------------------ Kendo Gakkou ------------------
-
-
-##--------- Environment Setup ---------
+## --------- Environment Setup ---------
 
 ###Pre-Requisite Software:
 
@@ -12,7 +10,7 @@ GitHub (Git Bash) https://desktop.github.com/
 Visual Studio Code https://code.visualstudio.com/
 Node.js https://nodejs.org/en/download/
 
-###**ALL commands are to be executed from the main part of the kendoSchool directory**
+### **ALL commands are to be executed from the main part of the kendoSchool directory**
 
 
 To grab the repository from github and have it on your computer, go to your PC User directory and create a Git folder. Navigate to that folder in git bash then input the following command:
@@ -35,7 +33,7 @@ on first launch of the application the Windows FireWall will likely prompt you t
 Open a web browser and enter the URL: localhost:8080
 
 
-##--------- Getting the Latest Develop Build ---------
+## --------- Getting the Latest Develop Build ---------
 
 
 to fetch and checkout the latest develop build enter the following commands:
@@ -44,7 +42,7 @@ git fetch origin
 git rebase origin/develop
 '''
 
-##--------- Creating a Branch ---------
+## --------- Creating a Branch ---------
 
 To create a branch enter the following commands:
 '''
@@ -64,7 +62,7 @@ when your local branch is ready to test, you can push the branch to origin with:
 
 After this you can create a PR on GitHub.
 
-##--------- Fetching a Remote and Testing a PR ---------
+## --------- Fetching a Remote and Testing a PR ---------
 
 To fetch a PR, you need to add the person who created the PR as a remote. Go onto the PR page on GitHub, go down to the bottom and there is a text link that says "command line instructions".  Open the link and copy the repo URL, then input the following command in Git Bash:
 'git remote add [remoteName] [remoteLink]' (ensure the remoteName is the person's name that you are pulling from)
