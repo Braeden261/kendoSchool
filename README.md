@@ -18,6 +18,7 @@ Node.js https://nodejs.org/en/download/
 
 To grab the repository from github and have it on your computer, go to your PC User directory and create a Git folder. Navigate to that folder in git bash then input the following command:
 git clone https://github.com/Braeden261/kendoSchool.git [custom repo name]
+cd [custom repo name]
 git checkout develop
 
 
