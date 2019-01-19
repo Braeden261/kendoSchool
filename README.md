@@ -8,7 +8,6 @@ WebVR Term project for IMD3901B - Design Studio 3
 Pre-Requisite Software:
 
 Ensure the following software is installed on your computer:
-
 GitHub (Git Bash) https://desktop.github.com/
 Visual Studio Code https://code.visualstudio.com/
 Node.js https://nodejs.org/en/download/
@@ -17,6 +16,7 @@ Node.js https://nodejs.org/en/download/
 
 
 To grab the repository from github and have it on your computer, go to your PC User directory and create a Git folder. Navigate to that folder in git bash then input the following command:
+
 git clone https://github.com/Braeden261/kendoSchool.git [custom repo name]
 cd [custom repo name]
 git checkout develop
