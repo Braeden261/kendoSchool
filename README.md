@@ -6,11 +6,12 @@ WebVR Term project for IMD3901B - Design Studio 3
 ###Pre-Requisite Software:
 
 Ensure the following software is installed on your computer:
-```
-GitHub (Git Bash) https://desktop.github.com/
-Visual Studio Code https://code.visualstudio.com/
-Node.js https://nodejs.org/en/download/
-```
+
+- GitHub (Git Bash) https://desktop.github.com/
+- Visual Studio Code https://code.visualstudio.com/
+- Node.js https://nodejs.org/en/download/
+
+
 ### **ALL commands are to be executed from the main part of the kendoSchool directory**
 
 
