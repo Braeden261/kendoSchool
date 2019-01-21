@@ -1,0 +1,23 @@
+{
+  "name": "kendoSchool",
+  "version": "1.0.0",
+  "description": "WebVR project for IMD3901B - Design Studio 3",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Braeden261/kendoSchool.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Braeden261/kendoSchool/issues"
+  },
+  "homepage": "https://github.com/Braeden261/kendoSchool#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
