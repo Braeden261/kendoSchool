@@ -29,10 +29,12 @@ npm install express --save
 ```
 
 To launch application using localhost use the following command in git bash: 
-`node app.js`
+```
+node app.js
+```
 
 on first launch of the application the Windows FireWall will likely prompt you to allow access, click Allow Access.
-Open a web browser and enter the URL: localhost:8080
+Open a web browser and enter the URL:  `localhost:8080`
 
 
 ## --------- Getting the Latest Develop Build ---------
