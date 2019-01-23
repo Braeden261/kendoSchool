@@ -58,11 +58,12 @@ You are now on your branch and you can commit changes to the branch as you work 
 ```
 git add --all
 `git commit -m "(message)"
-git push
 ```
 
 when your local branch is ready to test, you can push the branch to origin with:
-`git push -u origin [BranchName]`
+```git push -u origin [BranchName]```
+
+If you make more changes after pushing the branch to github, you can use the standard `git push` command to push your changes to the branch.
 
 After this you can create a PR on GitHub.
 
