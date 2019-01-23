@@ -57,7 +57,7 @@ git checkout [BranchName]
 You are now on your branch and you can commit changes to the branch as you work on the feature/bug you are working on.
 ```
 git add --all
-`git commit -m "(message)"
+git commit -m "(message)"
 ```
 
 when your local branch is ready to test, you can push the branch to origin with:
