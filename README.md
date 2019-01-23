@@ -85,3 +85,9 @@ When you are done testing a remote branch, you can enter the following command t
 ```
 git checkout develop
 ```
+
+## --------- Merging a PR on GitHub ---------
+
+After a PR has been approved, you can merge your PR.  Go into the PR page and scroll to the bottom of the page.  If there are no conflicts with the base branch then you are ready to go.
+
+To merge the PR press the down arrow on the right side of the Merge button.  Select "Rebase and merge", this is a good way to ensure that the PR is merged without an issues.
