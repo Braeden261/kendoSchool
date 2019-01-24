@@ -1,4 +1,4 @@
-# ------------------ Kendo Gakkou ------------------
+# ------------------ Kendo Gakko ------------------
 WebVR Term project for IMD3901B - Design Studio 3
 
 ## --------- Environment Setup ---------
