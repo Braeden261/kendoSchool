@@ -1,3 +1,6 @@
+Blog Posts:
+https://kendogakko.wixsite.com/kendogakko/blog
+
 # ------------------ Kendo Gakko ------------------
 WebVR Term project for IMD3901B - Design Studio 3
 
