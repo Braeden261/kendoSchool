@@ -2,6 +2,7 @@
 //const is a constant
 //user let for variables you want to change
 //DO NOT USER var
+require('aframe-physics-system');
 const express   = require('express');
 //let express = ???
 

@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Braeden261/kendoSchool#readme",
   "dependencies": {
+    "aframe-physics-system": "^3.3.0",
     "express": "^4.16.4"
   }
 }
