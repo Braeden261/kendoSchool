@@ -70,6 +70,11 @@ If you make more changes after pushing the branch to github, you can use the sta
 
 After this you can create a PR on GitHub.
 
+## --------- Creating a PR ---------
+
+To create a PR on Github, you can go to the main page of the Repository in the Code section. Beside the branch selection drop down there is a button that says "New Pull Request", press that button. There you can choose which branch you want to merge, and which branch you want to merge into.  ALWAYS choose 'develop' for the branch you want to merge your new branch into.  After you have selected the two branchs you can add a title that is suitable for the feature/bug being fixed, and a short description. Then press the "Create Pull Request" button at the bottom of the page.
+
+
 ## --------- Fetching a Remote and Testing a PR ---------
 
 To fetch a PR, you need to add the person who created the PR as a remote. Go onto the PR page on GitHub, go down to the bottom and there is a text link that says "command line instructions".  Open the link and copy the repo URL, then input the following command in Git Bash:
