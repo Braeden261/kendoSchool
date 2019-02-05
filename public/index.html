@@ -5,11 +5,38 @@
         <script src="/js/aframe-physics-system.min.js"></script>
     </head>
     <body>
-        <a-scene physics="debug: true">
+        <a-scene physics="debug: false">
+            <a-assets>
+                <!-- Textures -->
+                <img id = "skymap" src = "/assets/textures/nightSky.png">
+
+                <!-- Proxy Models -->
+                <a-asset-item id="dojo-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Dojo_PROXY_v002.obj"></a-asset-item>
+                <a-asset-item id="shinai-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Shinai_PROXY_v002.obj"></a-asset-item>
+                <a-asset-item id="dummy-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Dummy_PROXY_v001.obj"></a-asset-item>
+            </a-assets>
             
-            <a-plane static-body rotation="90 0 0" width="10" height="10"></a-plane>
+            <!-- <a-plane static-body rotation="90 0 0" width="10" height="10"></a-plane>
             <a-box dynamic-body position="0 10 -4" width="1" height="1" depth="1"></a-box>
-            <a-box dynamic-body position="0.5 0.5 -4" width="0.5" height="0.5" depth="0.5"></a-box>
+            <a-box dynamic-body position="0.5 0.5 -4" width="0.5" height="0.5" depth="0.5"></a-box> -->
+            
+            <!-- Lights -->
+            
+            <!-- Proxy Models -->
+            <a-entity   id="dojo"
+                        static-body
+                        obj-model="obj:#dojo-obj"
+                        scale="0.1 0.1 0.1"
+                        position="0 0 0"
+                        material="color:#bdc3c7; roughness:0.7; metalness:0;"
+                        shadow="cast:true; receive:true;"
+            ></a-entity>
+
+            <!-- Sky Dome -->
+            <a-entity   id = "sky"
+                        geometry = "primitive: sphere; radius: 500;"
+                        material = "shader: flat; src: #skymap; side: back; height: 2048; width: 2048"
+            ></a-entity>
             
        </a-scene>
     </body>
