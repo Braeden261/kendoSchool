@@ -70,6 +70,7 @@ If you make more changes after pushing the branch to github, you can use the sta
 
 After this you can create a PR on GitHub.
 
+
 ## --------- Fetching a Remote and Testing a PR ---------
 
 To fetch a PR, you need to add the person who created the PR as a remote. Go onto the PR page on GitHub, go down to the bottom and there is a text link that says "command line instructions".  Open the link and copy the repo URL, then input the following command in Git Bash:
