@@ -29,6 +29,7 @@ To initialize the actual application enter the following commands, esure the sof
 ```
 npm init --yes
 npm install express --save
+npm install --save aframe-physics-system
 ```
 
 To launch application using localhost use the following command in git bash: 
