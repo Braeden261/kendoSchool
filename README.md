@@ -39,6 +39,8 @@ node app.js
 on first launch of the application the Windows FireWall will likely prompt you to allow access, click Allow Access.
 Open a web browser and enter the URL:  `localhost:8080`
 
+## --------- Creating a PR ---------
+To create a PR on Github, you can go to the main page of the Repository in the Code section. Beside the branch selection drop down there is a button that says "New Pull Request", press that button. There you can choose which branch you want to merge, and which branch you want to merge into.  ALWAYS choose 'develop' for the branch you want to merge your new branch into.  After you have selected the two branchs you can add a title that is suitable for the feature/bug being fixed, and a short description. Then press the "Create Pull Request" button at the bottom of the page.
 
 ## --------- Getting the Latest Develop Build ---------
 
@@ -69,10 +71,6 @@ when your local branch is ready to test, you can push the branch to origin with:
 If you make more changes after pushing the branch to github, you can use the standard `git push` command to push your changes to the branch.
 
 After this you can create a PR on GitHub.
-
-## --------- Creating a PR ---------
-
-To create a PR on Github, you can go to the main page of the Repository in the Code section. Beside the branch selection drop down there is a button that says "New Pull Request", press that button. There you can choose which branch you want to merge, and which branch you want to merge into.  ALWAYS choose 'develop' for the branch you want to merge your new branch into.  After you have selected the two branchs you can add a title that is suitable for the feature/bug being fixed, and a short description. Then press the "Create Pull Request" button at the bottom of the page.
 
 
 ## --------- Fetching a Remote and Testing a PR ---------
