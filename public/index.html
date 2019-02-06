@@ -7,11 +7,74 @@
         
     </head>
     <body>
-        <a-scene physics="debug: true">
+        <a-scene physics="debug: true; restitution: 0.2;">
+            <a-assets>
+                <!-- Textures -->
+                <img id = "skymap" src = "/assets/textures/nightSky.png">
+
+                <!-- Proxy Models -->
+                <a-asset-item id="dojo-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Dojo_PROXY_v003.obj"></a-asset-item>
+                <a-asset-item id="shinai-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Shinai_PROXY_v003.obj"></a-asset-item>
+                <a-asset-item id="dummy-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Dummy_PROXY_v002.obj"></a-asset-item>
+            </a-assets>
+
+            <!-- CAMERA (User POV, 6ft tall person standing on raised platform) -->
+            <a-entity camera look-controls position="0 2.2 1.05" ></a-entity>
+
+            <!-- Ground Planes -->
+            <a-plane static-body position="0 0.6 0" rotation="90 0 0" width="3.658" height="3.658"></a-plane>
+            <a-plane static-body position="0 0 0" rotation="90 0 0" width="12.192" height="21.336"></a-plane>
             
-            <a-plane static-body rotation="90 0 0" width="10" height="10"></a-plane>
-            <a-box dynamic-body position="0 10 -4" width="1" height="1" depth="1"></a-box>
-            <a-box dynamic-body position="0.5 0.5 -4" width="0.5" height="0.5" depth="0.5"></a-box>
+            <!-- Lights -->
+            <a-entity   light = "type: point; intensity: 0.8; color: #bbb; castShadow: true; shadowBias: -0.000001; shadowMapWidth: 1024; shadowMapHeight: 1024;"
+                        position = "0 2.1 0"
+            ></a-entity>
+            <a-entity   light = "type: ambient; intensity: 0.06; color: #bbb;"></a-entity>
+            
+            <!-- Proxy Models -->
+            <a-entity   id="dojo"
+                        obj-model="obj:#dojo-obj"
+                        scale="1.0 1.0 1.0"
+                        position="0 0 0"
+                        material="color:#bdc3c7; roughness:0.7; metalness:0;"
+                        shadow="cast:true; receive:true;"
+            ></a-entity>
+            
+            <a-entity   id="dummyBox"
+                        physics="restitution: 0;"
+                        static-body
+                        geometry="primitive:box; height:1.7; width:0.45; depth:0.45;"
+                        position="0 1.45 -1.0"
+                        material="color:#FFFFFF; visible:false; wireframe:true;">
+                <a-entity   id="dummy"
+                            obj-model="obj:#dummy-obj"
+                            position="0 -0.85 -0.21"
+                            scale="1.0 1.0 1.0"
+                            rotation="0 90 0"
+                            material="color:#bdc3c7; roughness:0.7; metalness:0;"
+                ></a-entity>
+            </a-entity>
+            
+            <a-entity   id="shinaiBox"
+                        dynamic-body
+                        geometry="primitive:cylinder; height:1.42; radius:0.05; segmentsRadial: 12; segmentsHeight:1;"
+                        position="0 2 0.250"
+                        rotation="0 0 -90"
+                        material="color:#FFFFFF; visible:false; wireframe:true;">>
+                <a-entity   id="shinai"
+                            obj-model="obj:#shinai-obj"
+                            scale="1.0 1.0 1.0"
+                            position="0.754 -0.70 0"
+                            rotation="0 0 0"
+                            material="color:#bdc3c7; roughness:0.7; metalness:0;"
+                ></a-entity>
+            </a-entity>
+
+            <!-- Sky Dome -->
+            <a-entity   id = "sky"
+                        geometry = "primitive: sphere; radius: 500;"
+                        material = "shader: flat; src: #skymap; side: back; height: 2048; width: 2048"
+            ></a-entity>
             
        </a-scene>
 
