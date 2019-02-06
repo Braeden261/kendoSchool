@@ -8,6 +8,7 @@ const express   = require('express');
 const app       = express();
 const http      = require("http");
 const server    = http.createServer(app);
+const socketIO = require('socket.io')(server);
 
 //default port is 80
 //default port for https is 443
@@ -19,15 +20,19 @@ const LISTEN_PORT = 8080;
 app.use(express.static(__dirname + '/public'));
 
 //create a "route" for accessing this page
-app.get('/', function(req, res) {
-    res.sendFile(__dirname + 'public/index.html'); //send/serve this index.html file
+app.get('/index', function(req, res) {
+    res.sendFile(__dirname + '/public/index.html'); //send/serve this index.html file
+});
+
+app.get('/mobile', function(req, res) {
+    res.sendFile(__dirname + '/public/mobile-test.html')
 });
 
 //socket = one client
 //socketIO = all clients
 //Sockets stuff
 
-let sequence = [10];
+let sequence = [];
 let numSeq = 0;
 
 socketIO.on('connection', function(socket){
@@ -38,7 +43,7 @@ socketIO.on('connection', function(socket){
     });
 
     socket.on('red', function(){    
-        if (numSeq > 10){
+        if (numSeq < 10){
             sequence[numSeq] = "1";
             console.log('1_button');
             numSeq++;
@@ -48,7 +53,7 @@ socketIO.on('connection', function(socket){
             }
     });
     socket.on('green', function(){
-        if (numSeq > 10){
+        if (numSeq < 10){
             sequence[numSeq] = "2";
             console.log('1_button');
             numSeq++;
@@ -58,7 +63,7 @@ socketIO.on('connection', function(socket){
             }
     });
     socket.on('blue', function(){
-        if (numSeq > 10){
+        if (numSeq < 10){
             sequence[numSeq] = "3";
             console.log('1_button');
             numSeq++;
@@ -71,10 +76,9 @@ socketIO.on('connection', function(socket){
     socket.on('send', function(){
         console.log('send event detected');
         console.log('Sequence: ' + sequence);
+
         socketIO.emit('send_instruction', {sequence});
-        for(i = 0; i < 10; i++){
-            sequence[i] = null;
-        }
+        sequence = []
         numSeq = 0;
     });
 
@@ -83,17 +87,3 @@ socketIO.on('connection', function(socket){
 
 server.listen(LISTEN_PORT);
 console.log('Listening to port' + LISTEN_PORT);
-
-
-
-
-
-
-if (numSeq > 10){
-    sequence[numSeq] = "3";
-    console.log('3_button');
-    numSeq++;
-}
-else{
-    console.log('sequence_full');
-}
