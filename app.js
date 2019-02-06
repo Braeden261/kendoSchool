@@ -22,5 +22,78 @@ app.use(express.static(__dirname + '/public'));
 app.get('/', function(req, res) {
     res.sendFile(__dirname + 'public/index.html'); //send/serve this index.html file
 });
+
+//socket = one client
+//socketIO = all clients
+//Sockets stuff
+
+let sequence = [10];
+let numSeq = 0;
+
+socketIO.on('connection', function(socket){
+    console.log(socket.id + ' connected')
+
+    socket.on('disconnect', function(){
+        console.log(socket.id + ' disconnected');
+    });
+
+    socket.on('red', function(){    
+        if (numSeq > 10){
+            sequence[numSeq] = "1";
+            console.log('1_button');
+            numSeq++;
+            }
+            else{
+                console.log('sequence_full');
+            }
+    });
+    socket.on('green', function(){
+        if (numSeq > 10){
+            sequence[numSeq] = "2";
+            console.log('1_button');
+            numSeq++;
+            }
+            else{
+                console.log('sequence_full');
+            }
+    });
+    socket.on('blue', function(){
+        if (numSeq > 10){
+            sequence[numSeq] = "3";
+            console.log('1_button');
+            numSeq++;
+            }
+            else{
+                console.log('sequence_full');
+            }
+    });
+
+    socket.on('send', function(){
+        console.log('send event detected');
+        console.log('Sequence: ' + sequence);
+        socketIO.emit('send_instruction', {sequence});
+        for(i = 0; i < 10; i++){
+            sequence[i] = null;
+        }
+        numSeq = 0;
+    });
+
+});
+
+
 server.listen(LISTEN_PORT);
 console.log('Listening to port' + LISTEN_PORT);
+
+
+
+
+
+
+if (numSeq > 10){
+    sequence[numSeq] = "3";
+    console.log('3_button');
+    numSeq++;
+}
+else{
+    console.log('sequence_full');
+}
