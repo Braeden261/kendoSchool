@@ -82,6 +82,13 @@ socketIO.on('connection', function(socket){
         numSeq = 0;
     });
 
+    socket.on('clear', function(){
+        console.log('clear event detected');
+        
+        sequence = []
+        numSeq = 0;
+    });
+
 });
 
 

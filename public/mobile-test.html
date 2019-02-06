@@ -12,6 +12,7 @@
         <button id="blue" style="background-color: blue; color: whitesmoke;">3</button>
 
         <button id="send" style="background-color: purple; color: whitesmoke;">Send Sequence</button>
+        <button id="clear" style="background-color: yellow; color: black;">Clear Sequence</button>
 
         <script src="/socket.io/socket.io.js"></script>
         <script>
@@ -40,6 +41,11 @@
             document.querySelector('#send').addEventListener('click', function(){
                 socket.emit('send');
                 console.log('send_button');
+            });
+
+            document.querySelector('#clear').addEventListener('click', function(){
+                socket.emit('clear');
+                console.log('clear_button');
             });
             
         </script>
