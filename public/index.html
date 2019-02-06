@@ -3,18 +3,30 @@
         <title>Kendo School</title>
         <script src="/js/aframe-v0.8.2.min.js"></script>
         <script src="/js/aframe-physics-system.min.js"></script>
+        <script src="https://rawgit.com/chenzlabs/auto-detect-controllers/master/dist/aframe-auto-detect-controllers-component.min.js"></script>
+        <!-- npm install aframe-auto-detect-controllers-component --save -->
     </head>
     <body>
         <a-scene physics="debug: true">
             
             <!-- VR Hands -->
-            <a-entity id="leftHand" hand-controls="left"></a-entity>
-            <a-entity id="rightHand" hand-controls="right"></a-entity>
+
+            <!-- hand-controls -->
+            <!-- <a-entity id="leftHand" hand-controls="left"></a-entity>
+            <a-entity id="rightHand" hand-controls="right"></a-entity> -->
+
+            <!-- oculus-touch-controls -->
+            <!-- <a-entity oculus-touch-controls="hand: left; model: true"></a-entity>
+            <a-entity oculus-touch-controls="hand: right; model: true"></a-entity> -->
+
+            <!-- auto-detect-controllers -->
+            <a-entity id="rightHand" auto-detect-controllers="hand: right"></a-entity>
+            <a-entity id="leftHand" auto-detect-controllers="hand: left"></a-entity>
 
             <!-- Physical Shapes -->
             <a-plane static-body rotation="90 0 0" width="10" height="10"></a-plane>
-            <a-box dynamic-body position="0 10 -4" width="1" height="1" depth="1"></a-box>
-            <a-box dynamic-body position="0.5 0.5 -4" width="0.5" height="0.5" depth="0.5"></a-box>
+            <a-box dynamic-body position="0 10 -4" width="0.5" height="0.5" depth="1"></a-box>
+            <a-box dynamic-body position="0.5 0.5 -4" width="1" height="0.5" depth="0.5"></a-box>
             
        </a-scene>
     </body>
