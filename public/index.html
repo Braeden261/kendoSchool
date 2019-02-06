@@ -7,10 +7,6 @@
     <body>
         <a-scene physics="debug: false; maxInterval: 0.01; iterations: 20; restitution: 0.1">
 
-            <a-assets>
-                <img id="skymap" src="/assets/textures/nightSky.png">
-            </a-assets>
-
             <!-- VR hand-controls (FireFox Only) -->
             <a-entity   id="leftHand"
                         hand-controls="left"
@@ -27,19 +23,7 @@
                             rotation="0 0 90"
                 ></a-entity>
             </a-entity>
-            
-            <!-- VR hand-controls Debug Physical Shapes -->
-            <a-plane    static-body rotation="90 0 0"
-                        width="10"
-                        height="10"
-            ></a-plane>
-            <a-box  dynamic-body="mass: 50; linearDamping: 0.5"
-                    position="0 1.1 -1"
-                    width="0.3"
-                    height="1.8"
-                    depth="0.3"
-            ></a-box>
-            
+
        </a-scene>
     </body>
 </html>
