@@ -26,32 +26,33 @@
 
             
             document.querySelector('#red').addEventListener('click', function(){
-                socket.emit("red");
+                socket.emit("redResponse");
                 console.log('red_button');
             });
             document.querySelector('#green').addEventListener('click', function(){
-                socket.emit("green");
+                socket.emit("greenResponse");
                 console.log('green_button');
             });
             document.querySelector('#blue').addEventListener('click', function(){
-                socket.emit("blue");
+                socket.emit("blueResponse");
                 console.log('blue_button');
             });
 
             document.querySelector('#send').addEventListener('click', function(){
-                socket.emit('send');
+                socket.emit('sendResponse');
                 console.log('send_button');
             });
 
-            document.querySelector('#clear').addEventListener('click', function(){
-                socket.emit('clear');
-                console.log('clear_button');
+            
+            //Write some socket client code
+
+            socket.on('connect', function(userData){
+                console.log('connected');
             });
 
-            socket.on('send_response', function(data){
-                console.log('Response : ' + data.response); //print data in console
+            socket.on('send_instruction', function(data){
+                console.log('Incoming Sequence: ' + data.sequence); //print data in console
             });
-            
         </script>
     </body>
 
