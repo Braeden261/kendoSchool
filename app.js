@@ -28,6 +28,10 @@ app.get('/mobile', function(req, res) {
     res.sendFile(__dirname + '/public/mobile-test.html')
 });
 
+app.get('/vr', function(req, res) {
+    res.sendFile(__dirname + '/public/VR-test.html')
+});
+
 //socket = one client
 //socketIO = all clients
 //Sockets stuff
@@ -90,8 +94,12 @@ socketIO.on('connection', function(socket){
         prevSeq = sequence;
         prevNumSeq = numSeq;
         sequence = [];
+        
         numSeq = 0;
         response = [];
+
+        responseSeq = [];
+        numResponseSeq = 0;
 
         
     });
@@ -106,47 +114,55 @@ socketIO.on('connection', function(socket){
     //Response
 
     socket.on('redResponse', function(){    
-        if (numSeq < prevNumSeq){
+        if (numResponseSeq < prevNumSeq){
             responseSeq[numResponseSeq] = "1";
             console.log('1_button');
             numResponseSeq++;
             }
             else{
-                console.log('repsonse_full');
+                console.log('response_full');
             }
     });
     socket.on('greenResponse', function(){
         if (numResponseSeq < prevNumSeq){
             responseSeq[numResponseSeq] = "2";
-            console.log('1_button');
+            console.log('2_button');
             numResponseSeq++;
             }
             else{
-                console.log('repsonse_full');
+                console.log('response_full');
             }
     });
     socket.on('blueResponse', function(){
         if (numResponseSeq < prevNumSeq){
             responseSeq[numResponseSeq] = "3";
-            console.log('1_button');
+            console.log('3_button');
             numResponseSeq++;
             }
             else{
-                console.log('repsonse_full');
+                console.log('response_full');
             }
     });
 
-    if (numResponseSeq == prevNumSeq){
-        for (i = 0; i <= prevNumSeq; i++){
-            if (prevSeq[i] == responseSeq[i]){
+    socket.on('acceptResponse', function(){
+        
+        for (i = 0; i < numResponseSeq; i++){
+            if (prevSeq[i] === responseSeq[i]){
                 response[i] = true;
             }
             else{
                 response[i] = false;
             }
         }
+        if (numResponseSeq < prevNumSeq){
+            for(i = numResponseSeq; i < prevNumSeq; i++){
+                response[i] = false;
+            }
+        }
         socketIO.emit('send_response', {response});
-    }
+        numResponseSeq = 0;
+        response = [];
+    });
 
 
 

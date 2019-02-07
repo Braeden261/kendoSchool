@@ -11,9 +11,8 @@
         <button id="green" style="background-color: green; color: whitesmoke;">2</button>
         <button id="blue" style="background-color: blue; color: whitesmoke;">3</button>
 
-        <button id="send" style="background-color: purple; color: whitesmoke;">Send Sequence</button>
-        <button id="clear" style="background-color: yellow; color: black;">Clear Sequence</button>
-
+        <button id="accept" style="background-color: purple; color: whitesmoke;">Accept</button>
+        
         <script src="/socket.io/socket.io.js"></script>
         <script>
             //Write some socket client code
@@ -38,10 +37,11 @@
                 console.log('blue_button');
             });
 
-            document.querySelector('#send').addEventListener('click', function(){
-                socket.emit('sendResponse');
-                console.log('send_button');
+            document.querySelector('#accept').addEventListener('click', function(){
+                socket.emit("acceptResponse");
+                console.log('accept_button');
             });
+
 
             
             //Write some socket client code
