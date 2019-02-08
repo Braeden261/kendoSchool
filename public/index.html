@@ -3,6 +3,8 @@
         <title>Kendo School</title>
         <script src="/js/aframe-v0.8.2.min.js"></script>
         <script src="/js/aframe-physics-system.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        
     </head>
     <body>
         <a-scene physics="debug: false; maxInterval: 0.01; iterations: 20; restitution: 0.1">
@@ -94,5 +96,20 @@
             ></a-entity>
             
        </a-scene>
+
+
+       <script>
+            //Write some socket client code
+            let socket = io();
+
+            socket.on('connect', function(userData){
+                console.log('connected');
+            });
+
+            socket.on('send_instruction', function(data){
+                console.log('Sequence: ' + data.sequence); //print data in console
+            });
+        </script>
+
     </body>
 </html>
