@@ -53,6 +53,10 @@
             socket.on('send_instruction', function(data){
                 console.log('Incoming Sequence: ' + data.sequence); //print data in console
             });
+
+            socket.on('send_response', function(data){
+                console.log('Response : ' + data.response); //print data in console
+            });
         </script>
     </body>
 
