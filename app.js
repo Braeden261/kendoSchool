@@ -20,16 +20,17 @@ const LISTEN_PORT = 8080;
 app.use(express.static(__dirname + '/public'));
 
 //create a "route" for accessing this page
-app.get('/index', function(req, res) {
-    res.sendFile(__dirname + '/public/index.html'); //send/serve this index.html file
+
+app.get('/student', function(req, res) {
+    res.sendFile(__dirname + '/public/student.html'); //send/serve this index.html file
 });
 
-app.get('/mobile', function(req, res) {
-    res.sendFile(__dirname + '/public/mobile-test.html')
+app.get('/master', function(req, res) {
+    res.sendFile(__dirname + '/public/master.html')
 });
 
-app.get('/vr', function(req, res) {
-    res.sendFile(__dirname + '/public/VR-test.html')
+app.get('/student-test', function(req, res) {
+    res.sendFile(__dirname + '/public/student-test.html')
 });
 
 //socket = one client
