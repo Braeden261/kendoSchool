@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Student Test Page</title>
+    </head>
+    <body>
+        <h1>Press the 3 numbered buttons to match the incoming sequence</h1>
+        
+        <button id="red" style="background-color: red; color: whitesmoke;">1</button>
+        <button id="green" style="background-color: green; color: whitesmoke;">2</button>
+        <button id="blue" style="background-color: blue; color: whitesmoke;">3</button>
+
+        <button id="accept" style="background-color: purple; color: whitesmoke;">Accept</button>
+        
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            //Write some socket client code
+            let socket = io();
+
+            //built in event
+            socket.on('connect', function(userData){
+                console.log('connected');
+            });
+
+            
+            document.querySelector('#red').addEventListener('click', function(){
+                socket.emit("redResponse");
+                console.log('red_button');
+            });
+            document.querySelector('#green').addEventListener('click', function(){
+                socket.emit("greenResponse");
+                console.log('green_button');
+            });
+            document.querySelector('#blue').addEventListener('click', function(){
+                socket.emit("blueResponse");
+                console.log('blue_button');
+            });
+
+            document.querySelector('#accept').addEventListener('click', function(){
+                socket.emit("acceptResponse");
+                console.log('accept_button');
+            });
+
+
+            
+            //Write some socket client code
+
+            socket.on('connect', function(userData){
+                console.log('connected');
+            });
+
+            socket.on('send_instruction', function(data){
+                console.log('Incoming Sequence: ' + data.sequence); //print data in console
+            });
+
+            socket.on('send_response', function(data){
+                console.log('Response : ' + data.response); //print data in console
+            });
+        </script>
+    </body>
+
+</html>
