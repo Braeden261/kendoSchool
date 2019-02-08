@@ -123,6 +123,19 @@
             socket.on('send_instruction', function(data){
                 console.log('Sequence: ' + data.sequence); //print data in console
             });
+
+
+            //Sounds
+            let hitSnd = new Audio('../assets/sounds/effects/hitSound.mp3');
+
+            var playerEl = document.querySelector('#shinaiBox');
+                playerEl.addEventListener('collide', function (e) {
+                console.log('Player has collided with body #' + e.detail.body.id);
+
+                
+                hitSnd.play();
+            });
+
         </script>
 
     </body>
