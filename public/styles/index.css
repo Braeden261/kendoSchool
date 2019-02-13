@@ -1,0 +1,46 @@
+html {
+    background-color: #353535;
+    font-family: 'Montserrat', sans-serif;
+    color: #FFFFFF;
+}
+
+#logoContainer {
+    width: 600px;
+    margin: 70px auto;
+}
+
+.title-img {
+    width: 600px;
+}
+
+#bodyText {
+    width: 70%;
+    margin: auto;
+    text-align: center;
+}
+
+p {
+    font-weight: 200;
+    font-size: 12pt;
+}
+
+h1 {
+    font-weight: 400;
+    letter-spacing: 5px;
+    font-size: 18pt;
+}
+
+.player-img {
+    height: 135px;
+    margin-top: 50px;
+}
+
+#instructions-container {
+    display: inline-block;
+}
+
+.master-instruction {
+    display: inline-block;
+    width: 30%;
+    margin: 0 30px;
+}
