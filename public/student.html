@@ -3,12 +3,11 @@
         <title>Kendo School</title>
         <script src="/js/aframe-v0.8.2.min.js"></script>
         <script src="/js/aframe-physics-system.min.js"></script>
-        <script src="/socket.io/socket.io.js"></script>
-        
+        <script src="js/grabber-component.js"></script>
+        <script src="js/grabbable-component.js"></script>
     </head>
     <body>
-        <a-scene physics="debug: false; maxInterval: 0.01; iterations: 20; restitution: 0.1">
-      
+        <a-scene physics="debug: true; maxInterval: 0.01; iterations: 20; restitution: 0.1">
             <a-assets>
                 <!-- Textures -->
                 <img id = "skymap" src = "/assets/textures/nightSky.png">
@@ -19,97 +18,156 @@
                 <a-asset-item id="dummy-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Dummy_PROXY_v002.obj"></a-asset-item>
             </a-assets>
 
-            <!-- VR hand-controls (FireFox Only) -->
-            <a-entity   id="leftHand"
-                        hand-controls="left"
-            ></a-entity>
-
-            <a-entity   id="rightHand"
-                        hand-controls="right"
+            <!-- Camera & VR Hands Rig -->
+            <!-- User POV = ~1.8m (6ft) base height + ~0.4m raised platform) -->
+            <a-entity   id ="camera-rig"
+                        position="0 0.4 0"
             >
-                <a-entity   id="rhBox"
-                            static-body
-                            geometry="primitive: box; height: 1; width: 0.02; depth: 0.02"
-                            material="color: #e74c3c; visible: true; wireframe: false"
-                            position="-0.4 -0.02 0.02"
-                            rotation="0 0 90"
+                <!-- VR hand-controls (FireFox Only) -->
+                <a-entity   id="leftHand"
+                            hand-controls="left"
+                ></a-entity>
+
+                <!--  -->
+                <a-entity   id="rightHand"
+                            hand-controls="right"
+                >
+                    <a-entity   id="rightHand-box-rig"          
+                                position="0 -0.02 0.045"
+                                rotation="0 0 0"
+                    >
+                        <a-entity   id="rightHand-box"
+                                    static-body
+                                    _grabber="grabbable: #dummy-box"
+                                    geometry="primitive: box;
+                                              height: 0.05;
+                                              width: 0.08;
+                                              depth: 0.09;"
+                                    material="color: #e74c3c;
+                                              visible: false;
+                                              wireframe: true;"
+                        ></a-entity>
+                    </a-entity>
+                </a-entity>
+
+                <!-- User Perspective -->
+                <a-entity   id="head"
+                            camera
+                            look-controls
+                            position="0 1.6 1.05"
                 ></a-entity>
             </a-entity>
 
-
-            <!-- CAMERA (User POV, 6ft tall person standing on raised platform) -->
-            <a-entity camera look-controls position="0 2.2 1.05" ></a-entity>
-
             <!-- Ground Planes -->
-            <a-plane static-body position="0 0.6 0" rotation="90 0 0" width="3.658" height="3.658"></a-plane>
-            <a-plane static-body position="0 0 0" rotation="90 0 0" width="12.192" height="21.336"></a-plane>
+            <a-plane    id="groundPlane-platform"
+                        static-body
+                        position="0 0.6 0"
+                        rotation="90 0 0"
+                        width="3.658"
+                        height="3.658"
+            ></a-plane>
+            <a-plane    id="groundPlane-floor"
+                        static-body
+                        position="0 0 0"
+                        rotation="90 0 0"
+                        width="12.192"
+                        height="21.336"
+            ></a-plane>
             
             <!-- Lights -->
-            <a-entity   light = "type: point; intensity: 0.8; color: #bbb; castShadow: true; shadowBias: -0.000001; shadowMapWidth: 1024; shadowMapHeight: 1024;"
-                        position = "0 2.1 0"
+            <a-entity   light = "type: point;
+                                 intensity: 0.8;
+                                 color: #bbb;
+                                 castShadow: true;
+                                 shadowBias: -0.000001;
+                                 shadowMapWidth: 1024;
+                                 shadowMapHeight: 1024;"
+                        position = "0 4 0"
             ></a-entity>
-            <a-entity   light = "type: ambient; intensity: 0.06; color: #bbb;"></a-entity>
+            <a-entity   light = "type: ambient;
+                                 intensity: 0.06;
+                                 color: #bbb;"
+            ></a-entity>
             
             <!-- Proxy Models -->
             <a-entity   id="dojo"
-                        obj-model="obj:#dojo-obj"
+                        obj-model="obj: #dojo-obj"
                         scale="1.0 1.0 1.0"
                         position="0 0 0"
-                        material="color:#bdc3c7; roughness:0.7; metalness:0;"
-                        shadow="cast:true; receive:true;"
+                        material="color: #bdc3c7;
+                                  roughness: 0.7;
+                                  metalness: 0;"
+                        shadow="cast: true;
+                                receive: true;"
             ></a-entity>
-            
-            <a-entity   id="dummyBox"
-                        physics="restitution: 0;"
-                        static-body
-                        geometry="primitive:box; height:1.7; width:0.45; depth:0.45;"
-                        position="0 1.45 -1.0"
-                        material="color:#FFFFFF; visible:false; wireframe:true;">
-                <a-entity   id="dummy"
-                            obj-model="obj:#dummy-obj"
-                            position="0 -0.85 -0.21"
-                            scale="1.0 1.0 1.0"
-                            rotation="0 90 0"
-                            material="color:#bdc3c7; roughness:0.7; metalness:0;"
-                ></a-entity>
+
+            <!--dummy-->
+            <a-entity   id="dummy-rig"
+                        position="0 1.55 -1.0"
+            >
+                <a-entity   id="dummy-box"
+                            _grabbable
+                            dynamic-body="mass: 200;
+                                          linearDamping: 0.02;"
+                            geometry="primitive: box;
+                                      height: 1.7;
+                                      width: 0.19;
+                                      depth: 0.19;"
+                            material="color: #FFFFFF;
+                                      visible: false;
+                                      wireframe: true;"
+                >
+                    <a-entity   id="dummy"
+                                obj-model="obj:#dummy-obj"
+                                position="0 -0.85 0"
+                                scale="1.0 1.0 1.0"
+                                rotation="0 90 0"
+                                material="color:#bdc3c7;
+                                          roughness: 0.7;
+                                          metalness: 0;"
+                    ></a-entity>
+                </a-entity>
             </a-entity>
             
-            <a-entity   id="shinaiBox"
-                        dynamic-body
-                        geometry="primitive:cylinder; height:1.42; radius:0.05; segmentsRadial: 12; segmentsHeight:1;"
+            <!--shinai-->
+            <a-entity   id="shinai-rig"
                         position="0 2 0.250"
                         rotation="0 0 -90"
-                        material="color:#FFFFFF; visible:false; wireframe:true;">>
-                <a-entity   id="shinai"
-                            obj-model="obj:#shinai-obj"
-                            scale="1.0 1.0 1.0"
-                            position="0.754 -0.70 0"
-                            rotation="0 0 0"
-                            material="color:#bdc3c7; roughness:0.7; metalness:0;"
-                ></a-entity>
+            >   
+                <!--blade hit box-->
+                <a-entity   id="shinai-box"
+                            dynamic-body
+                            geometry="primitive:cylinder;
+                                      height: 1.41;
+                                      radius: 0.025;
+                                      segmentsRadial: 12;
+                                      segmentsHeight: 1;"
+                            material="color: #FFFFFF;
+                                      visible: false;
+                                      wireframe: true;"
+                >
+                    <!--object-->
+                    <a-entity   id="shinai"
+                                obj-model="obj: #shinai-obj"
+                                scale="1.0 1.0 1.0"
+                                position="0.7585 -0.705 0"
+                                material="color: #bdc3c7;
+                                          roughness: 0.7;
+                                          metalness: 0;"
+                    ></a-entity>
+                </a-entity>
             </a-entity>
 
             <!-- Sky Dome -->
             <a-entity   id = "sky"
-                        geometry = "primitive: sphere; radius: 500;"
-                        material = "shader: flat; src: #skymap; side: back; height: 2048; width: 2048"
+                        geometry = "primitive: sphere;
+                                    radius: 500;"
+                        material = "shader: flat;
+                                    src: #skymap;
+                                    side: back;
+                                    height: 2048;
+                                    width: 2048;"
             ></a-entity>
-            
        </a-scene>
-
-
-       <script>
-            //Write some socket client code
-            let socket = io();
-
-            socket.on('connect', function(userData){
-                console.log('connected');
-            });
-
-            socket.on('send_instruction', function(data){
-                console.log('Sequence: ' + data.sequence); //print data in console
-            });
-        </script>
-
     </body>
 </html>
