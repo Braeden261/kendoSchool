@@ -14,6 +14,9 @@ AFRAME.registerComponent('event-manager', {
         Context_AF.grabberRight.el.addEventListener('gripup', function(event) {
             console.log("Right-Released");
         });
+        Context_AF.grabberRight.el.addEventListener('collide', function(event) {
+            console.log("Right-Collided");
+        });
 
         //Left Grabber Events
         Context_AF.grabberLeft.el.addEventListener('gripdown', function(event) {
@@ -23,9 +26,13 @@ AFRAME.registerComponent('event-manager', {
         Context_AF.grabberLeft.el.addEventListener('gripup', function(event) {
             console.log("Left-Released");
         });
+        Context_AF.grabberLeft.el.addEventListener('collide', function(event) {
+            console.log("Left-Collided");
+        });
 
+        //Grabbee Events
         Context_AF.grabbee.el.addEventListener('collide', function(event){
-            console.log("grabbee-collided");
+            console.log("grabbee-Collided");
         });
     },
     grabObject : function() {
