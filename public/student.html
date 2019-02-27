@@ -18,29 +18,52 @@
                 <a-asset-item id="dummy-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Dummy_PROXY_v002.obj"></a-asset-item>
             </a-assets>
 
+            <!-- Event Handler -->
+            <a-entity   id="Chandler"
+                        event-manager
+            ></a-entity>
+
             <!-- Camera & VR Hands Rig -->
             <!-- User POV = ~1.8m (6ft) base height + ~0.4m raised platform) -->
             <a-entity   id ="camera-rig"
                         position="0 0.4 0"
             >
                 <!-- VR hand-controls (FireFox Only) -->
-                <a-entity   id="leftHand"
+                <!-- Left Hand -->
+                <a-entity   id="handLeft"
                             hand-controls="left"
-                ></a-entity>
-
-                <!--  -->
-                <a-entity   id="rightHand"
-                            hand-controls="right"
+                            grabber="hand: left"
                 >
-                    <a-entity   id="rightHand-box-rig"          
+                    <a-entity   id="handLeft-box-rig"          
                                 position="0 -0.02 0.045"
                                 rotation="0 0 0"
                     >
-                        <a-entity   id="rightHand-box"
+                        <a-entity   id="handLeft-box"
                                     static-body
-                                    _grabber="grabbable: #dummy-box"
                                     geometry="primitive: box;
-                                              height: 0.05;
+                                              height: 0.03;
+                                              width: 0.08;
+                                              depth: 0.09;"
+                                    material="color: #e74c3c;
+                                              visible: false;
+                                              wireframe: true;"
+                        ></a-entity>
+                    </a-entity>
+                </a-entity>
+
+                <!-- Right Hand -->
+                <a-entity   id="handRight"
+                            hand-controls="right"
+                            grabber="hand: right"
+                >
+                    <a-entity   id="handRight-box-rig"          
+                                position="0 -0.02 0.045"
+                                rotation="0 0 0"
+                    >
+                        <a-entity   id="handRight-box"
+                                    static-body
+                                    geometry="primitive: box;
+                                              height: 0.03;
                                               width: 0.08;
                                               depth: 0.09;"
                                     material="color: #e74c3c;
@@ -106,7 +129,7 @@
                         position="0 1.55 -1.0"
             >
                 <a-entity   id="dummy-box"
-                            _grabbable
+                            grabbable
                             dynamic-body="mass: 200;
                                           linearDamping: 0.02;"
                             geometry="primitive: box;
@@ -130,32 +153,29 @@
             </a-entity>
             
             <!--shinai-->
-            <a-entity   id="shinai-rig"
+            <!--blade hit box-->
+            <a-entity   id="shinai-box"
+                        dynamic-body
                         position="0 2 0.250"
                         rotation="0 0 -90"
-            >   
-                <!--blade hit box-->
-                <a-entity   id="shinai-box"
-                            dynamic-body
-                            geometry="primitive:cylinder;
-                                      height: 1.41;
-                                      radius: 0.025;
-                                      segmentsRadial: 12;
-                                      segmentsHeight: 1;"
-                            material="color: #FFFFFF;
-                                      visible: false;
-                                      wireframe: true;"
-                >
-                    <!--object-->
-                    <a-entity   id="shinai"
-                                obj-model="obj: #shinai-obj"
-                                scale="1.0 1.0 1.0"
-                                position="0.7585 -0.705 0"
-                                material="color: #bdc3c7;
-                                          roughness: 0.7;
-                                          metalness: 0;"
-                    ></a-entity>
-                </a-entity>
+                        geometry="primitive:cylinder;
+                                    height: 1.41;
+                                    radius: 0.025;
+                                    segmentsRadial: 12;
+                                    segmentsHeight: 1;"
+                        material="color: #FFFFFF;
+                                    visible: false;
+                                    wireframe: true;"
+            >
+                <!--object model-->
+                <a-entity   id="shinai"
+                            obj-model="obj: #shinai-obj"
+                            scale="1.0 1.0 1.0"
+                            position="0.7585 -0.705 0"
+                            material="color: #bdc3c7;
+                                        roughness: 0.7;
+                                        metalness: 0;"
+                ></a-entity>
             </a-entity>
 
             <!-- Sky Dome -->
