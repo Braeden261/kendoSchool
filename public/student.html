@@ -4,7 +4,6 @@
         <script src="/js/aframe-v0.8.2.min.js"></script>
         <script src="/js/aframe-physics-system.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
-        
     </head>
     <body>
         <a-scene physics="debug: false; maxInterval: 0.01; iterations: 20; restitution: 0.1">
@@ -55,7 +54,7 @@
                         obj-model="obj:#dojo-obj"
                         scale="1.0 1.0 1.0"
                         position="0 0 0"
-                        material="color:#bdc3c7; roughness:0.7; metalness:0;"
+                        material="color:#bdc3c7; roughness:0.7; metalness:0; transparent:true; opacity:1;"
                         shadow="cast:true; receive:true;"
             ></a-entity>
             
