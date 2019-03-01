@@ -1,4 +1,4 @@
-function detectDevice(){
+function deviceDispatch(){
     if (AFRAME.utils.isMobile()){
         //Mobile
         console.log("Mobile");
@@ -14,6 +14,19 @@ function detectDevice(){
         //Headset
         console.log("Desktop");
         window.location.href = '/student-test.html';
+
+    }
+}
+
+
+function detectDevice(){
+    if (AFRAME.utils.isMobile()){
+        //Mobile
+        console.log("Mobile");
+    }
+    else if (!AFRAME.utils.checkHeadsetConnected()){
+        //Headset
+        console.log("Desktop");
 
     }
 }
