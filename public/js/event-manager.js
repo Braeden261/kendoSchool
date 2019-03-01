@@ -1,47 +1,38 @@
 AFRAME.registerComponent('event-manager', {
     schema: {},
     init : function() {
-        const Context_AF    = this;
+        const Context_AF            = this;
 
-        let grabberRight    = document.getElementById('handRight');
-        let grabberLeft     = document.getElementById('handLeft');
-        let grabbee         = document.getElementById('shinai-box');
+        Context_AF.grabberRight     = document.querySelector('#handRight');
+        Context_AF.grabberLeft      = document.querySelector('#handLeft');
+        Context_AF.shinai           = document.querySelector('#shinai-box');
 
         //Right Grabber Events
-        Context_AF.grabberRight.el.addEventListener('gripdown', function(event) {
-            console.log("Right-Grabbing");
+        Context_AF.grabberRight.addEventListener('gripdown', function(event) {
+            Context_AF.grabberRight.setAttribute('grabbing', true);
+            console.log("[Right-Grabbing: " + Context_AF.grabberRight.getAttribute('grabbing') + "]");
         });
-        Context_AF.grabberRight.el.addEventListener('gripup', function(event) {
-            console.log("Right-Released");
+        Context_AF.grabberRight.addEventListener('gripup', function(event) {
+            Context_AF.grabberRight.setAttribute('grabbing', false);
+            console.log("[Right-Grabbing: " + Context_AF.grabberRight.getAttribute('grabbing') + "]");
         });
-        Context_AF.grabberRight.el.addEventListener('collide', function(event) {
-            console.log("Right-Collided");
-        });
-
-        //Left Grabber Events
-        Context_AF.grabberLeft.el.addEventListener('gripdown', function(event) {
-            console.log("Left-Grabbing");
-            Context_AF.grabberLeft.setAttribute('');
-        });
-        Context_AF.grabberLeft.el.addEventListener('gripup', function(event) {
-            console.log("Left-Released");
-        });
-        Context_AF.grabberLeft.el.addEventListener('collide', function(event) {
-            console.log("Left-Collided");
+        Context_AF.grabberRight.addEventListener('collide', function(event) {
+            Context_AF.getCollisionDetail(event);
         });
 
-        //Grabbee Events
-        Context_AF.grabbee.el.addEventListener('collide', function(event){
-            console.log("grabbee-Collided");
+        //shinai Events
+        Context_AF.shinai.addEventListener('collide', function(event){
+            Context_AF.getCollisionDetail(event);
         });
     },
     grabObject : function() {
         const Context_AF = this;
 
-        let cowElem = document.createElement('a-entity');
-        cowElem.setAttribute('obj-model', {obj:'/assets/models/Cow.obj'});
-        
-        let scene = document.querySelector('a-scene');
-        scene.appendChild(cowElem);
+    },
+
+    getCollisionDetail : function(_event) {
+        const Context_AF = this;
+
+        console.log("[" + _event.detail.target.id + " 💥 " + _event.detail.body.id + "]");
     }
 });
