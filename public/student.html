@@ -3,8 +3,7 @@
         <title>Kendo School</title>
         <script src="/js/aframe-v0.8.2.min.js"></script>
         <script src="/js/aframe-physics-system.min.js"></script>
-        <script src="js/grabber-component.js"></script>
-        <script src="js/grabbable-component.js"></script>
+        <script src="/js/aframe-physics-extras.min.js"></script>
         <script src="js/event-manager.js"></script>
     </head>
     <body>
@@ -35,10 +34,10 @@
                 <!-- Left Hand -->
                 <a-entity   id="handLeft"
                             hand-controls="left"
-                            grabber="hand: left"
                 >
                     <a-entity   id="handLeft-box"
-                                static-body          
+                                physics-collider
+                                static-body
                                 position="0 -0.02 0.045"
                                 rotation="0 0 0"
                                 geometry="primitive: box;
@@ -54,9 +53,9 @@
                 <!-- Right Hand -->
                 <a-entity   id="handRight"
                             hand-controls="right"
-                            grabber="hand: right"
                 >
                     <a-entity   id="handRight-box"
+                                physics-collider
                                 static-body          
                                 position="0 -0.02 0.045"
                                 rotation="0 0 0"
@@ -119,7 +118,6 @@
                         position="0 1.55 -1.0"
             >
                 <a-entity   id="dummy-box"
-                            grabbable
                             dynamic-body="mass: 200;
                                           linearDamping: 0.02;"
                             geometry="primitive: box;
