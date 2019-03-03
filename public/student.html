@@ -142,32 +142,24 @@
             </a-entity>
             
             <!--shinai-->
-            <!--hit box-->
-            <a-entity   id="shinai-box"
+            <a-entity   id="shinai"
+                        obj-model="obj:#shinai-obj"
                         hoverable
                         grabbable
-                        dynamic-body
+                        body="type: dynamic; mass: 10; shape: none;"
+                        shape__main="shape: cylinder;
+                                     height: 1.41;
+                                     radiusTop: 0.025;
+                                     radiusBottom: 0.025;"
                         collision-filter="group: swords;
                                           collidesWith: hands, objs, environment;
                                           collisionForces: true;"
-                        geometry="primitive:cylinder; height: 1.41;
-                                  radius: 0.025;
-                                  segmentsRadial: 12;
-                                  segmentsHeight: 1;"
-                        material="color: #FFFFFF;
-                                  visible: false;
-                                  wireframe: true;"
+                        material="color: #bdc3c7;
+                                  roughness: 0.7;
+                                  metalness: 0.2;
+                                  visible: true;"
                         position="0 2 0"
-            >
-                <!--model-->
-                <a-entity   obj-model="obj: #shinai-obj"
-                            scale="1.0 1.0 1.0"
-                            position="0.7585 -0.705 0"
-                            material="color: #bdc3c7;
-                                      roughness: 0.7;
-                                      metalness: 0;"
-                ></a-entity>
-            </a-entity>
+            ></a-entity>
 
             <!-- Sky Dome -->
             <a-entity   id = "sky"

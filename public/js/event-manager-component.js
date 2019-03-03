@@ -5,7 +5,7 @@ AFRAME.registerComponent('event-manager', {
 
         Context_AF.grabberRight     = document.querySelector('#handRight');
         Context_AF.grabberLeft      = document.querySelector('#handLeft');
-        Context_AF.shinai           = document.querySelector('#shinai-box');
+        Context_AF.shinai           = document.querySelector('#shinai');
 
         //"grabberRight" Events
         //Grab
@@ -20,7 +20,7 @@ AFRAME.registerComponent('event-manager', {
         });
         //Collide
         Context_AF.grabberRight.addEventListener('collide', function(event) {
-            Context_AF.collisionDetail(event);
+            Context_AF.CollisionDetail(event);
         });
 
         //"shinai" Events
