@@ -4,14 +4,13 @@
         <script src="/js/aframe-v0.8.2.min.js"></script>
         <script src="/js/aframe-physics-system.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
-        
     </head>
     <body>
         <a-scene physics="debug: false; maxInterval: 0.01; iterations: 20; restitution: 0.1">
       
             <a-assets>
                 <!-- Textures -->
-                <img id = "skymap" src = "/assets/textures/nightSky.png">
+                <img id = "skymap" src = "/assets/textures/skyTexture/sky-02.png">
 
                 <!-- Proxy Models -->
                 <a-asset-item id="dojo-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Dojo_PROXY_v003.obj"></a-asset-item>
@@ -55,7 +54,7 @@
                         obj-model="obj:#dojo-obj"
                         scale="1.0 1.0 1.0"
                         position="0 0 0"
-                        material="color:#bdc3c7; roughness:0.7; metalness:0;"
+                        material="color:#bdc3c7; roughness:0.7; metalness:0; transparent:true; opacity:1;"
                         shadow="cast:true; receive:true;"
             ></a-entity>
             
