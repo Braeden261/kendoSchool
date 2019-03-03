@@ -1,4 +1,4 @@
-AFRAME.registerComponent('grabbable', {
+AFRAME.registerComponent('grabee', {
     schema: {},
     init : function() {
         const Context_AF            = this;

@@ -4,10 +4,13 @@
         <script src="/js/aframe-v0.8.2.min.js"></script>
         <script src="/js/aframe-physics-system.min.js"></script>
         <script src="/js/aframe-physics-extras.min.js"></script>
-        <script src="js/event-manager.js"></script>
+        <script src="js/super-hands.min.js"></script>
+        <script src="js/event-manager-component.js"></script>
+        <script src="js/grabee-component.js"></script>
+        <script src="js/grabber-component.js"></script>
     </head>
     <body>
-        <a-scene physics="debug: true; maxInterval: 0.01; iterations: 20; restitution: 0.1">
+        <a-scene physics="debug: true; gravity: 0; maxInterval: 0.01; iterations: 20; restitution: 0.1">
             <a-assets>
                 <!-- Textures -->
                 <img id = "skymap" src = "/assets/textures/nightSky.png">
@@ -16,6 +19,21 @@
                 <a-asset-item id="dojo-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Dojo_PROXY_v003.obj"></a-asset-item>
                 <a-asset-item id="shinai-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Shinai_PROXY_v003.obj"></a-asset-item>
                 <a-asset-item id="dummy-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Dummy_PROXY_v002.obj"></a-asset-item>
+
+                <!-- Mixins -->
+                <a-mixin id="controller"
+                         super-hands="colliderEvent: collisions;
+                                      colliderEventProperty: els;
+                                      colliderEndEvent: collisions;
+                                      colliderEndEventProperty: clearedEls;
+                                      grabStartButtons: gripdown, pointdown, triggerdown;
+                                      grabEndButtons: gripup, pointup, triggerup"
+                         static-body="shape: box"
+                         physics-collider
+                         collision-filter="group: hands;
+                                           collidesWith: swords, objs;
+                                           collisionForces: false;"
+                ></a-mixin>
             </a-assets>
 
             <!-- Camera & VR Hands Rig -->
@@ -31,48 +49,25 @@
                 ></a-entity>
                 
                 <!-- VR hand-controls (FireFox Only) -->
-                <!-- Left Hand -->
-                <a-entity   id="handLeft"
-                            hand-controls="left"
-                >
-                    <a-entity   id="handLeft-box"
-                                physics-collider
-                                static-body
-                                position="0 -0.02 0.045"
-                                rotation="0 0 0"
-                                geometry="primitive: box;
-                                            height: 0.03;
-                                            width: 0.08;
-                                            depth: 0.09;"
-                                material="color: #e74c3c;
-                                            visible: false;
-                                            wireframe: true;"
-                    ></a-entity>
-                </a-entity>
-
                 <!-- Right Hand -->
                 <a-entity   id="handRight"
                             hand-controls="right"
-                >
-                    <a-entity   id="handRight-box"
-                                physics-collider
-                                static-body          
-                                position="0 -0.02 0.045"
-                                rotation="0 0 0"
-                                geometry="primitive: box;
-                                            height: 0.03;
-                                            width: 0.08;
-                                            depth: 0.09;"
-                                material="color: #e74c3c;
-                                            visible: false;
-                                            wireframe: true;"
-                    ></a-entity>
-                </a-entity>
+                            mixin="controller"
+                ></a-entity>
+
+                <!-- Left Hand -->
+                <a-entity   id="handLeft"
+                            hand-controls="left"
+                            mixin="controller"
+                ></a-entity>
             </a-entity>
 
             <!-- Ground Planes -->
             <a-plane    id="groundPlane-platform"
                         static-body
+                        collision-filter="group: environment;
+                                          collidesWith: swords, objs;
+                                          collisionForces: true;"
                         position="0 0.6 0"
                         rotation="90 0 0"
                         width="3.658"
@@ -80,6 +75,9 @@
             ></a-plane>
             <a-plane    id="groundPlane-floor"
                         static-body
+                        collision-filter="group: environment;
+                                          collidesWith: swords, objs;
+                                          collisionForces: true;"
                         position="0 0 0"
                         rotation="90 0 0"
                         width="12.192"
@@ -120,6 +118,9 @@
                 <a-entity   id="dummy-box"
                             dynamic-body="mass: 200;
                                           linearDamping: 0.02;"
+                            collision-filter="group: objs;
+                                              collidesWith: hands, swords, objs, environment;
+                                              collisionForces: true;"
                             geometry="primitive: box;
                                       height: 1.7;
                                       width: 0.19;
@@ -141,28 +142,30 @@
             </a-entity>
             
             <!--shinai-->
-            <!--blade hit box-->
+            <!--hit box-->
             <a-entity   id="shinai-box"
+                        hoverable
+                        grabbable
                         dynamic-body
-                        position="0 2 0.250"
-                        rotation="0 0 -90"
-                        geometry="primitive:cylinder;
-                                    height: 1.41;
-                                    radius: 0.025;
-                                    segmentsRadial: 12;
-                                    segmentsHeight: 1;"
+                        collision-filter="group: swords;
+                                          collidesWith: hands, objs, environment;
+                                          collisionForces: true;"
+                        geometry="primitive:cylinder; height: 1.41;
+                                  radius: 0.025;
+                                  segmentsRadial: 12;
+                                  segmentsHeight: 1;"
                         material="color: #FFFFFF;
-                                    visible: false;
-                                    wireframe: true;"
+                                  visible: false;
+                                  wireframe: true;"
+                        position="0 2 0"
             >
-                <!--object model-->
-                <a-entity   id="shinai"
-                            obj-model="obj: #shinai-obj"
+                <!--model-->
+                <a-entity   obj-model="obj: #shinai-obj"
                             scale="1.0 1.0 1.0"
                             position="0.7585 -0.705 0"
                             material="color: #bdc3c7;
-                                        roughness: 0.7;
-                                        metalness: 0;"
+                                      roughness: 0.7;
+                                      metalness: 0;"
                 ></a-entity>
             </a-entity>
 
