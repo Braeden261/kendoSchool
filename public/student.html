@@ -4,6 +4,7 @@
         <script src="/js/aframe-v0.8.2.min.js"></script>
         <script src="/js/aframe-physics-system.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/hit-sound-component.js"></script>
     </head>
     <body>
         <a-scene physics="debug: false; maxInterval: 0.01; iterations: 20; restitution: 0.1">
@@ -16,6 +17,7 @@
                 <a-asset-item id="dojo-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Dojo_PROXY_v003.obj"></a-asset-item>
                 <a-asset-item id="shinai-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Shinai_PROXY_v003.obj"></a-asset-item>
                 <a-asset-item id="dummy-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Dummy_PROXY_v002.obj"></a-asset-item>
+                <audio id='hitSnd' src='../assets/sounds/effects/hitSound.mp3'></audio>
             </a-assets>
 
             <!-- VR hand-controls (FireFox Only) -->
@@ -73,7 +75,8 @@
                 ></a-entity>
             </a-entity>
             
-            <a-entity   id="shinaiBox"
+            <a-entity hit-sound-component
+                        id="shinaiBox"
                         dynamic-body
                         geometry="primitive:cylinder; height:1.42; radius:0.05; segmentsRadial: 12; segmentsHeight:1;"
                         position="0 2 0.250"
@@ -108,19 +111,6 @@
             socket.on('send_instruction', function(data){
                 console.log('Sequence: ' + data.sequence); //print data in console
             });
-
-
-            //Sounds
-            let hitSnd = new Audio('../assets/sounds/effects/hitSound.mp3');
-
-            var playerEl = document.querySelector('#shinaiBox');
-                playerEl.addEventListener('collide', function (e) {
-                console.log('Player has collided with body #' + e.detail.body.id);
-
-                
-                hitSnd.play();
-            });
-
         </script>
 
     </body>
