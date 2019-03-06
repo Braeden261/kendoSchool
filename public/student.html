@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Kendo School</title>
+        <title>Kendo Gakko</title>
         <script src="/js/aframe-v0.8.2.min.js"></script>
         <script src="/js/aframe-physics-system.min.js"></script>
         <script src="/js/aframe-physics-extras.min.js"></script>
@@ -10,7 +10,10 @@
         <script src="js/grabber-component.js"></script>
     </head>
     <body>
-        <a-scene physics="debug: true; gravity: 0; maxInterval: 0.01; iterations: 20; restitution: 0.1">
+        <a-scene physics="debug: true;
+                          maxInterval: 0.01;
+                          iterations: 20;
+                          restitution: 0.1;">
             <a-assets>
                 <!-- Textures -->
                 <img id = "skymap" src = "/assets/textures/nightSky.png">
@@ -45,7 +48,7 @@
                 <a-entity   id="head"
                             camera
                             look-controls
-                            position="0 1.6 1.05"
+                            position="0 1.6 1.00"
                 ></a-entity>
                 
                 <!-- VR hand-controls (FireFox Only) -->
@@ -116,7 +119,7 @@
                         position="0 1.55 -1.0"
             >
                 <a-entity   id="dummy-box"
-                            dynamic-body="mass: 200;
+                            dynamic-body="mass: 100;
                                           linearDamping: 0.02;"
                             collision-filter="group: objs;
                                               collidesWith: hands, swords, objs, environment;
@@ -145,8 +148,7 @@
             <a-entity   id="shinai"
                         obj-model="obj:#shinai-obj"
                         hoverable
-                        grabbable
-                        body="type: dynamic; mass: 10; shape: none;"
+                        body="type: dynamic; mass: 200; shape: none;"
                         shape__main="shape: cylinder;
                                      height: 1.41;
                                      radiusTop: 0.025;
