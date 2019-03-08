@@ -11,9 +11,10 @@
     </head>
     <body>
         <a-scene physics="debug: true;
+                          gravity: -2;
                           maxInterval: 0.01;
                           iterations: 20;
-                          restitution: 0.1;">
+                          restitution: 0.2;">
             <a-assets>
                 <!-- Textures -->
                 <img id = "skymap" src = "/assets/textures/nightSky.png">
@@ -143,16 +144,45 @@
                     ></a-entity>
                 </a-entity>
             </a-entity>
+
+            <!--TEST CUBE-->
+            <a-entity   id="tester"
+                        hoverable
+                        geometry="primitive: box;
+                                  height: 0.1;
+                                  width: 0.1;
+                                  depth: 0.1;"
+                        position="0.5 2 0"
+                        material="color: #e74c3c;
+                                  visible: true;
+                                  wireframe: true;"
+            ></a-entity>
             
             <!--shinai-->
             <a-entity   id="shinai"
                         obj-model="obj:#shinai-obj"
                         hoverable
-                        body="type: dynamic; mass: 200; shape: none;"
-                        shape__main="shape: cylinder;
-                                     height: 1.41;
-                                     radiusTop: 0.025;
-                                     radiusBottom: 0.025;"
+                        body="type: dynamic;
+                              mass: 200;
+                              shape: none;"
+                        shape__blade="shape: cylinder;
+                                      height: 1.20;
+                                      offset: 0 0.105 0;
+                                      radiusTop: 0.024;   
+                                      radiusBottom: 0.024;
+                                      numSegments: 16;"
+                        shape__hilt="shape: cylinder;
+                                     height: 0.02;
+                                     offset: 0 -0.505 0;
+                                     radiusTop: 0.11;
+                                     radiusBottom: 0.11;
+                                     numSegments: 32;"
+                        shape__handle="shape: cylinder;
+                                       height: 0.19;
+                                       offset: 0 -0.61 0;
+                                       radiusTop: 0.03;
+                                       radiusBottom: 0.03;
+                                       numSegments: 8;"
                         collision-filter="group: swords;
                                           collidesWith: hands, objs, environment;
                                           collisionForces: true;"
