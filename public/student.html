@@ -7,16 +7,22 @@
         
     </head>
     <body>
-        <a-scene physics="debug: false; maxInterval: 0.01; iterations: 20; restitution: 0.1">
+        <a-scene physics="debug: true; maxInterval: 0.01; iterations: 20; restitution: 0.1">
       
             <a-assets>
                 <!-- Textures -->
                 <img id = "skymap" src = "/assets/textures/nightSky.png">
+                <img id = "dummyMap" src = "/assets/textures/dummyTexture/TexturePNG/dummyTexture.png">
+                <img id = "swordMap" src = "/assets/textures/swordTexture/TexturePNG/swordTexture.png">
 
                 <!-- Proxy Models -->
                 <a-asset-item id="dojo-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Dojo_PROXY_v003.obj"></a-asset-item>
-                <a-asset-item id="shinai-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Shinai_PROXY_v003.obj"></a-asset-item>
-                <a-asset-item id="dummy-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Dummy_PROXY_v002.obj"></a-asset-item>
+                <a-asset-item id="proxy-shinai-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Shinai_PROXY_v003.obj"></a-asset-item>
+                <a-asset-item id="proxy-dummy-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Dummy_PROXY_v002.obj"></a-asset-item>
+                <!--Final Geometry-->
+                <a-asset-item id="shinai-obj" src="/assets/models/objFiles/sword/sword.obj"></a-asset-item>
+                <a-asset-item id="dummy-obj" src="/assets/models/objFiles/dummy/trainingDummy.obj"></a-asset-item>
+            
             </a-assets>
 
             <!-- VR hand-controls (FireFox Only) -->
@@ -70,7 +76,7 @@
                             position="0 -0.85 -0.21"
                             scale="1.0 1.0 1.0"
                             rotation="0 90 0"
-                            material="color:#bdc3c7; roughness:0.7; metalness:0;"
+                            material="src:#dummyMap; roughness:0.7; metalness:0;"
                 ></a-entity>
             </a-entity>
             
@@ -83,9 +89,9 @@
                 <a-entity   id="shinai"
                             obj-model="obj:#shinai-obj"
                             scale="1.0 1.0 1.0"
-                            position="0.754 -0.70 0"
+                            position="0 -0.7 0"
                             rotation="0 0 0"
-                            material="color:#bdc3c7; roughness:0.7; metalness:0;"
+                            material="src:#swordMap; roughness:0.7; metalness:0;"
                 ></a-entity>
             </a-entity>
 
