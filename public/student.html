@@ -6,14 +6,16 @@
         <script src="/socket.io/socket.io.js"></script>
     </head>
     <body>
-        <a-scene physics="debug: false; maxInterval: 0.01; iterations: 20; restitution: 0.1">
+        <a-scene physics="debug: false; maxInterval: 0.01; iterations: 20; restitution: 0.1" shadow="type: pcfsoft;" fog="type: linear; color: #e0bfb6; near: 5.8; far: 45.88;">
       
             <a-assets>
                 <!-- Textures -->
                 <img id = "skymap" src = "/assets/textures/skyTexture/sky-02.png">
+                <img id = "dojo-tex" src = "/assets/textures/dojoTexture/dojo_wallsFloors_texture-02.png">
 
-                <!-- Proxy Models -->
-                <a-asset-item id="dojo-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Dojo_PROXY_v003.obj"></a-asset-item>
+                <!-- Models -->
+                <a-asset-item id="dojo-obj" src="/assets/models/objFiles/dojo/dojo_structure.obj"></a-asset-item>
+                <a-asset-item id="windows-obj" src="/assets/models/objFiles/dojo/dojo_windows.obj"></a-asset-item>
                 <a-asset-item id="shinai-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Shinai_PROXY_v003.obj"></a-asset-item>
                 <a-asset-item id="dummy-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Dummy_PROXY_v002.obj"></a-asset-item>
             </a-assets>
@@ -44,17 +46,30 @@
             <a-plane static-body position="0 0 0" rotation="90 0 0" width="12.192" height="21.336"></a-plane>
             
             <!-- Lights -->
-            <a-entity   light = "type: point; intensity: 0.8; color: #bbb; castShadow: true; shadowBias: -0.000001; shadowMapWidth: 1024; shadowMapHeight: 1024;"
-                        position = "0 2.1 0"
+            <a-entity   light = "type: spot; intensity: 0.45; angle: 60; penumbra: 0.9; color: #fff8e8; castShadow: true; shadowBias: -0.000001; shadowMapWidth: 2048; shadowMapHeight: 2048;"
+                        position = "0 7.33 0"
+                        rotation = "-90 0 0"
             ></a-entity>
-            <a-entity   light = "type: ambient; intensity: 0.06; color: #bbb;"></a-entity>
+            <a-entity   light = "type: ambient; intensity: 0.15; color: #f86605;"></a-entity>
+            <a-entity   light = "type: spot; angle: 25; penumbra: 1; color: #ffefca"
+                        position = "0 4.95 -14.27"
+                        rotation = "-90 0 0"
+            ></a-entity>
             
-            <!-- Proxy Models -->
+            <!-- Models -->
             <a-entity   id="dojo"
                         obj-model="obj:#dojo-obj"
                         scale="1.0 1.0 1.0"
                         position="0 0 0"
-                        material="color:#bdc3c7; roughness:0.7; metalness:0; transparent:true; opacity:1;"
+                        material="src:#dojo-tex; roughness:0.7; metalness:0; transparent:true; opacity:1;"
+                        shadow="cast:true; receive:true;"
+            ></a-entity>
+
+            <a-entity   id="windows"
+                        obj-model="obj:#windows-obj"
+                        scale="1.0 1.0 1.0"
+                        position="0 0 0"
+                        material="color:##fff9de; roughness:0.7; metalness:0; transparent:true; opacity:0.85;"
                         shadow="cast:true; receive:true;"
             ></a-entity>
             
@@ -91,7 +106,7 @@
             <!-- Sky Dome -->
             <a-entity   id = "sky"
                         geometry = "primitive: sphere; radius: 500;"
-                        material = "shader: flat; src: #skymap; side: back; height: 2048; width: 2048"
+                        material = "shader: flat; src: #skymap; side: back; height: 2048; width: 2048; fog: false;"
             ></a-entity>
             
        </a-scene>
