@@ -3,16 +3,22 @@
 <html>
     <head>
         <title>Kendo Gakko</title>
-
+        <script src="/js/aframe-v0.8.2.min.js"></script>
+        <script src="/js/detect-device.js"></script>
+      
         <link rel="stylesheet" href="/styles/index.css">
         <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500" rel="stylesheet">
+        <meta name="viewport" content="user-scalable=no"/>
+        <meta name="HandheldFriendly" content="true"/>
     </head>
-    <body>
+    <body onload="detectDevice()">
         <div id="logoContainer">
                 <img class="title-img" src="/assets/lander-images/Title-Katanas.png">
         </div>
 
-        <div id="bodyText">
+        <div id="bodyDiv">
+            <br><br><br><br>
+            
             <p>Welcome to Kendō Gakkō, a multi-user, multi-device experience. Learn basic Kendo sword techniques and their associated Japanese names, and put your memory skills to the test in this Simon Says-style game.<br><br>Do you have what it takes to graduate from Kendo School?</p>
             
             <br><br><br><br>
@@ -23,16 +29,16 @@
             <br>
             <div class="instructions-container">
                 <div class="master-instruction">
-                    <img src="/assets/lander-images/MasterInstruction-01.png">
+                    <img class="master-instruction-img" src="/assets/lander-images/MasterInstruction-01.png">
                     <p>define the sequence</p>
                 </div>
                 <div class="master-instruction">
-                    <img src="/assets/lander-images/MasterInstruction-02.png">
+                    <img class="master-instruction-img" src="/assets/lander-images/MasterInstruction-02.png">
                     <p>send it to the student</p>
                 </div>
                 <div class="master-instruction">
-                    <img style="width: 225px; margin-top: 15px;" src="/assets/lander-images/MasterInstruction-03.png">
-                    <p>watch in VR</p>
+                    <img class="master-instruction-img" src="/assets/lander-images/MasterInstruction-03.png">
+                    <p>watch the student in VR</p>
                 </div>
             </div>
             
@@ -44,29 +50,25 @@
             <br>
             <div class="instructions-container">
                 <div class="student-instruction">
-                    <img src="/assets/lander-images/StudentInstruction-01.png">
-                    <p>define the sequence</p>
+                    <img class="student-instruction-img" src="/assets/lander-images/StudentInstruction-01.png">
+                    <p>pick up the shinai</p>
                 </div>
                 <div class="student-instruction">
-                    <img src="/assets/lander-images/StudentInstruction-02.png">
-                    <p>send it to the student</p>
+                    <img class="student-instruction-img" src="/assets/lander-images/StudentInstruction-02.png">
+                    <p>receive sequence from master</p>
                 </div>
                 <div class="student-instruction">
-                    <img src="/assets/lander-images/StudentInstruction-03.png">
-                    <p>watch in VR</p>
+                    <img class="student-instruction-img" src="/assets/lander-images/StudentInstruction-03.png">
+                    <p>execute the sequence</p>
                 </div>
             </div>
 
-            <br><br><br><br><br><br>
+            <br><br><br><br><br><br><br><br><br>
 
-            <h1>BEGIN YOUR EXPERIENCE</h1>
-            <button onclick="window.location.href = '/master.html'">Master</button>
-            <button onclick="window.location.href = '/student-test.html'">Student</button>
-            <button onclick="window.location.href = '/student.html'">VR</button>
-
+            <button onclick="deviceDispatch()">BEGIN YOUR EXPERIENCE</button>
+          
             <br><br><br><br>
         </div>
-
     
     </body>
 </html>
