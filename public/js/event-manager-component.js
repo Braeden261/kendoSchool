@@ -48,7 +48,7 @@ AFRAME.registerComponent('event-manager', {
 
             console.log(delta);
 
-            if (delta < 0.5) {
+            if (delta < 0.1) {
                 //console.log(Context_AF.tester);
                 Context_AF.grabObject(Context_AF.handRight);
             }
@@ -101,11 +101,12 @@ AFRAME.registerComponent('event-manager', {
     //     this.shinai.setAttribute(this.physBod_shinai);
 
     //TESTER////////////////////////////////////////////////////////////////////////////////////////////////
-    this.tester.flushToDOM();
-    this.scene.removeChild(this.tester);
-    _grabber.appendChild(this.tester);
-    this.tester.setAttribute('position', {x: 0.0, y: 0, z: 0.0});
-    this.tester.addState('grabbed');
+        this.scene.removeChild(this.tester);
+        this.tester.setAttribute('position', {x: 0.0, y: 0.0, z: 0.0});
+        this.tester.flushToDOM();
+        _grabber.appendChild(this.tester);
+
+        this.tester.addState('grabbed');
     //TESTER////////////////////////////////////////////////////////////////////////////////////////////////
     },
 
@@ -126,10 +127,14 @@ AFRAME.registerComponent('event-manager', {
     //     }
 
     //TESTER////////////////////////////////////////////////////////////////////////////////////////////////
-        this.tester.flushToDOM();
-        this.tester.setAttribute('position', {x: 0.5, y: 2.0, z: 0.0});
+        tempPos = _grabber.object3D.getWorldPosition();
+        tempRot = _grabber.object3D.getWorldRotation();
         _grabber.removeChild(this.tester);
+        this.tester.setAttribute('position', {x: tempPos.x, y: tempPos.y, z: tempPos.z});
+        this.tester.setAttribute('rotation', {x: tempRot.x, y: tempRot.y, z: tempRot.z});
+        this.tester.flushToDOM();
         this.scene.appendChild(this.tester);
+
         this.tester.removeState('grabbed');
     //TESTER////////////////////////////////////////////////////////////////////////////////////////////////
     },

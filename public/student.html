@@ -11,10 +11,10 @@
     </head>
     <body>
         <a-scene physics="debug: true;
-                          gravity: -2;
+                          gravity: 0;
                           maxInterval: 0.01;
                           iterations: 20;
-                          restitution: 0.2;">
+                          restitution: 0.1;">
             <a-assets>
                 <!-- Textures -->
                 <img id = "skymap" src = "/assets/textures/nightSky.png">
@@ -42,51 +42,23 @@
 
             <!-- Camera & VR Hands Rig -->
             <!-- User POV = ~1.8m (6ft) base height + ~0.4m raised platform) -->
-            <a-entity   id ="camera-rig"
-                        position="0 0.4 0"
-            >
-                <!-- User Perspective -->
-                <a-entity   id="head"
-                            camera
-                            look-controls
-                            position="0 1.6 1.00"
-                ></a-entity>
-                
-                <!-- VR hand-controls (FireFox Only) -->
-                <!-- Right Hand -->
-                <a-entity   id="handRight"
-                            hand-controls="right"
-                            mixin="controller"
-                ></a-entity>
+            <a-entity   id="head"
+                        camera
+                        look-controls
+                        position="0 1.8 1.00"
+            ></a-entity>
+            
+            <!-- Right Hand Controller-->
+            <a-entity   id="handRight"
+                        hand-controls="right"
+                        mixin="controller"
+            ></a-entity>
 
-                <!-- Left Hand -->
-                <a-entity   id="handLeft"
-                            hand-controls="left"
-                            mixin="controller"
-                ></a-entity>
-            </a-entity>
-
-            <!-- Ground Planes -->
-            <a-plane    id="groundPlane-platform"
-                        static-body
-                        collision-filter="group: environment;
-                                          collidesWith: swords, objs;
-                                          collisionForces: true;"
-                        position="0 0.6 0"
-                        rotation="90 0 0"
-                        width="3.658"
-                        height="3.658"
-            ></a-plane>
-            <a-plane    id="groundPlane-floor"
-                        static-body
-                        collision-filter="group: environment;
-                                          collidesWith: swords, objs;
-                                          collisionForces: true;"
-                        position="0 0 0"
-                        rotation="90 0 0"
-                        width="12.192"
-                        height="21.336"
-            ></a-plane>
+            <!-- Left Hand Controller-->
+            <a-entity   id="handLeft"
+                        hand-controls="left"
+                        mixin="controller"
+            ></a-entity>
             
             <!-- Lights -->
             <a-entity   light = "type: point;
@@ -107,17 +79,51 @@
             <a-entity   id="dojo"
                         obj-model="obj: #dojo-obj"
                         scale="1.0 1.0 1.0"
-                        position="0 0 0"
+                        position="0 -0.4 0"
                         material="color: #bdc3c7;
                                   roughness: 0.7;
                                   metalness: 0;"
                         shadow="cast: true;
                                 receive: true;"
-            ></a-entity>
+            >
+                <!-- Environment Hit Boxes -->
+                <!--Ground-->
+                <a-entity   id="groundPlane-platform"
+                            static-body
+                            geometry="primitive: box;
+                                      height: 0.1;
+                                      width: 3.658;
+                                      depth: 3.658;"
+                            collision-filter="group: environment;
+                                              collidesWith: swords, objs;
+                                              collisionForces: true;"
+                            material="color: #bdc3c7;
+                                      roughness: 0.7;
+                                      metalness: 0;
+                                      wireframe: true;"
+                            position="0 0.55 0"
+                ></a-entity>
+                <!--Platform-->
+                <a-entity   id="groundPlane-floor"
+                            static-body
+                            geometry="primitive: box;
+                                      height: 0.1;
+                                      width: 13;
+                                      depth: 22;"
+                            collision-filter="group: environment;
+                                              collidesWith: swords, objs;
+                                              collisionForces: true;"
+                            material="color: #bdc3c7;
+                                      roughness: 0.7;
+                                      metalness: 0;
+                                      wireframe: true;"
+                            position="0 -0.05 0"
+                ></a-entity>
+            </a-entity>
 
             <!--dummy-->
             <a-entity   id="dummy-rig"
-                        position="0 1.55 -1.0"
+                        position="0 1.05 -1.0"
             >
                 <a-entity   id="dummy-box"
                             dynamic-body="mass: 100;
