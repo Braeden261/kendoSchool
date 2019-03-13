@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400" rel="stylesheet">
+    <script type = "text/javascript">
+        window.onload = function () {
+            var table = document.getElementById("tableID");
+            console.log(table)
+            if (table != null) {
+                for (var i = 0; i < table.rows.length; i++) {
+                    for (var j = 0; j < table.rows[i].cells.length; j++)
+                    table.rows[i].cells[j].onclick = function () {
+                        console.log(this.id)
+                        mark(this);
+                    };
+                }
+            }
+
+            function mark(tableCell) {
+                var img = document.getElementById(tableCell.id);
+                if (img.style.border === "5px solid red") {
+                    img.style.border = null;
+                } else {
+                    img.style.border = "5px solid red";
+                }
+                
+            }
+        };
+
+        function send() {
+            list = []
+            var table = document.getElementById("tableID");
+            console.log(table)
+            if (table != null) {
+                for (var i = 0; i < table.rows.length; i++) {
+                    for (var j = 0; j < table.rows[i].cells.length; j++) {
+                        cell = table.rows[i].cells[j]
+                        if (cell.style.border === "5px solid red") {
+                            list.push(cell.id)
+                        }
+                    }
+                }
+            }
+            console.log(list)
+        }
+    </script>
+</head>
+
+<body>
+    <div class="top-left">
+        <img src="images/logokendo.png" class="small-image"> 
+    </div>
+    <div class="right-icon">
+        <img src="images/sendicon.png" class="sequence-image" onclick="send()">
+    </div>
+    <div class="bottom-left">
+        <img src="images/headseticon.png" class="sequence-image">
+    </div>
+    <div class="center-screen">
+        <h2> SELECT THE DESIRED SEQUENCE FOR YOUR STUDENT </h2>
+        <table id="tableID" class="sequence">
+            <tr>
+                <td id="leftarm"><img src="images/leftarm_text.png" class="sequence-image"> </td>
+                <td id="head"><img src="images/head_text.png" class="sequence-image"> </td>
+                <td id="ribcage"><img src="images/ribcage_text.png" class="sequence-image"> </td>
+                <td id="rightarm"><img src="images/rightarm_text.png" class="sequence-image"> </td>
+            </tr>
+
+            <tr>
+                <td id="leftleg"><img src="images/leftleg_text.png" class="sequence-image"> </td>
+                <td id="pelvis"><img src="images/pelvis_text.png" class="sequence-image"> </td>
+                <td id="abdomen"><img src="images/abdomen_text.png" class="sequence-image"> </td>
+                <td id="rightleg"><img src="images/rightleg_text.png" class="sequence-image"> </td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>
