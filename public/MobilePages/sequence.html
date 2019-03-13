@@ -39,6 +39,7 @@
                         cell = table.rows[i].cells[j]
                         if (cell.style.border === "5px solid red") {
                             list.push(cell.id)
+
                         }
                     }
                 }
@@ -53,10 +54,13 @@
         <img src="images/logokendo.png" class="small-image"> 
     </div>
     <div class="right-icon">
-        <img src="images/sendicon.png" class="sequence-image" onclick="send()">
+        <img src="images/sendicon.png" class="sequence-image" onclick="send()"> 
+    </div>
+        <div class="right-icon">
+        <img src="images/sendicon.png" class="sequence-image" onclick="location.href='file:///Users/hannahperks/Desktop/kendo/sequence_results.html'" class="continue"> 
     </div>
     <div class="bottom-left">
-        <img src="images/headseticon.png" class="sequence-image">
+        <img src="images/clearicon.png" class="sequence-image">
     </div>
     <div class="center-screen">
         <h2> SELECT THE DESIRED SEQUENCE FOR YOUR STUDENT </h2>
