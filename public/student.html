@@ -4,6 +4,7 @@
         <script src="/js/aframe-v0.8.2.min.js"></script>
         <script src="/js/aframe-physics-system.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/hit-sound-component.js"></script>
     </head>
     <body>
 
@@ -19,10 +20,17 @@
                 <!-- Models -->
                 <a-asset-item id="dojo-obj" src="/assets/models/objFiles/dojo/dojo_structure.obj"></a-asset-item>
                 <a-asset-item id="windows-obj" src="/assets/models/objFiles/dojo/dojo_windows.obj"></a-asset-item>
+
                 <a-asset-item id="shinai-obj" src="/assets/models/objFiles/sword/sword.obj"></a-asset-item>
                 <a-asset-item id="dummy-obj" src="/assets/models/objFiles/dummy/trainingDummy.obj"></a-asset-item>
+                <audio id='hit-sound' src='/assets/sounds/effects/hitSound.mp3'></audio>
+                <audio id="nature-sound" loop>
+                    <source  src="/assets/sounds/ambientSounds.mp3" type="audio/mp3">
+                </audio>
 
             </a-assets>
+            <!--Sounds-->
+            <a-entity id="hitSnd" sound="src:#hit-sound"></a-entity>
 
             <!-- VR hand-controls (FireFox Only) -->
             <a-entity   id="leftHand"
@@ -93,7 +101,8 @@
                 ></a-entity>
             </a-entity>
             
-            <a-entity   id="shinaiBox"
+            <a-entity hit-sound-component
+                        id="shinaiBox"
                         dynamic-body
                         geometry="primitive:cylinder; height:1.42; radius:0.05; segmentsRadial: 12; segmentsHeight:1;"
                         position="0 2 0.250"
@@ -128,6 +137,15 @@
             socket.on('send_instruction', function(data){
                 console.log('Sequence: ' + data.sequence); //print data in console
             });
+
+            window.onload = function(){
+                let ambient = document.querySelector('#nature-sound');
+                ambient.volume = 0.05;
+                ambient.play();
+            }
+
+            
+            
         </script>
 
     </body>
