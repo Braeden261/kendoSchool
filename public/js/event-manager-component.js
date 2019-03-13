@@ -33,6 +33,23 @@ AFRAME.registerComponent('event-manager', {
                 Context_AF.shinai.removeAttribute('constraint');
             }
         });
+        
+        //Point Start
+        Context_AF.handRight.addEventListener('pointingstart', function(event) {
+            Context_AF.handRight.addState('pointing');
+            console.log("[Right ✔ 👉");
+
+            Context_AF.handRight.setAttribute('collision-filter', {collisionForces: true});
+        });
+
+        //Point End
+        Context_AF.handRight.addEventListener('pointingend', function(event) {
+            Context_AF.handRight.removeState('pointing');
+            console.log("[Right ✘ 👉");
+
+            Context_AF.handRight.setAttribute('collision-filter', {collisionForces: false});
+        });
+
 
         //E V E N T S - H A N D _ L E F T
         //Grip Closed
@@ -59,6 +76,22 @@ AFRAME.registerComponent('event-manager', {
                 Context_AF.shinai.removeAttribute('constraint');
             }
         });
+        
+        //Point Start
+        Context_AF.handLeft.addEventListener('pointingstart', function(event) {
+            Context_AF.handLeft.addState('pointing');
+            console.log("[Left ✔ 👉");
+
+            Context_AF.handLeft.setAttribute('collision-filter', {collisionForces: true});
+        });
+
+        //Point End
+        Context_AF.handRight.addEventListener('pointingend', function(event) {
+            Context_AF.handRight.removeState('pointing');
+            console.log("[Left ✘ 👉");
+
+            Context_AF.handRight.setAttribute('collision-filter', {collisionForces: false});
+        });
 
         //E V E N T S - S H I N A I
         //Collision
@@ -69,12 +102,12 @@ AFRAME.registerComponent('event-manager', {
 
         //State Added
         Context_AF.shinai.addEventListener('stateadded', function(event) {
-            console.log("[Shinai 👍 " + event.detail + "]");
+            console.log("[Shinai ✔ " + event.detail + "]");
         });
         
         //State Added
         Context_AF.shinai.addEventListener('stateremoved', function(event) {
-            console.log("[Shinai 👎 " + event.detail + "]");
+            console.log("[Shinai ✘ " + event.detail + "]");
         });
     },
 
