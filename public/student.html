@@ -56,8 +56,6 @@
                 ></a-mixin>
 
             </a-assets>
-            <!--Sounds-->
-            <a-entity id="hitSnd" sound="src:#hit-sound"></a-entity>
 
             <!-- Camera & VR Hands Rig -->
             <!-- User POV = ~1.8m (6ft) base height + ~0.4m raised platform) -->
@@ -113,7 +111,7 @@
                         shadow="cast:true; receive:true;"
             >
                 <!-- Environment Hit Boxes -->
-                <!--Ground-->
+                <!--Platform-->
                 <a-entity   id="groundPlane-platform"
                             static-body
                             geometry="primitive: box;
@@ -129,13 +127,14 @@
                                       wireframe: true;"
                             position="0 0.55 0"
                 ></a-entity>
-                <!--Platform-->
+
+                <!--Ground-->
                 <a-entity   id="groundPlane-floor"
                             static-body
                             geometry="primitive: box;
                                       height: 0.1;
                                       width: 13;
-                                      depth: 22;"
+                                      depth: 23;"
                             collision-filter="group: environment;
                                               collidesWith: swords, objs;
                                               collisionForces: true;"
@@ -145,8 +144,8 @@
                                       wireframe: true;"
                             position="0 -0.05 0"
                 ></a-entity>
-            </a-entity>
-            <!-- End of Dojo-->
+            </a-entity><!-- End of Dojo-->
+            
 
             <a-entity   id="windows"
                         obj-model="obj:#windows-obj"
@@ -158,7 +157,7 @@
 
             <!--dummy-->
             <a-entity   id="dummy-rig"
-                        position="0 1.05 -1.0"
+                        position="0 1.5 -1.0"
             >
                 <a-entity   id="dummy-box"
                             dynamic-body="mass: 100;
@@ -189,6 +188,7 @@
             <!--shinai-->
             <a-entity   id="shinai"
                         obj-model="obj:#shinai-obj"
+                        hit-sound-component
                         hoverable
                         body="type: dynamic;
                               mass: 200;
@@ -217,9 +217,12 @@
                         material="color: #bdc3c7;
                                   roughness: 0.7;
                                   metalness: 0.2;
-                                  visible: true;"
+                                  visible: false;"
                         position="0 2 0"
-            ></a-entity>
+            >
+                <!--Sounds-->
+                <a-entity id="hitSnd" sound="src:#hit-sound"></a-entity>
+            </a-entity>
 
             <!-- Sky Dome -->
             <a-entity   id = "sky"

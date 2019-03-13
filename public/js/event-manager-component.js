@@ -86,11 +86,11 @@ AFRAME.registerComponent('event-manager', {
         });
 
         //Point End
-        Context_AF.handRight.addEventListener('pointingend', function(event) {
-            Context_AF.handRight.removeState('pointing');
+        Context_AF.handLeft.addEventListener('pointingend', function(event) {
+            Context_AF.handLeft.removeState('pointing');
             console.log("[Left ✘ 👉");
 
-            Context_AF.handRight.setAttribute('collision-filter', {collisionForces: false});
+            Context_AF.handLeft.setAttribute('collision-filter', {collisionForces: false});
         });
 
         //E V E N T S - S H I N A I
