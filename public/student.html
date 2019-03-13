@@ -11,7 +11,7 @@
     </head>
     <body>
         <a-scene physics="debug: true;
-                          gravity: -9.8;
+                          gravity: 0;
                           maxInterval: 0.0667;
                           iterations: 20;
                           restitution: 0.1;">
@@ -32,7 +32,10 @@
                                       colliderEndEventProperty: clearedEls;
                                       grabStartButtons: gripdown, pointdown, triggerdown;
                                       grabEndButtons: gripup, pointup, triggerup"
-                         static-body="shape: box"
+                         static-body="shape: none;"
+                         shape__palm="shape: box;
+                                      halfExtents: 0.05 0.025 0.02;
+                                      offset: 0 -0.015 0.025;"
                          physics-collider
                          collision-filter="group: hands;
                                            collidesWith: swords, objs;
@@ -150,19 +153,6 @@
                     ></a-entity>
                 </a-entity>
             </a-entity>
-
-            <!--TEST CUBE-->
-            <a-entity   id="tester"
-                        hoverable
-                        geometry="primitive: box;
-                                  height: 0.1;
-                                  width: 0.1;
-                                  depth: 0.1;"
-                        position="0.5 2 0"
-                        material="color: #e74c3c;
-                                  visible: true;
-                                  wireframe: true;"
-            ></a-entity>
             
             <!--shinai-->
             <a-entity   id="shinai"
