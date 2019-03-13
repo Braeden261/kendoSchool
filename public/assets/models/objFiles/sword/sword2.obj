@@ -1,6 +1,6 @@
 # This file uses centimeters as units for non-parametric coordinates.
 
-mtllib sword.mtl
+mtllib sword2.mtl
 g default
 v 0.005398 0.001033 -0.005398
 v 0.000000 0.001033 -0.007634

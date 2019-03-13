@@ -35,7 +35,7 @@
                 <a-asset-item id="dojo-obj" src="/assets/models/objFiles/dojo/dojo_structure.obj"></a-asset-item>
                 <a-asset-item id="windows-obj" src="/assets/models/objFiles/dojo/dojo_windows.obj"></a-asset-item>
 
-                <a-asset-item id="shinai-obj" src="/assets/models/objFiles/sword/sword.obj"></a-asset-item>
+                <a-asset-item id="shinai-obj" src="/assets/models/objFiles/sword/sword2.obj"></a-asset-item>
                 <a-asset-item id="dummy-obj" src="/assets/models/objFiles/dummy/trainingDummy.obj"></a-asset-item>
 
                 <audio id='hit-sound' src='/assets/sounds/effects/hitSound.mp3'></audio>
@@ -185,7 +185,7 @@
                                 position="0 -0.85 0"
                                 scale="1.0 1.0 1.0"
                                 rotation="0 90 0"
-                                material="color:#bdc3c7;
+                                material="src:#dummyMap;
                                           roughness: 0.7;
                                           metalness: 0;"
                     ></a-entity>
@@ -201,35 +201,35 @@
                               mass: 200;
                               shape: none;"
                         shape__blade="shape: cylinder;
-                                      height: 1.20;
-                                      offset: 0 0.105 0;
+                                      height: 1.05;
+                                      offset: 0 0.905 0;
                                       radiusTop: 0.024;   
                                       radiusBottom: 0.024;
                                       numSegments: 16;"
                         shape__hilt="shape: cylinder;
                                      height: 0.02;
-                                     offset: 0 -0.505 0;
-                                     radiusTop: 0.11;
-                                     radiusBottom: 0.11;
+                                     offset: 0 0.37 0;
+                                     radiusTop: 0.06;
+                                     radiusBottom: 0.06;
                                      numSegments: 32;"
                         shape__handle="shape: cylinder;
-                                       height: 0.19;
-                                       offset: 0 -0.61 0;
-                                       radiusTop: 0.03;
-                                       radiusBottom: 0.03;
+                                       height: 0.36;
+                                       offset: 0 0.18 0;
+                                       radiusTop: 0.02;
+                                       radiusBottom: 0.02;
                                        numSegments: 8;"
                         collision-filter="group: swords;
                                           collidesWith: hands, objs, environment;
                                           collisionForces: true;"
-                        material="color: #bdc3c7;
+                        material="src:#swordMap;
                                   roughness: 0.7;
                                   metalness: 0.2;
-                                  visible: false;"
+                                  visible: true;"
                         position="0 2 0"
             >
                 <!--Sounds-->
                 <a-entity id="hitSnd" sound="src:#hit-sound"></a-entity>
-
+               
             </a-entity>
 
             <!-- Sky Dome -->
