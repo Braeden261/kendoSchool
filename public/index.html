@@ -3,13 +3,72 @@
 <html>
     <head>
         <title>Kendo Gakko</title>
+        <script src="/js/aframe-v0.8.2.min.js"></script>
+        <script src="/js/detect-device.js"></script>
+      
+        <link rel="stylesheet" href="/styles/index.css">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500" rel="stylesheet">
+        <meta name="viewport" content="user-scalable=no"/>
+        <meta name="HandheldFriendly" content="true"/>
     </head>
-    <body>
-            <h1>Select a page You wish to go to:</h1>
-            <button style="background-color: crimson; color: whitesmoke;" onclick="window.location.href = '/master.html'">Master</button>
-            <button style="background-color: green; color: whitesmoke;" onclick="window.location.href = '/student-test.html'">Student</button>
-            <button style="background-color: navy; color: whitesmoke;" onclick="window.location.href = '/student.html'">VR</button>
-    
+    <body onload="detectDevice()">
+        <div id="logoContainer">
+                <img class="title-img" src="/assets/lander-images/Title-Katanas.png">
+        </div>
+
+        <div id="bodyDiv">
+            <br><br><br><br>
+            
+            <p>Welcome to Kendō Gakkō, a multi-user, multi-device experience. Learn basic Kendo sword techniques and their associated Japanese names, and put your memory skills to the test in this Simon Says-style game.<br><br>Do you have what it takes to graduate from Kendo School?</p>
+            
+            <br><br><br><br>
+
+            <img class="player-img" src="/assets/lander-images/Master.png">
+            <h1>PLAYER ONE: THE MASTER (MOBILE)</h1>
+            <p>As the Master, you are responsible for providing the Student with a sequence of actions to perform on the training dummy.</p>
+            <br>
+            <div class="instructions-container">
+                <div class="master-instruction">
+                    <img class="master-instruction-img" src="/assets/lander-images/MasterInstruction-01.png">
+                    <p>define the sequence</p>
+                </div>
+                <div class="master-instruction">
+                    <img class="master-instruction-img" src="/assets/lander-images/MasterInstruction-02.png">
+                    <p>send it to the student</p>
+                </div>
+                <div class="master-instruction">
+                    <img class="master-instruction-img" src="/assets/lander-images/MasterInstruction-03.png">
+                    <p>watch the student in VR</p>
+                </div>
+            </div>
+            
+            <br><br><br><br>
+
+            <img class="player-img" src="/assets/lander-images/Student.png">
+            <h1>PLAYER TWO: THE STUDENT (VR)</h1>
+            <p>As the Student, you are responsible for performing the sequence of actions provided to you by the Master.</p>
+            <br>
+            <div class="instructions-container">
+                <div class="student-instruction">
+                    <img class="student-instruction-img" src="/assets/lander-images/StudentInstruction-01.png">
+                    <p>pick up the shinai</p>
+                </div>
+                <div class="student-instruction">
+                    <img class="student-instruction-img" src="/assets/lander-images/StudentInstruction-02.png">
+                    <p>receive sequence from master</p>
+                </div>
+                <div class="student-instruction">
+                    <img class="student-instruction-img" src="/assets/lander-images/StudentInstruction-03.png">
+                    <p>execute the sequence</p>
+                </div>
+            </div>
+
+            <br><br><br><br><br><br><br><br><br>
+
+            <button onclick="deviceDispatch()">BEGIN YOUR EXPERIENCE</button>
+          
+            <br><br><br><br>
+        </div>
     
     </body>
 </html>

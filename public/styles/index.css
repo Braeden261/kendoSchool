@@ -1,0 +1,80 @@
+html {
+    background-color: #353535;
+    font-family: 'Montserrat', sans-serif;
+    color: #FFFFFF;
+}
+
+#logoContainer {
+    width: 700px;
+    margin: 70px auto;
+}
+
+.title-img {
+    width: 700px;
+}
+
+#bodyDiv {
+    width: 70%;
+    margin: auto;
+    text-align: center;
+}
+
+p {
+    font-weight: 200;
+    font-size: 150%;
+}
+
+h1 {
+    font-weight: 400;
+    letter-spacing: 5px;
+    font-size: 200%;
+}
+
+.player-img {
+    height: 135px;
+    margin-top: 50px;
+}
+
+.master-instruction, .student-instruction {
+    display: inline-block;
+    margin: 0 5%;
+    
+}
+
+.master-instruction-img {
+    width: 200px;
+}
+
+button { 
+    padding: 20px;
+    margin: 10px;
+    background-color: #353535;
+    font-family: 'Montserrat', sans-serif;
+    color: #FFFFFF;
+    border: #FFFFFF 0.5px solid;
+    border-radius: 5px;
+    font-size: 150%;
+    font-weight: 200;
+}
+
+button:hover { 
+    background-color: #e74c3c;
+    border: #e74c3c 0.5px solid;
+    cursor: pointer;
+}
+
+
+/* M E D I A   Q U E R I E S */
+
+/* @media screen and (max-width:1080px)
+{
+	.master-instruction, .student-instruction {
+        display: block;
+        margin: 10% 5%;
+    }
+
+    p {
+        text-align: justify;
+        text-align-last: center;
+    }
+} */
