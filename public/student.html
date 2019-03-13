@@ -123,21 +123,17 @@
        <script>
             //Write some socket client code
             let socket = io();
-
             socket.on('connect', function(userData){
                 console.log('connected');
             });
-
             socket.on('send_instruction', function(data){
                 console.log('Sequence: ' + data.sequence); //print data in console
             });
-
             window.onload = function(){
                 let ambient = document.querySelector('#nature-sound');
                 ambient.volume = 0.05;
                 ambient.play();
             }
-
             
             
         </script>
