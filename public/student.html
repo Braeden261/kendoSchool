@@ -6,24 +6,24 @@
         <script src="/js/aframe-physics-extras.min.js"></script>
         <script src="js/super-hands.min.js"></script>
         <script src="js/event-manager-component.js"></script>
-        <script src="js/grabee-component.js"></script>
-        <script src="js/grabber-component.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <script src="/js/hit-sound-component.js"></script>
     </head>
     <body>
-
-        <a-scene physics="debug: true;
+        <a-scene loading-screen="dotsColor: #e74c3c;
+                                 backgroundColor: #353535;
+                                 enabled: true;"
+                 physics="debug: true;
                           gravity: -9.8;
-                          maxInterval: 0.0667;
+                          maxInterval: 0.02;
                           iterations: 20;
                           restitution: 0.1;"
                  shadow="type: pcfsoft;" 
                  fog="type: linear;
                       color: #e0bfb6;
                       near: 5.8;
-                      far: 45.88;">
-
+                      far: 45.88;"
+        >
             <a-assets>
                 <!-- Textures -->
                 <img id = "skymap" src = "/assets/textures/skyTexture/sky-02.png">
@@ -67,6 +67,7 @@
             <!-- User POV = ~1.8m (6ft) base height + ~0.4m raised platform) -->
             <a-entity   id="head"
                         camera
+                        wasd-controls
                         look-controls
                         position="0 1.8 1.00"
             ></a-entity>
@@ -113,15 +114,20 @@
                         obj-model="obj: #dojo-obj"
                         scale="1.0 1.0 1.0"
                         position="0 0 0"
-                        material="src:#dojo-tex; roughness:0.7; metalness:0; transparent:true; opacity:1;"
-                        shadow="cast:true; receive:true;"
+                        material="src:#dojo-tex;
+                                  roughness:0.7;
+                                  metalness:0;
+                                  transparent:true;
+                                  opacity:1;"
+                        shadow="cast:true;
+                                receive:true;"
             >
                 <!-- Environment Hit Boxes -->
                 <!--Platform-->
                 <a-entity   id="groundPlane-platform"
                             static-body
                             geometry="primitive: box;
-                                      height: 0.1;
+                                      height: 0.5;
                                       width: 3.658;
                                       depth: 3.658;"
                             collision-filter="group: environment;
@@ -131,16 +137,16 @@
                                       roughness: 0.7;
                                       metalness: 0;
                                       wireframe: true;"
-                            position="0 0.55 0"
+                            position="0 0.35 0"
                 ></a-entity>
 
                 <!--Ground-->
                 <a-entity   id="groundPlane-floor"
                             static-body
                             geometry="primitive: box;
-                                      height: 0.1;
-                                      width: 13;
-                                      depth: 23;"
+                                      height: 0.5;
+                                      width: 16.2;
+                                      depth: 25.5;"
                             collision-filter="group: environment;
                                               collidesWith: swords, objs;
                                               collisionForces: true;"
@@ -148,7 +154,7 @@
                                       roughness: 0.7;
                                       metalness: 0;
                                       wireframe: true;"
-                            position="0 -0.05 0"
+                            position="0 -0.25 0"
                 ></a-entity>
             </a-entity><!-- End of Dojo-->
             
@@ -167,7 +173,7 @@
                         position="0 1.5 -1.0"
             >
                 <a-entity   id="dummy-box"
-                            dynamic-body="mass: 100;
+                            dynamic-body="mass: 20;
                                           linearDamping: 0.02;"
                             collision-filter="group: objs;
                                               collidesWith: hands, swords, objs, environment;
@@ -198,30 +204,30 @@
                         hit-sound-component
                         hoverable
                         body="type: dynamic;
-                              mass: 200;
+                              mass: 50;
                               shape: none;"
                         shape__blade="shape: cylinder;
-                                      height: 1.05;
-                                      offset: 0 0.905 0;
+                                      height: 1.20;
+                                      offset: 0 0.105 0;
                                       radiusTop: 0.024;   
                                       radiusBottom: 0.024;
                                       numSegments: 16;"
                         shape__hilt="shape: cylinder;
                                      height: 0.02;
-                                     offset: 0 0.37 0;
-                                     radiusTop: 0.06;
-                                     radiusBottom: 0.06;
+                                     offset: 0 -0.505 0;
+                                     radiusTop: 0.11;
+                                     radiusBottom: 0.11;
                                      numSegments: 32;"
                         shape__handle="shape: cylinder;
-                                       height: 0.36;
-                                       offset: 0 0.18 0;
-                                       radiusTop: 0.02;
-                                       radiusBottom: 0.02;
+                                       height: 0.19;
+                                       offset: 0 -0.61 0;
+                                       radiusTop: 0.03;
+                                       radiusBottom: 0.03;
                                        numSegments: 8;"
                         collision-filter="group: swords;
                                           collidesWith: hands, objs, environment;
                                           collisionForces: true;"
-                        material="src:#swordMap;
+                        material="color: #bdc3c7;
                                   roughness: 0.7;
                                   metalness: 0.2;
                                   visible: true;"
@@ -229,7 +235,6 @@
             >
                 <!--Sounds-->
                 <a-entity id="hitSnd" sound="src:#hit-sound"></a-entity>
-               
             </a-entity>
 
             <!-- Sky Dome -->
