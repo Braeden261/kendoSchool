@@ -26,12 +26,15 @@
                 <!-- Textures -->
                 <img id = "skymap" src = "/assets/textures/skyTexture/sky-02.png">
                 <img id = "dojo-tex" src = "/assets/textures/dojoTexture/dojo_wallsFloors_texture-02.png">
+                <img id = "bgSword-tex" src = "/assets/textures/backgroundSwordTexture/TexturePNG/swordTexture.png">
 
                 <!-- Models -->
                 <a-asset-item id="dojo-obj" src="/assets/models/objFiles/dojo/dojo_structure.obj"></a-asset-item>
                 <a-asset-item id="windows-obj" src="/assets/models/objFiles/dojo/dojo_windows.obj"></a-asset-item>
                 <a-asset-item id="shinai-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Shinai_PROXY_v003.obj"></a-asset-item>
                 <a-asset-item id="dummy-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Dummy_PROXY_v002.obj"></a-asset-item>
+                <a-asset-item id="bgSword-obj" src="/assets/models/objFiles/bg_models/bg_sword.obj"></a-asset-item>
+
                 <audio id='hit-sound' src='/assets/sounds/effects/hitSound.mp3'></audio>
                 <audio id="nature-sound" loop>
                     <source  src="/assets/sounds/ambientSounds.mp3" type="audio/mp3">
@@ -151,7 +154,7 @@
                         obj-model="obj:#windows-obj"
                         scale="1.0 1.0 1.0"
                         position="0 0 0"
-                        material="color:##fff9de; roughness:0.7; metalness:0; transparent:true; opacity:0.85;"
+                        material="color:##fff9de; roughness:0.7; metalness:0; transparent:true; opacity:0.95;"
                         shadow="cast:true; receive:true;"
             ></a-entity>
 
@@ -223,6 +226,14 @@
                 <!--Sounds-->
                 <a-entity id="hitSnd" sound="src:#hit-sound"></a-entity>
             </a-entity>
+
+            <a-entity   id="bgSword"
+                        obj-model="obj:#bgSword-obj"
+                        scale="1.0 1.0 1.0"
+                        position="0 0.5 -4"
+                        material="src:#bgSword-tex; roughness:0.7;"
+                        shadow="cast:true; receive:true;"
+            ></a-entity>
 
             <!-- Sky Dome -->
             <a-entity   id = "sky"
