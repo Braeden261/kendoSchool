@@ -10,6 +10,12 @@
         <a-scene physics="debug: false; maxInterval: 0.01; iterations: 20; restitution: 0.1" shadow="type: pcfsoft;" fog="type: linear; color: #e0bfb6; near: 5.8; far: 45.88;">
       
             <a-assets>
+                <!-- Mixins -->
+                <a-mixin    id="lantern-light"
+                            light = "type: spot; angle: 50; distance: 5; decay: 1; penumbra: 1; color: #ffd779; intensity: 0.5;"
+                            rotation = "-90 0 0"
+                ></a-mixin>
+
                 <!-- Textures -->
                 <img id = "skymap" src = "/assets/textures/skyTexture/sky-02.png">
                 <img id = "dojo-tex" src = "/assets/textures/dojoTexture/dojo_wallsFloors_texture-02.png">
@@ -21,7 +27,7 @@
                 <a-asset-item id="shinai-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Shinai_PROXY_v003.obj"></a-asset-item>
                 <a-asset-item id="dummy-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Dummy_PROXY_v002.obj"></a-asset-item>
                 <a-asset-item id="lanternFrames-obj" src="/assets/models/objFiles/lantern/lanterns_frames_lines.obj"></a-asset-item>
-                <a-asset-item id="lanternBodies-obj" src="/assets/models/objFiles/lantern/lantern_body.obj"></a-asset-item>
+                <a-asset-item id="lanternBodies-obj" src="/assets/models/objFiles/lantern/lanterns_bodies.obj"></a-asset-item>
 
                 <!-- Audio -->
                 <audio id='hit-sound' src='/assets/sounds/effects/hitSound.mp3'></audio>
@@ -96,10 +102,59 @@
             <a-entity   id="lantern-bodies"
                         obj-model="obj:#lanternBodies-obj"
                         scale="1.0 1.0 1.0"
-                        position="-4.915 2.510 -9.993"
-                        material="src:#lantern-tex; roughness:0.7; metalness:0; transparent:true; opacity:0.1;"
+                        position="0 0 0"
+                        material="src:#lantern-tex; roughness:0.7; metalness:0; transparent:true; opacity:0.95; emissive:#ffe3a4; emissiveIntensity:0.3;"
                         shadow="cast:true; receive:true;"
-                        light="type:point; intensity:0.3; color:#ffefca;"
+            ></a-entity>
+
+            <a-entity   id="lanternLight"
+                        mixin="lantern-light"
+                        position="-4.915 2.52 -10.0"
+            ></a-entity>
+
+            <a-entity   id="lanternLight"
+                        mixin="lantern-light"
+                        position="-4.915 2.52 -5.0"
+            ></a-entity>
+
+            <a-entity   id="lanternLight"
+                        mixin="lantern-light"
+                        position="-4.915 2.52 0.0"
+            ></a-entity>
+
+            <a-entity   id="lanternLight"
+                        mixin="lantern-light"
+                        position="-4.915 2.52 5.01"
+            ></a-entity>
+
+            <a-entity   id="lanternLight"
+                        mixin="lantern-light"
+                        position="-4.915 2.52 10.01"
+            ></a-entity>
+
+            <a-entity   id="lanternLight"
+                        mixin="lantern-light"
+                        position="4.91 2.52 -10.01"
+            ></a-entity>
+
+            <a-entity   id="lanternLight"
+                        mixin="lantern-light"
+                        position="4.91 2.52 -5.002"
+            ></a-entity>
+
+            <a-entity   id="lanternLight"
+                        mixin="lantern-light"
+                        position="4.91 2.52 -0.001"
+            ></a-entity>
+
+            <a-entity   id="lanternLight"
+                        mixin="lantern-light"
+                        position="4.91 2.52 4.997"
+            ></a-entity>
+
+            <a-entity   id="lanternLight"
+                        mixin="lantern-light"
+                        position="4.91 2.52 10.0"
             ></a-entity>
             
             <a-entity   id="dummyBox"
