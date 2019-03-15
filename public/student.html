@@ -1,105 +1,375 @@
 <html>
     <head>
-        <title>Kendo School</title>
+        <title>Kendo Gakko</title>
         <script src="/js/aframe-v0.8.2.min.js"></script>
         <script src="/js/aframe-physics-system.min.js"></script>
+        <script src="/js/aframe-physics-extras.min.js"></script>
+        <script src="js/super-hands.min.js"></script>
+        <script src="js/event-manager-component.js"></script>
         <script src="/socket.io/socket.io.js"></script>
-        
+        <script src="/js/hit-sound-component.js"></script>
     </head>
     <body>
-        <a-scene physics="debug: false; maxInterval: 0.01; iterations: 20; restitution: 0.1">
-      
+        <a-scene loading-screen="dotsColor: #e74c3c;
+                                 backgroundColor: #353535;
+                                 enabled: true;"
+                 physics="debug: false;
+                          gravity: -9;
+                          maxInterval: 0.02;
+                          iterations: 20;
+                          restitution: 0.1;"
+                 shadow="type: pcfsoft;" 
+                 fog="type: linear;
+                      color: #e0bfb6;
+                      near: 5.8;
+                      far: 45.88;"
+        >
             <a-assets>
-                <!-- Textures -->
-                <img id = "skymap" src = "/assets/textures/nightSky.png">
+                <!-- Mixins -->
+                <a-mixin    id="lantern-light"
+                            light = "type: spot; angle: 50; distance: 5; decay: 1; penumbra: 1; color: #ffd779; intensity: 0.5;"
+                            rotation = "-90 0 0"
+                ></a-mixin>
 
-                <!-- Proxy Models -->
-                <a-asset-item id="dojo-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Dojo_PROXY_v003.obj"></a-asset-item>
-                <a-asset-item id="shinai-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Shinai_PROXY_v003.obj"></a-asset-item>
-                <a-asset-item id="dummy-obj" src="/assets/models/proxyModels/proxyModels_obj/KendoGakko_Dummy_PROXY_v002.obj"></a-asset-item>
+                <!-- Textures -->
+                <img id = "skymap" src = "/assets/textures/skyTexture/sky-02.png">
+                <img id = "dojo-tex" src = "/assets/textures/dojoTexture/dojo_wallsFloors_texture-02.png">
+                <img id = "dummyMap" src = "/assets/textures/dummyTexture/TexturePNG/dummyTexture.png">
+                <img id = "shinai-tex" src = "/assets/textures/swordTexture/TexturePNG/swordTexture.png">
+
+                <img id = "lantern-tex" src = "/assets/textures/lanternTexture/lantern_tex.png">
+                <img id = "bgSword-tex" src = "/assets/textures/backgroundSwordTexture/TexturePNG/swordTexture.png">
+
+
+                <!-- Models -->
+                <a-asset-item id="dojo-obj" src="/assets/models/objFiles/dojo/dojo_structure.obj"></a-asset-item>
+                <a-asset-item id="windows-obj" src="/assets/models/objFiles/dojo/dojo_windows.obj"></a-asset-item>
+
+
+                <a-asset-item id="shinai-obj" src="/assets/models/objFiles/sword/sword_v003.obj"></a-asset-item>
+                <a-asset-item id="dummy-obj" src="/assets/models/objFiles/dummy/trainingDummy.obj"></a-asset-item>
+
+                <a-asset-item id="lanternFrames-obj" src="/assets/models/objFiles/lantern/lanterns_frames_lines.obj"></a-asset-item>
+                <a-asset-item id="lanternBodies-obj" src="/assets/models/objFiles/lantern/lanterns_bodies.obj"></a-asset-item>
+
+                <a-asset-item id="bgSword-obj" src="/assets/models/objFiles/bg_models/bg_sword.obj"></a-asset-item>
+
+
+
+                <audio id='hit-sound' src='/assets/sounds/effects/hitSound.mp3'></audio>
+                <audio id="nature-sound" loop>
+                    <source  src="/assets/sounds/ambientSounds.mp3" type="audio/mp3">
+                </audio>
+
+                <!-- Mixins -->
+                <a-mixin id="controller"
+                         super-hands="colliderEvent: collisions;
+                                      colliderEventProperty: els;
+                                      colliderEndEvent: collisions;
+                                      colliderEndEventProperty: clearedEls;
+                                      grabStartButtons: gripdown, pointdown, triggerdown;
+                                      grabEndButtons: gripup, pointup, triggerup"
+                         static-body="shape: none;"
+                         shape__palm="shape: box;
+                                      halfExtents: 0.05 0.025 0.02;
+                                      offset: 0 -0.015 0.025;"
+                         physics-collider
+                         collision-filter="group: hands;
+                                           collidesWith: swords, objs;
+                                           collisionForces: false;"
+                ></a-mixin>
+                
             </a-assets>
 
-            <!-- VR hand-controls (FireFox Only) -->
-            <a-entity   id="leftHand"
-                        hand-controls="left"
+            <!-- C A M E R A   &   V R   H A N D S -->
+            <!--user POV = ~1.8m (6ft) base height + ~0.4m raised platform)-->
+            <a-entity   id="head"
+                        camera
+                        look-controls
+                        position="0 1.8 1.00"
             ></a-entity>
-
-            <a-entity   id="rightHand"
+            
+            <!-- Right Hand Controller-->
+            <a-entity   id="handRight"
                         hand-controls="right"
-            >
-                <a-entity   id="rhBox"
-                            static-body
-                            geometry="primitive: box; height: 1; width: 0.02; depth: 0.02"
-                            material="color: #e74c3c; visible: true; wireframe: false"
-                            position="-0.4 -0.02 0.02"
-                            rotation="0 0 90"
-                ></a-entity>
-            </a-entity>
-
-
-            <!-- CAMERA (User POV, 6ft tall person standing on raised platform) -->
-            <a-entity camera look-controls position="0 2.2 1.05" ></a-entity>
-
-            <!-- Ground Planes -->
-            <a-plane static-body position="0 0.6 0" rotation="90 0 0" width="3.658" height="3.658"></a-plane>
-            <a-plane static-body position="0 0 0" rotation="90 0 0" width="12.192" height="21.336"></a-plane>
-            
-            <!-- Lights -->
-            <a-entity   light = "type: point; intensity: 0.8; color: #bbb; castShadow: true; shadowBias: -0.000001; shadowMapWidth: 1024; shadowMapHeight: 1024;"
-                        position = "0 2.1 0"
+                        mixin="controller"
             ></a-entity>
-            <a-entity   light = "type: ambient; intensity: 0.06; color: #bbb;"></a-entity>
+
+            <!-- Left Hand Controller-->
+            <a-entity   id="handLeft"
+                        hand-controls="left"
+                        mixin="controller"
+            ></a-entity>
             
-            <!-- Proxy Models -->
+            <!-- L I G H T S -->
+            <a-entity   light = "type: spot;
+                                 intensity: 0.5;
+                                 angle: 60;
+                                 penumbra: 0.9;
+                                 color: #fff8e8;
+                                 castShadow: true;
+                                 shadowBias: -0.000001;
+                                 shadowMapWidth: 2048;
+                                 shadowMapHeight: 2048;"
+                        position = "0 7.33 0"
+                        rotation = "-90 0 0"
+            ></a-entity>
+            <a-entity   light = "type: ambient;
+                                 intensity: 0.23;
+                                 color: #f86605;"></a-entity>
+            <a-entity   light = "type: spot;
+                                 angle: 25;
+                                 penumbra: 1;
+                                 color: #ffefca"
+                        position = "0 4.95 -14.27"
+                        rotation = "-90 0 0"
+            ></a-entity>
+            
+            <!-- M O D E L S -->
+            <!-- dojo -->
             <a-entity   id="dojo"
-                        obj-model="obj:#dojo-obj"
+                        obj-model="obj: #dojo-obj"
                         scale="1.0 1.0 1.0"
                         position="0 0 0"
-                        material="color:#bdc3c7; roughness:0.7; metalness:0;"
+                        material="src:#dojo-tex;
+                                  roughness:0.7;
+                                  metalness:0;
+                                  transparent:true;
+                                  opacity:1;"
+                        shadow="cast:true;
+                                receive:true;"
+            >
+                <!-- environment hit boxes -->
+                <!--platform-->
+                <a-entity   id="groundPlane-platform"
+                            static-body
+                            geometry="primitive: box;
+                                      height: 0.5;
+                                      width: 3.658;
+                                      depth: 3.658;"
+                            collision-filter="group: environment;
+                                              collidesWith: swords, objs;
+                                              collisionForces: true;"
+                            material="color: #bdc3c7;
+                                      roughness: 0.7;
+                                      metalness: 0;
+                                      visible: false;
+                                      wireframe: false;"
+                            position="0 0.35 0"
+                ></a-entity>
+
+                <!--ground-->
+                <a-entity   id="groundPlane-floor"
+                            static-body
+                            geometry="primitive: box;
+                                      height: 0.5;
+                                      width: 16.2;
+                                      depth: 25.5;"
+                            collision-filter="group: environment;
+                                              collidesWith: swords, objs;
+                                              collisionForces: true;"
+                            material="color: #bdc3c7;
+                                      roughness: 0.7;
+                                      metalness: 0;
+                                      visible: false;
+                                      wireframe: false;"
+                            position="0 -0.25 0"
+                ></a-entity>
+            </a-entity><!-- end of dojo-->
+            
+            <a-entity   id="windows"
+                        obj-model="obj:#windows-obj"
+                        scale="1.0 1.0 1.0"
+                        position="0 0 0"
+                        material="color: #fff9de;
+                                  roughness :0.7;
+                                  metalness: 0;
+                                  transparent: true;
+                                  opacity: 0.85;"
+                        shadow="cast: true;
+                                receive: true;"
+            ></a-entity>
+
+            <!--Lanterns-->
+            <a-entity   id="lantern-frames"
+                        obj-model="obj:#lanternFrames-obj"
+                        scale="1.0 1.0 1.0"
+                        position="0 0 0"
+                        material="src:#lantern-tex; roughness:0.7; metalness:0; transparent:true; opacity:1;"
                         shadow="cast:true; receive:true;"
             ></a-entity>
-            
-            <a-entity   id="dummyBox"
-                        physics="restitution: 0;"
-                        static-body
-                        geometry="primitive:box; height:1.7; width:0.45; depth:0.45;"
-                        position="0 1.45 -1.0"
-                        material="color:#FFFFFF; visible:false; wireframe:true;">
-                <a-entity   id="dummy"
-                            obj-model="obj:#dummy-obj"
-                            position="0 -0.85 -0.21"
-                            scale="1.0 1.0 1.0"
-                            rotation="0 90 0"
-                            material="color:#bdc3c7; roughness:0.7; metalness:0;"
-                ></a-entity>
+
+            <a-entity   id="lantern-bodies"
+                        obj-model="obj:#lanternBodies-obj"
+                        scale="1.0 1.0 1.0"
+                        position="0 0 0"
+                        material="src:#lantern-tex; roughness:0.7; metalness:0; transparent:true; opacity:0.95; emissive:#ffe3a4; emissiveIntensity:0.3;"
+                        shadow="cast:true; receive:true;"
+            ></a-entity>
+
+            <a-entity   id="lanternLight"
+                        mixin="lantern-light"
+                        position="-4.915 2.52 -10.0"
+            ></a-entity>
+
+            <a-entity   id="lanternLight"
+                        mixin="lantern-light"
+                        position="-4.915 2.52 -5.0"
+            ></a-entity>
+
+            <a-entity   id="lanternLight"
+                        mixin="lantern-light"
+                        position="-4.915 2.52 0.0"
+            ></a-entity>
+
+            <a-entity   id="lanternLight"
+                        mixin="lantern-light"
+                        position="-4.915 2.52 5.01"
+            ></a-entity>
+
+            <a-entity   id="lanternLight"
+                        mixin="lantern-light"
+                        position="-4.915 2.52 10.01"
+            ></a-entity>
+
+            <a-entity   id="lanternLight"
+                        mixin="lantern-light"
+                        position="4.91 2.52 -10.01"
+            ></a-entity>
+
+            <a-entity   id="lanternLight"
+                        mixin="lantern-light"
+                        position="4.91 2.52 -5.002"
+            ></a-entity>
+
+            <a-entity   id="lanternLight"
+                        mixin="lantern-light"
+                        position="4.91 2.52 -0.001"
+            ></a-entity>
+
+            <a-entity   id="lanternLight"
+                        mixin="lantern-light"
+                        position="4.91 2.52 4.997"
+            ></a-entity>
+
+            <a-entity   id="lanternLight"
+                        mixin="lantern-light"
+                        position="4.91 2.52 10.0"
+            ></a-entity>
+
+            <!--dummy-->
+            <a-entity   id="dummy-rig"
+                        position="0 1.5 -1.0"
+            >
+                <a-entity   id="dummy-box"
+                            body="type: dynamic;
+                                  mass: 80;
+                                  linearDamping: 0.02;
+                                  shape: none;"
+                            collision-filter="group: objs;
+                                              collidesWith: hands, swords, objs, environment;
+                                              collisionForces: true;"
+                            shape__core="shape: cylinder;
+                                         height: 1.64;
+                                         radiusTop: 0.12;
+                                         radiusBottom: 0.12;
+                                         offset: 0 0.04 0;
+                                         numSegments: 16;"
+                            shape__face="shape: box;
+                                         height: 0.4;
+                                         halfExtents: 0.04 0.04 0.14;
+                                         offset: -0.01 0.75 0.255;"
+                            shape__arms="shape: box;
+                                         height: 0.4;
+                                         halfExtents: 0.54 0.05 0.05;
+                                         offset: 0 0.4 -0.02;"
+                            shape__leg="shape: box;
+                                         halfExtents: 0.03 0.3 0.2;
+                                         offset: 0 -0.5 0.3;"
+                            shape__base="shape: box;
+                                         halfExtents: 0.3 0.016 0.3;
+                                         offset: 0 -0.84 0;"
+                            shape__foot="shape: box;
+                                         halfExtents: 0.17 0.016 0.17;
+                                         offset: 0 -0.84 0.623;"
+                >
+                    <a-entity   id="dummy"
+                                obj-model="obj:#dummy-obj"
+                                position="0 -0.85 0"
+                                scale="1.0 1.0 1.0"
+                                rotation="0 90 0"
+                                material="src: #dummyMap;
+                                          roughness: 0.7;
+                                          metalness: 0;"
+                    ></a-entity>
+                </a-entity>
             </a-entity>
             
-            <a-entity   id="shinaiBox"
-                        dynamic-body
-                        geometry="primitive:cylinder; height:1.42; radius:0.05; segmentsRadial: 12; segmentsHeight:1;"
-                        position="0 2 0.250"
-                        rotation="0 0 -90"
-                        material="color:#FFFFFF; visible:false; wireframe:true;">>
-                <a-entity   id="shinai"
-                            obj-model="obj:#shinai-obj"
-                            scale="1.0 1.0 1.0"
-                            position="0.754 -0.70 0"
-                            rotation="0 0 0"
-                            material="color:#bdc3c7; roughness:0.7; metalness:0;"
-                ></a-entity>
+            <!--shinai-->
+            <a-entity   id="shinai"
+                        obj-model="obj:#shinai-obj"
+                        hit-sound-component
+                        hoverable
+                        body="type: dynamic;
+                              mass: 100;
+                              shape: none;"
+                        shape__blade="shape: cylinder;
+                                      height: 1.05;
+                                      offset: 0 0.12 0;
+                                      radiusTop: 0.02;   
+                                      radiusBottom: 0.016;
+                                      numSegments: 16;"
+                        shape__guard="shape: cylinder;
+                                      height: 0.017;
+                                      offset: 0 -0.399 0;
+                                      radiusTop: 0.05;
+                                      radiusBottom: 0.05;
+                                      numSegments: 24;"
+                        shape__handle="shape: cylinder;
+                                       height: 0.232;
+                                       offset: 0 -0.528 0;
+                                       radiusTop: 0.018;
+                                       radiusBottom: 0.018;
+                                       numSegments: 8;"
+                        collision-filter="group: swords;
+                                          collidesWith: hands, objs, environment;
+                                          collisionForces: true;"
+                        material="src: #shinai-tex;
+                                  roughness: 0.7;
+                                  metalness: 0.2;
+                                  visible: true;"
+                        position="0 2 0"
+            >
+                <!--sounds-->
+                <a-entity id="hitSnd" sound="src:#hit-sound"></a-entity>
             </a-entity>
+
+            <a-entity   id="bgSword"
+                        obj-model="obj:#bgSword-obj"
+                        scale="1.0 1.0 1.0"
+                        position="0 0.5 -4"
+                        material="src:#bgSword-tex; roughness:0.7;"
+                        shadow="cast:true; receive:true;"
+            ></a-entity>
 
             <!-- Sky Dome -->
             <a-entity   id = "sky"
-                        geometry = "primitive: sphere; radius: 500;"
-                        material = "shader: flat; src: #skymap; side: back; height: 2048; width: 2048"
+                        geometry = "primitive: sphere;
+                                    radius: 500;"
+                        material = "shader: flat;
+                                    src: #skymap;
+                                    side: back;
+                                    height: 2048;
+                                    width: 2048;
+                                    fog: false;"
             ></a-entity>
             
+            <!-- Event Handler -->
+            <a-entity   id="Chandler"
+                        event-manager
+            ></a-entity>
        </a-scene>
-
-
        <script>
-            //Write some socket client code
             let socket = io();
 
             socket.on('connect', function(userData){
@@ -107,9 +377,14 @@
             });
 
             socket.on('send_instruction', function(data){
-                console.log('Sequence: ' + data.sequence); //print data in console
+                console.log('Sequence: ' + data.sequence);
             });
-        </script>
 
+            window.onload = function(){
+                let ambient = document.querySelector('#nature-sound');
+                ambient.volume = 0.01;
+                ambient.play();
+            }
+        </script>
     </body>
 </html>
