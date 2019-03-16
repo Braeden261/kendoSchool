@@ -37,10 +37,8 @@
         function send(){
             socket.emit('send');
             console.log('send_button');
-            window.location.href='sequence_results.html';
+            window.location.href='connecting.html';
         }
-
-        
 
         //built in event
         socket.on('connect', function(userData){

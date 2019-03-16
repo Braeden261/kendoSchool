@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <link href="style.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400" rel="stylesheet">
-    <script type = "text/javascript">
-        /*
-        GO AND GRAB RESULTS AND UPDATE BORDER COLOUR OF ICONS
-        */
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+    
+        let socket = io();
+
+        socket.on('complete', function(){
+            window.location.href='performance.html';
+        });
+
     </script>
 </head>
 
