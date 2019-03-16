@@ -56,36 +56,17 @@ socketIO.on('connection', function(socket){
     });
 
     //Instructions
-    socket.on('red', function(){    
-        if (numSeq < 10){
-            sequence[numSeq] = "1";
-            console.log('1_button');
-            numSeq++;
-            }
-            else{
-                console.log('sequence_full');
-            }
-    });
-    socket.on('green', function(){
-        if (numSeq < 10){
-            sequence[numSeq] = "2";
-            console.log('1_button');
-            numSeq++;
-            }
-            else{
-                console.log('sequence_full');
-            }
-    });
-    socket.on('blue', function(){
-        if (numSeq < 10){
-            sequence[numSeq] = "3";
-            console.log('1_button');
-            numSeq++;
-            }
-            else{
-                console.log('sequence_full');
-            }
-    });
+    for (let i = 1; i < 9; i++){
+        socket.on(i, function(){    
+            if (numSeq < 10){
+                sequence[numSeq] = i;
+                numSeq++;
+                }
+                else{
+                    console.log('sequence_full');
+                }
+        });
+    }
 
     socket.on('send', function(){
         console.log('send event detected');
