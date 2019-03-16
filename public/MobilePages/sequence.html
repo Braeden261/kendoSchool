@@ -10,6 +10,7 @@
         let socket = io();
 
         window.onload = function () {
+            socket.emit('clear');
             let table = document.getElementById("tableID");
             console.log(table)
             if (table != null) {
@@ -32,16 +33,14 @@
                 } 
             }
         };
-        
+
         function send(){
-            window.location.href='sequence_results.html'
             socket.emit('send');
             console.log('send_button');
+            window.location.href='sequence_results.html';
         }
 
-
         
-
 
         //built in event
         socket.on('connect', function(userData){
@@ -49,7 +48,7 @@
         });
 
         
-        </script>
+    </script>
 </head>
 
 <body>
@@ -57,10 +56,10 @@
         <img src="images/logokendo.png" class="small-image"> 
     </div>
     <div class="right-icon">
-        <img  id="send" src="images/sendicon.png" class="sequence-image" onclick="send()" class="continue"> 
+        <img  src="images/sendicon.png" class="sequence-image" onclick="send()" class="continue"> 
     </div>
     <div class="bottom-left">
-        <img  id="clear" src="images/clearicon.png" class="sequence-image">
+        <img src="images/clearicon.png" class="sequence-image" onclick="socket.emit('clear')">
     </div>
     <div class="center-screen">
         <h2> SELECT THE DESIRED SEQUENCE FOR YOUR STUDENT </h2>
