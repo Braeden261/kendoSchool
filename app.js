@@ -56,17 +56,80 @@ socketIO.on('connection', function(socket){
     });
 
     //Instructions
-    for (let i = 1; i < 9; i++){
-        socket.on(i, function(){    
-            if (numSeq < 10){
-                sequence[numSeq] = i;
-                numSeq++;
-                }
-                else{
-                    console.log('sequence_full');
-                }
-        });
-    }
+
+    socket.on('leftArm', function(){    
+        if (numSeq < 10){
+            sequence[numSeq] = "1";
+            numSeq++;
+            }
+            else{
+                console.log('sequence_full');
+            }
+    });
+    socket.on('head', function(){
+        if (numSeq < 10){
+            sequence[numSeq] = "2";
+            numSeq++;
+            }
+            else{
+                console.log('sequence_full');
+            }
+    });
+    socket.on('ribCage', function(){
+        if (numSeq < 10){
+            sequence[numSeq] = "3";
+            numSeq++;
+            }
+            else{
+                console.log('sequence_full');
+            }
+    });
+    socket.on('rightArm', function(){
+        if (numSeq < 10){
+            sequence[numSeq] = "4";
+            numSeq++;
+            }
+            else{
+                console.log('sequence_full');
+            }
+    });
+    
+    socket.on('leftLeg', function(){
+        if (numSeq < 10){
+            sequence[numSeq] = "5";
+            numSeq++;
+            }
+            else{
+                console.log('sequence_full');
+            }
+    });
+    socket.on('pelvis', function(){
+        if (numSeq < 10){
+            sequence[numSeq] = "6";
+            numSeq++;
+            }
+            else{
+                console.log('sequence_full');
+            }
+    });
+    socket.on('abdomen', function(){
+        if (numSeq < 10){
+            sequence[numSeq] = "7";
+            numSeq++;
+            }
+            else{
+                console.log('sequence_full');
+            }
+    });
+    socket.on('rightLeg', function(){
+        if (numSeq < 10){
+            sequence[numSeq] = "8";
+            numSeq++;
+            }
+            else{
+                console.log('sequence_full');
+            }
+    });
 
     socket.on('send', function(){
         console.log('send event detected');
