@@ -5,7 +5,7 @@
         <title>Student Test Page</title>
     </head>
     <body>
-        <h1>Press the 3 numbered buttons to match the incoming sequence</h1>
+        <h1>Test Input Page</h1>
         
         <button id="leftArm" style="background-color: red; color: whitesmoke;">Left Arm</button>
         <button id="head" style="background-color: green; color: whitesmoke;">Head</button>
@@ -20,6 +20,11 @@
         </div>
         <div>
             <button id="bow" style="background-color: blue; color: whitesmoke;">Bow</button>
+        </div>
+
+        <div>
+            <button id="continue" style="background-color: blue; color: whitesmoke;">Continue</button>
+            <button id="repeat" style="background-color: blue; color: whitesmoke;">Repeat</button>
         </div>
         <script src="/socket.io/socket.io.js"></script>
         <script>
@@ -68,6 +73,14 @@
             document.querySelector('#bow').addEventListener('click', function(){
                 console.log('bow');
                 socket.emit('bow');
+            });
+            document.querySelector('#continue').addEventListener('click', function(){
+                console.log('continue');
+                socket.emit('continue');
+            });
+            document.querySelector('#repeat').addEventListener('click', function(){
+                console.log('repeat');
+                socket.emit('repeat');
             });
 
 

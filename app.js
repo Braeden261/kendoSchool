@@ -178,14 +178,7 @@ socketIO.on('connection', function(socket){
             if(numResponseSeq >= prevNumSeq){
                 console.log('complete');
                 socketIO.emit('complete');
-                sequence = [];
-                numSeq = 0;
 
-                prevSeq = [];
-                prevNumSeq = 0;
-
-                responseSeq = [];
-                numResponseSeq = 0;
                 start = false;
 
             }
@@ -209,14 +202,7 @@ socketIO.on('connection', function(socket){
             if(numResponseSeq >= prevNumSeq){
                 console.log('complete');
                 socketIO.emit('complete');
-                sequence = [];
-                numSeq = 0;
 
-                prevSeq = [];
-                prevNumSeq = 0;
-
-                responseSeq = [];
-                numResponseSeq = 0;
                 start = false;
 
             }
@@ -240,14 +226,7 @@ socketIO.on('connection', function(socket){
             if(numResponseSeq >= prevNumSeq){
                 console.log('complete');
                 socketIO.emit('complete');
-                sequence = [];
-                numSeq = 0;
 
-                prevSeq = [];
-                prevNumSeq = 0;
-
-                responseSeq = [];
-                numResponseSeq = 0;
                 start = false;
 
             }
@@ -271,14 +250,7 @@ socketIO.on('connection', function(socket){
             if(numResponseSeq >= prevNumSeq){
                 console.log('complete');
                 socketIO.emit('complete');
-                sequence = [];
-                numSeq = 0;
 
-                prevSeq = [];
-                prevNumSeq = 0;
-
-                responseSeq = [];
-                numResponseSeq = 0;
                 start = false;
 
             }
@@ -303,14 +275,7 @@ socketIO.on('connection', function(socket){
             if(numResponseSeq >= prevNumSeq){
                 console.log('complete');
                 socketIO.emit('complete');
-                sequence = [];
-                numSeq = 0;
 
-                prevSeq = [];
-                prevNumSeq = 0;
-
-                responseSeq = [];
-                numResponseSeq = 0;
                 start = false;
 
             }
@@ -334,14 +299,7 @@ socketIO.on('connection', function(socket){
             if(numResponseSeq >= prevNumSeq){
                 console.log('complete');
                 socketIO.emit('complete');
-                sequence = [];
-                numSeq = 0;
 
-                prevSeq = [];
-                prevNumSeq = 0;
-
-                responseSeq = [];
-                numResponseSeq = 0;
                 start = false;
 
             }
@@ -365,14 +323,7 @@ socketIO.on('connection', function(socket){
             if(numResponseSeq >= prevNumSeq){
                 console.log('complete');
                 socketIO.emit('complete');
-                sequence = [];
-                numSeq = 0;
 
-                prevSeq = [];
-                prevNumSeq = 0;
-
-                responseSeq = [];
-                numResponseSeq = 0;
                 start = false;
 
             }
@@ -396,21 +347,26 @@ socketIO.on('connection', function(socket){
             if(numResponseSeq >= prevNumSeq){
                 console.log('complete');
                 socketIO.emit('complete');
-                sequence = [];
-                numSeq = 0;
-
-                prevSeq = [];
-                prevNumSeq = 0;
-
-                responseSeq = [];
-                numResponseSeq = 0;
                 start = false;
 
             }
         }
     });
     
-    
+    socket.on('repeat', function(){
+        responseSeq = [];
+        numResponseSeq = 0;
+        start=false;
+        socketIO.emit('seqRepeat');
+    });
+
+    socket.on('continue', function(){
+        responseSeq = [];
+        numResponseSeq = 0;
+        start=false;
+        socketIO.emit('seqContinue');
+    });
+
     
     socket.on('bow',function(){
         if(start == false){
@@ -422,6 +378,17 @@ socketIO.on('connection', function(socket){
     });
 
 });
+
+function clearLists(){
+    sequence = [];
+    numSeq = 0;
+
+    prevSeq = [];
+    prevNumSeq = 0;
+
+    responseSeq = [];
+    numResponseSeq = 0;
+}
 
 
 server.listen(LISTEN_PORT);
