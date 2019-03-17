@@ -11,20 +11,24 @@
         let passed = 0;
         let failed = 0;
         
+
+        window.onload = function () {
+            console.log('percent');
+            socket.emit('percent');
+        }
+
         socket.on('seqContinue',function(){
             window.location.href='sequence.html';
         });
 
-        window.onload = function () {
-            socket.emit('percent');
-        }
 
         socket.on('seqRepeat',function(){
             window.location.href='waiting.html';
         });
-        socket.on('ResPercent', function(data){
-            for (let i =0; i < data.resp[1]; i++){
-                if (data.resp[0][i] == true){
+        socket.on('resPercent', function(data){
+            console.log('percentCheck');
+            for (let i =0; i < data.resp.numResponseSeq; i++){
+                if (data.resp.responseSeq[i] == true){
                     passed++;
                 }
                 else{
