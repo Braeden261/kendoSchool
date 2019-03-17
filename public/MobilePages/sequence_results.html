@@ -9,8 +9,16 @@
     
         let socket = io();
 
+        let responseArray = [];
+        let currPoint = 0;
+
         socket.on('complete', function(){
             window.location.href='performance.html';
+        });
+
+        socket.on('response', function(data){
+            currPoint= data[1];
+            responseArray[currPoint] = data[0];
         });
 
     </script>
