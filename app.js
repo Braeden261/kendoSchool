@@ -46,7 +46,8 @@ let prevNumSeq = 0;
 let responseSeq = [];
 let numResponseSeq = 0;
 
-let response = [];
+let part1 = false;
+let start = false;
 
 socketIO.on('connection', function(socket){
     console.log(socket.id + ' connected')
@@ -55,56 +56,107 @@ socketIO.on('connection', function(socket){
         console.log(socket.id + ' disconnected');
     });
 
-    //Instructions
-    socket.on('red', function(){    
+    //Send Sequence
+    //Row 1
+    socket.on('leftArm', function(){    
         if (numSeq < 10){
             sequence[numSeq] = "1";
-            console.log('1_button');
             numSeq++;
             }
             else{
                 console.log('sequence_full');
             }
     });
-    socket.on('green', function(){
+    socket.on('head', function(){
         if (numSeq < 10){
             sequence[numSeq] = "2";
-            console.log('1_button');
             numSeq++;
             }
             else{
                 console.log('sequence_full');
             }
     });
-    socket.on('blue', function(){
+    socket.on('ribCage', function(){
         if (numSeq < 10){
             sequence[numSeq] = "3";
-            console.log('1_button');
             numSeq++;
             }
             else{
                 console.log('sequence_full');
             }
     });
-
-    socket.on('send', function(){
-        console.log('send event detected');
-        console.log('Sequence: ' + sequence);
-
-        socketIO.emit('send_instruction', {sequence});
-        prevSeq = sequence;
-        prevNumSeq = numSeq;
-        sequence = [];
-        
-        numSeq = 0;
-        response = [];
-
-        responseSeq = [];
-        numResponseSeq = 0;
-
-        
+    socket.on('rightArm', function(){
+        if (numSeq < 10){
+            sequence[numSeq] = "4";
+            numSeq++;
+            }
+            else{
+                console.log('sequence_full');
+            }
     });
+    //Row 2
+    socket.on('leftLeg', function(){
+        if (numSeq < 10){
+            sequence[numSeq] = "5";
+            numSeq++;
+            }
+            else{
+                console.log('sequence_full');
+            }
+    });
+    socket.on('pelvis', function(){
+        if (numSeq < 10){
+            sequence[numSeq] = "6";
+            numSeq++;
+            }
+            else{
+                console.log('sequence_full');
+            }
+    });
+    socket.on('abdomen', function(){
+        if (numSeq < 10){
+            sequence[numSeq] = "7";
+            numSeq++;
+            }
+            else{
+                console.log('sequence_full');
+            }
+    });
+    socket.on('rightLeg', function(){
+        if (numSeq < 10){
+            sequence[numSeq] = "8";
+            numSeq++;
+            }
+            else{
+                console.log('sequence_full');
+            }
+    });
+    //Send
+    socket.on('send', function(){
+        if (numSeq != 0){
+            console.log(numSeq);
+            socketIO.emit('send');
+            console.log('send event detected');
+            console.log('Sequence: ' + sequence);
+            socketIO.emit('send_instruction', {sequence});
+            prevSeq = sequence;
+            prevNumSeq = numSeq;
+            sequence = [];
+            
+            numSeq = 0;
+            response = [];
 
+            responseSeq = [];
+            numResponseSeq = 0;
+
+            console.log("SendSize:", prevNumSeq);
+            
+        }
+        else{
+            console.log("Not Enough Items in Sequence");
+        }
+    });
+    //Clear
     socket.on('clear', function(){
         console.log('clear event detected');
         sequence = [];
@@ -113,62 +165,261 @@ socketIO.on('connection', function(socket){
 
 
     //Response
+    //Row 1
+    
+    socket.on('leftArm_response', function(){   
+        if (start == true){   
+            if (numResponseSeq < prevNumSeq){
+                if (prevSeq[numResponseSeq] == 1){
+                    responseSeq[numResponseSeq] = true;
+                    part1 = true;
+                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    numResponseSeq++;
+                }
+                else{
+                    responseSeq[numResponseSeq] = false;
+                    part1 = false;
+                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    numResponseSeq++;
+                }
+                console.log("ResponseSize:", numResponseSeq);
+            }
+            if(numResponseSeq >= prevNumSeq){
+                console.log('complete');
+                socketIO.emit('complete');
+                //socketIO.emit('percResp',{responseSeq,numResponseSeq});
+                start = false;
 
-    socket.on('redResponse', function(){    
-        if (numResponseSeq < prevNumSeq){
-            responseSeq[numResponseSeq] = "1";
-            console.log('1_button');
-            numResponseSeq++;
-            }
-            else{
-                console.log('response_full');
-            }
-    });
-    socket.on('greenResponse', function(){
-        if (numResponseSeq < prevNumSeq){
-            responseSeq[numResponseSeq] = "2";
-            console.log('2_button');
-            numResponseSeq++;
-            }
-            else{
-                console.log('response_full');
-            }
-    });
-    socket.on('blueResponse', function(){
-        if (numResponseSeq < prevNumSeq){
-            responseSeq[numResponseSeq] = "3";
-            console.log('3_button');
-            numResponseSeq++;
-            }
-            else{
-                console.log('response_full');
-            }
-    });
-
-    socket.on('acceptResponse', function(){
-        
-        for (i = 0; i < numResponseSeq; i++){
-            if (prevSeq[i] === responseSeq[i]){
-                response[i] = true;
-            }
-            else{
-                response[i] = false;
             }
         }
-        if (numResponseSeq < prevNumSeq){
-            for(i = numResponseSeq; i < prevNumSeq; i++){
-                response[i] = false;
+    });
+    socket.on('head_response', function(){
+        if (start == true){      
+            if (numResponseSeq < prevNumSeq){
+                if (prevSeq[numResponseSeq] == 2){
+                    responseSeq[numResponseSeq] = true;
+                    part1 = true;
+                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    numResponseSeq++;
+                }
+                else{
+                    responseSeq[numResponseSeq] = false;
+                    part1 = false;
+                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    numResponseSeq++;
+                }
+                console.log("ResponseSize:", numResponseSeq);
+            }
+            if(numResponseSeq >= prevNumSeq){
+                console.log('complete');
+                socketIO.emit('complete');
+                //socketIO.emit('percResp',{responseSeq,numResponseSeq});
+                start = false;
+
             }
         }
-        socketIO.emit('send_response', {response});
+    });
+    socket.on('ribCage_response', function(){ 
+        if (start == true){     
+            if (numResponseSeq < prevNumSeq){
+                if (prevSeq[numResponseSeq] == 3){
+                    responseSeq[numResponseSeq] = true;
+                    part1 = true;
+                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    numResponseSeq++;
+                }
+                else{
+                    responseSeq[numResponseSeq] = false;
+                    part1 = false;
+                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    numResponseSeq++;
+                }
+                console.log("ResponseSize:", numResponseSeq);
+            }
+            if(numResponseSeq >= prevNumSeq){
+                console.log('complete');
+                socketIO.emit('complete');
+                //socketIO.emit('percResp',{responseSeq,numResponseSeq});
+                start = false;
+
+            }
+        }
+    });
+    socket.on('rightArm_response', function(){   
+        if (start == true){   
+            if (numResponseSeq < prevNumSeq){
+                if (prevSeq[numResponseSeq] == 4){
+                    responseSeq[numResponseSeq] = true;
+                    part1 = true;
+                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    numResponseSeq++;
+                }
+                else{
+                    responseSeq[numResponseSeq] = false;
+                    part1 = false;
+                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    numResponseSeq++;
+                }
+                console.log("ResponseSize:", numResponseSeq);
+            }
+            if(numResponseSeq >= prevNumSeq){
+                console.log('complete');
+                socketIO.emit('complete');
+                //socketIO.emit('percResp',{responseSeq,numResponseSeq});
+                start = false;
+
+            }
+        }
+    });
+    //Row 2
+    socket.on('leftLeg_response', function(){ 
+        if (start == true){     
+            if (numResponseSeq < prevNumSeq){
+                if (prevSeq[numResponseSeq] == 5){
+                    responseSeq[numResponseSeq] = true;
+                    part1 = true;
+                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    numResponseSeq++;
+                }
+                else{
+                    responseSeq[numResponseSeq] = false;
+                    part1 = false;
+                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    numResponseSeq++;
+                }
+                console.log("ResponseSize:", numResponseSeq);
+            }
+            if(numResponseSeq >= prevNumSeq){
+                console.log('complete');
+                socketIO.emit('complete');
+                //socketIO.emit('percResp',{responseSeq,numResponseSeq});
+                start = false;
+
+            }
+        }
+    });
+    socket.on('pelvis_response', function(){
+        if (start == true){      
+            if (numResponseSeq < prevNumSeq){
+                if (prevSeq[numResponseSeq] == 6){
+                    responseSeq[numResponseSeq] = true;
+                    part1 = true;
+                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    numResponseSeq++;
+                }
+                else{
+                    responseSeq[numResponseSeq] = false;
+                    part1 = false;
+                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    numResponseSeq++;
+                }
+                console.log("ResponseSize:", numResponseSeq);
+            }
+            if(numResponseSeq >= prevNumSeq){
+                console.log('complete');
+                socketIO.emit('complete');
+                //socketIO.emit('percResp',{responseSeq,numResponseSeq});
+                start = false;
+
+            }
+        }
+    });
+    socket.on('abdomen_response', function(){
+        if (start == true){      
+            if (numResponseSeq < prevNumSeq){
+                if (prevSeq[numResponseSeq] == 7){
+                    responseSeq[numResponseSeq] = true;
+                    part1 = true;
+                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    numResponseSeq++;
+                }
+                else{
+                    responseSeq[numResponseSeq] = false;
+                    part1 = false;
+                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    numResponseSeq++;
+                }
+                console.log("ResponseSize:", numResponseSeq);
+            }
+            if(numResponseSeq >= prevNumSeq){
+                console.log('complete');
+                socketIO.emit('complete');
+                //socketIO.emit('percResp',{responseSeq,numResponseSeq});
+                start = false;
+
+            }
+        }
+    });
+    socket.on('rightLeg_response', function(){
+        if (start == true){    
+            if (numResponseSeq < prevNumSeq){
+                if (prevSeq[numResponseSeq] == 8){
+                    responseSeq[numResponseSeq] = true;
+                    part1 = true;
+                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    numResponseSeq++;
+                }
+                else{
+                    responseSeq[numResponseSeq] = false;
+                    part1 = false;
+                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    numResponseSeq++;
+                }
+                console.log("ResponseSize:", numResponseSeq);
+            }
+            if(numResponseSeq >= prevNumSeq){
+                console.log('complete');
+                socketIO.emit('complete');
+                //socketIO.emit('percResp',{responseSeq,numResponseSeq});
+                start = false;
+
+            }
+        }
+    });
+    
+    socket.on('percent', function(){
+        console.log('percent');
+        socketIO.emit('percResp',{responseSeq,numResponseSeq});
+    });
+
+    socket.on('repeat', function(){
+        responseSeq = [];
         numResponseSeq = 0;
-        response = [];
+        start=false;
+        socketIO.emit('seqRepeat');
     });
 
+    socket.on('continue', function(){
+        clearLists();
+        start=false;
+        socketIO.emit('seqContinue');
+    });
 
+    socket.on('resetStart', function(){
+        start = false;
+    });
 
+    socket.on('bow',function(){
+        if(start == false){
+            console.log('bow');
+            start = true;
+            socketIO.emit('bow');
+            console.log("Start:", start);
+        }
+    });
 
 });
+
+function clearLists(){
+    sequence = [];
+    numSeq = 0;
+
+    prevSeq = [];
+    prevNumSeq = 0;
+
+    responseSeq = [];
+    numResponseSeq = 0;
+}
 
 
 server.listen(LISTEN_PORT);

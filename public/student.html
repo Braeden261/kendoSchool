@@ -8,6 +8,7 @@
         <script src="js/event-manager-component.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <script src="/js/hit-sound-component.js"></script>
+
     </head>
     <body>
         <a-scene loading-screen="dotsColor: #e74c3c;
@@ -372,6 +373,9 @@
        <script>
             let socket = io();
 
+            let passed = 0;
+            let failed = 0;
+
             socket.on('connect', function(userData){
                 console.log('connected');
             });
@@ -379,6 +383,23 @@
             socket.on('send_instruction', function(data){
                 console.log('Sequence: ' + data.sequence);
             });
+
+            socket.on('percResp', function(data){
+                console.log('percentCheck');
+                for (let i =0; i < data.numResponseSeq; i++){
+                    if (data.responseSeq[i] == true){
+                        passed++;
+                    }
+                    else{
+                        failed++;
+                    }
+                }
+                passed = 100 * ( passed/(data.numResponseSeq) );
+                failed = 100 * ( failed/(data.numResponseSeq) );
+                console.log("Passed:", passed, "%");
+                console.log("Failed:", failed, "%");
+            });
+
 
             window.onload = function(){
                 let ambient = document.querySelector('#nature-sound');

@@ -5,14 +5,27 @@
         <title>Student Test Page</title>
     </head>
     <body>
-        <h1>Press the 3 numbered buttons to match the incoming sequence</h1>
+        <h1>Test Input Page</h1>
         
-        <button id="red" style="background-color: red; color: whitesmoke;">1</button>
-        <button id="green" style="background-color: green; color: whitesmoke;">2</button>
-        <button id="blue" style="background-color: blue; color: whitesmoke;">3</button>
+        <button id="leftArm" style="background-color: red; color: whitesmoke;">Left Arm</button>
+        <button id="head" style="background-color: green; color: whitesmoke;">Head</button>
+        <button id="ribCage" style="background-color: blue; color: whitesmoke;">Rib Cage</button>
+        <button id="rightArm" style="background-color: blue; color: whitesmoke;">Right Arm</button>
 
-        <button id="accept" style="background-color: purple; color: whitesmoke;">Accept</button>
-        
+        <div>
+            <button id="leftLeg" style="background-color: blue; color: whitesmoke;">Left Leg</button>
+            <button id="pelvis" style="background-color: blue; color: whitesmoke;">Pelvis</button>
+            <button id="abdomen" style="background-color: blue; color: whitesmoke;">Abdomen</button>
+            <button id="rightLeg" style="background-color: blue; color: whitesmoke;">Right Leg</button>
+        </div>
+        <div>
+            <button id="bow" style="background-color: blue; color: whitesmoke;">Bow</button>
+        </div>
+
+        <div>
+            <button id="continue" style="background-color: blue; color: whitesmoke;">Continue</button>
+            <button id="repeat" style="background-color: blue; color: whitesmoke;">Repeat</button>
+        </div>
         <script src="/socket.io/socket.io.js"></script>
         <script>
             //Write some socket client code
@@ -24,22 +37,50 @@
             });
 
             
-            document.querySelector('#red').addEventListener('click', function(){
-                socket.emit("redResponse");
-                console.log('red_button');
+            document.querySelector('#leftArm').addEventListener('click', function(){
+                socket.emit("leftArm_response");
+                console.log('LeftArm_button');
             });
-            document.querySelector('#green').addEventListener('click', function(){
-                socket.emit("greenResponse");
-                console.log('green_button');
+            document.querySelector('#head').addEventListener('click', function(){
+                socket.emit("head_response");
+                console.log('head_button');
             });
-            document.querySelector('#blue').addEventListener('click', function(){
-                socket.emit("blueResponse");
-                console.log('blue_button');
+            document.querySelector('#ribCage').addEventListener('click', function(){
+                socket.emit("ribCage_response");
+                console.log('ribCage_button');
+            });
+            document.querySelector('#rightArm').addEventListener('click', function(){
+                socket.emit("rightArm_response");
+                console.log('rightArm_button');
             });
 
-            document.querySelector('#accept').addEventListener('click', function(){
-                socket.emit("acceptResponse");
-                console.log('accept_button');
+            document.querySelector('#leftLeg').addEventListener('click', function(){
+                socket.emit("leftLeg_response");
+                console.log('LeftLeg_button');
+            });
+            document.querySelector('#pelvis').addEventListener('click', function(){
+                socket.emit("pelvis_response");
+                console.log('pelvis_button');
+            });
+            document.querySelector('#abdomen').addEventListener('click', function(){
+                socket.emit("abdomen_response");
+                console.log('abdomen_button');
+            });
+            document.querySelector('#rightLeg').addEventListener('click', function(){
+                socket.emit("rightLeg_response");
+                console.log('rightLeg_button');
+            });
+            document.querySelector('#bow').addEventListener('click', function(){
+                console.log('bow');
+                socket.emit('bow');
+            });
+            document.querySelector('#continue').addEventListener('click', function(){
+                console.log('continue');
+                socket.emit('continue');
+            });
+            document.querySelector('#repeat').addEventListener('click', function(){
+                console.log('repeat');
+                socket.emit('repeat');
             });
 
 

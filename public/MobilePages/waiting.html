@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link href="style.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400" rel="stylesheet">
+	<script src="/socket.io/socket.io.js"></script>
+    <script>
+        let socket = io();
+        
+        socket.on('bow', function(data){
+                window.location.href='sequence_results.html';
+            });
+    </script>
+</head>
+
+<body> 
+	<div class="top-left">
+        <img src="images/logokendo.png" class="small-image"> 
+    </div> 
+    <div class="center-screen">
+    	<h3> YOUR STUDENT MUST BOW TO PAY RESPECTS TO YOU... </h3>
+    	<img src="images/respecticon.png" class="big-square-image"> 
+    </div>
+}
+</body>
+
+</html>
