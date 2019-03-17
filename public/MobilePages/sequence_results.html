@@ -20,7 +20,7 @@
         socket.on('response', function(data){
             currPoint= data.part1;
             responseArray[currPoint] = data.part1;
-            console.log(responseArray[currPoint]);
+            console.log("Action #",data.numResponseSeq+1, " = ", responseArray[currPoint]);
         });
 
     </script>

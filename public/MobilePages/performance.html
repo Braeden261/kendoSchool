@@ -6,6 +6,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400" rel="stylesheet">
     <script src="/socket.io/socket.io.js"></script>
     <script>
+
         let socket = io();
 
         let passed = 0;
@@ -21,24 +22,24 @@
             window.location.href='sequence.html';
         });
 
-
         socket.on('seqRepeat',function(){
             window.location.href='waiting.html';
         });
-        socket.on('resPercent', function(data){
+
+        socket.on('percResp', function(data){
             console.log('percentCheck');
-            for (let i =0; i < data.resp.numResponseSeq; i++){
-                if (data.resp.responseSeq[i] == true){
+            for (let i =0; i < data.numResponseSeq; i++){
+                if (data.responseSeq[i] == true){
                     passed++;
                 }
                 else{
                     failed++;
                 }
             }
-            passed = 100 * ( passed/(data.resp[1]) );
-            failed = 100 * ( failed/(data.resp[1]) );
+            passed = 100 * ( passed/(data.numResponseSeq) );
+            failed = 100 * ( failed/(data.numResponseSeq) );
             console.log("Passed:", passed, "%");
-            console.log("failed:", failed, "%");
+            console.log("Failed:", failed, "%");
         });
 
     </script>
@@ -56,10 +57,6 @@
                 <td class="right-td"><img src="images/red_icon.png" class="performance-image"> </td>
             </tr>
         </table>
-    </div>
-    <div>
-        <p id="percentCompleted"></p>
-        <p id="percentFailed"></p>
     </div>
 </body>
 
