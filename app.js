@@ -369,6 +369,12 @@ socketIO.on('connection', function(socket){
         }
     });
     
+    socket.on('percent', function(){
+
+        resp = [responseSeq,numResponseSeq]
+        socketIO.emit('respPercent',{resp});
+    });
+
     socket.on('repeat', function(){
         responseSeq = [];
         numResponseSeq = 0;

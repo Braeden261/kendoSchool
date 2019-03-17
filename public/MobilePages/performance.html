@@ -8,12 +8,33 @@
     <script>
         let socket = io();
 
+        let passed = 0;
+        let failed = 0;
+        
         socket.on('seqContinue',function(){
             window.location.href='sequence.html';
         });
 
+        window.onload = function () {
+            socket.emit('percent');
+        }
+
         socket.on('seqRepeat',function(){
             window.location.href='waiting.html';
+        });
+        socket.on('ResPercent', function(data){
+            for (let i =0; i < data.resp[1]; i++){
+                if (data.resp[0][i] == true){
+                    passed++;
+                }
+                else{
+                    failed++;
+                }
+            }
+            passed = 100 * ( passed/(data.resp[1]) );
+            failed = 100 * ( failed/(data.resp[1]) );
+            console.log("Passed:", passed, "%");
+            console.log("failed:", failed, "%");
         });
 
     </script>
@@ -29,8 +50,12 @@
             <tr>
                 <td class="left-td"><img src="images/green_icon.png" class="performance-image"> </td>
                 <td class="right-td"><img src="images/red_icon.png" class="performance-image"> </td>
-            </tr>   
+            </tr>
         </table>
+    </div>
+    <div>
+        <p id="percentCompleted"></p>
+        <p id="percentFailed"></p>
     </div>
 </body>
 
