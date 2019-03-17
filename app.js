@@ -133,21 +133,28 @@ socketIO.on('connection', function(socket){
     });
     //Send
     socket.on('send', function(){
-        console.log('send event detected');
-        console.log('Sequence: ' + sequence);
-        console
-        socketIO.emit('send_instruction', {sequence});
-        prevSeq = sequence;
-        prevNumSeq = numSeq;
-        sequence = [];
-        
-        numSeq = 0;
-        response = [];
+        if (numSeq != 0){
+            console.log(numSeq);
+            socketIO.emit('send');
+            console.log('send event detected');
+            console.log('Sequence: ' + sequence);
+            socketIO.emit('send_instruction', {sequence});
+            prevSeq = sequence;
+            prevNumSeq = numSeq;
+            sequence = [];
+            
+            numSeq = 0;
+            response = [];
 
-        responseSeq = [];
-        numResponseSeq = 0;
+            responseSeq = [];
+            numResponseSeq = 0;
 
-        console.log("SendSize:", prevNumSeq);
+            console.log("SendSize:", prevNumSeq);
+            
+        }
+        else{
+            console.log("Not Enough Items in Sequence");
+        }
     });
     //Clear
     socket.on('clear', function(){

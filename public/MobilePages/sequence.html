@@ -34,11 +34,9 @@
             }
         };
 
-        function send(){
-            socket.emit('send');
-            //console.log('send_button');
+        socket.on('send', function(){
             window.location.href='waiting.html';
-        }
+        });
 
         //built in event
         socket.on('connect', function(userData){
@@ -54,7 +52,7 @@
         <img src="images/logokendo.png" class="small-image"> 
     </div>
     <div class="right-icon">
-        <img  src="images/sendicon.png" class="sequence-image" onclick="send()" class="continue"> 
+        <img  src="images/sendicon.png" class="sequence-image" onclick="socket.emit('send')" class="continue"> 
     </div>
     <div class="bottom-left">
         <img src="images/clearicon.png" class="sequence-image" onclick="socket.emit('clear')">
