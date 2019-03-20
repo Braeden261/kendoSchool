@@ -14,7 +14,7 @@
         <a-scene loading-screen="dotsColor: #e74c3c;
                                  backgroundColor: #353535;
                                  enabled: true;"
-                 physics="debug: false;
+                 physics="debug: true;
                           gravity: -9;
                           maxInterval: 0.02;
                           iterations: 20;
@@ -52,6 +52,8 @@
 
                 <a-asset-item id="lanternFrames-obj" src="/assets/models/objFiles/lantern/lanterns_frames_lines.obj"></a-asset-item>
                 <a-asset-item id="lanternBodies-obj" src="/assets/models/objFiles/lantern/lanterns_bodies.obj"></a-asset-item>
+                
+                <a-asset-item id="lanternSingle-obj" src="/assets/models/objFiles/lantern/lantern_menu.obj"></a-asset-item>
 
                 <a-asset-item id="bgSword-obj" src="/assets/models/objFiles/bg_models/bg_sword.obj"></a-asset-item>
 
@@ -258,13 +260,97 @@
                         position="4.91 2.52 10.0"
             ></a-entity>
 
+
+            <!--Physical Menu-->
+            <a-box
+                    id="anchorA"
+                    position="-0.5 8 0"
+                    scale=" 0.5 0.5 0.5"
+                    static-body
+            ></a-box>
+
+            <a-box
+                    id="anchorB"
+                    position="0.5 8 0"
+                    scale=" 0.5 0.5 0.5"
+                    static-body
+            ></a-box>
+
+
+            <a-entity
+
+                    spring="target: #anchorA;
+                            damping:100;
+                            stiffness: 1000;
+                            restLength: 5;
+                            localAnchorA: 0 0.5 0;"
+
+                    id="lantern-continue"
+                    position="-0.5 4 0"
+                    body="  
+                            type: dynamic;
+                            mass: 50;
+                            linearDamping: 0.02;
+                            shape: none;"
+                    collision-filter="
+                            group: objs;
+                            collidesWith: hands, swords, objs, environment;
+                            collisionForces: true;"
+                    shape__core="shape: cylinder;
+                            height: 0.5;
+                            radiusTop: 0.25;
+                            radiusBottom: 0.25;
+                            offset: 0 0.3 0;
+                            numSegments: 16;"
+                            >
+                <a-entity   
+                    obj-model="obj:#lanternSingle-obj"
+                    scale="1 1 1"
+                    material="src:#lantern-tex; roughness:0.7; metalness:0; transparent:true; opacity:1;"
+                    shadow="cast:false; receive:true;"
+                ></a-entity>
+            </a-entity>
+            <a-entity
+
+                    spring="target: #anchorB;
+                            damping:100;
+                            stiffness: 1000;
+                            restLength: 5;
+                            localAnchorA: 0 0.5 0;"
+
+                    id="lantern-repeat"
+                    position="0.5 4 0"
+                    body="  
+                            type: dynamic;
+                            mass: 50;
+                            linearDamping: 0.02;
+                            shape: none;"
+                    collision-filter="
+                            group: objs;
+                            collidesWith: hands, swords, objs, environment;
+                            collisionForces: true;"
+                    shape__core="shape: cylinder;
+                            height: 0.5;
+                            radiusTop: 0.25;
+                            radiusBottom: 0.25;
+                            offset: 0 0.3 0;
+                            numSegments: 16;"
+                            >
+                <a-entity  
+                    obj-model="obj:#lanternSingle-obj"
+                    scale="1 1 1"
+                    material="src:#lantern-tex; roughness:0.7; metalness:0; transparent:true; opacity:1;"
+                    shadow="cast:false; receive:true;"
+                ></a-entity>
+            </a-entity>
+
             <!--dummy-->
             <a-entity   id="dummy-rig"
                         position="0 1.5 -1.0"
             >
                 <a-entity   id="dummy-box"
                             body="type: dynamic;
-                                  mass: 80;
+                                  mass: 1;
                                   linearDamping: 0.02;
                                   shape: none;"
                             collision-filter="group: objs;
