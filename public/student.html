@@ -37,10 +37,10 @@
                 <img id = "dojo-tex" src = "/assets/textures/dojoTexture/dojo_wallsFloors_texture-02.png">
                 <img id = "dummyMap" src = "/assets/textures/dummyTexture/TexturePNG/dummyTexture.png">
                 <img id = "shinai-tex" src = "/assets/textures/swordTexture/TexturePNG/swordTexture.png">
-
+                
                 <img id = "lantern-tex" src = "/assets/textures/lanternTexture/lantern_tex.png">
                 <img id = "bgSword-tex" src = "/assets/textures/backgroundSwordTexture/TexturePNG/swordTexture.png">
-
+                <img id = "scroll-tex" src = "/assets/textures/scrollTexture/scroll_tex.png">
 
                 <!-- Models -->
                 <a-asset-item id="dojo-obj" src="/assets/models/objFiles/dojo/dojo_structure.obj"></a-asset-item>
@@ -54,6 +54,8 @@
                 <a-asset-item id="lanternBodies-obj" src="/assets/models/objFiles/lantern/lanterns_bodies.obj"></a-asset-item>
 
                 <a-asset-item id="bgSword-obj" src="/assets/models/objFiles/bg_models/bg_sword.obj"></a-asset-item>
+
+                <a-asset-item id="scroll-obj" src="/assets/models/objFiles/scroll/scroll.obj"></a-asset-item>
 
 
 
@@ -104,7 +106,7 @@
             
             <!-- L I G H T S -->
             <a-entity   light = "type: spot;
-                                 intensity: 0.5;
+                                 intensity: 0.7;
                                  angle: 60;
                                  penumbra: 0.9;
                                  color: #fff8e8;
@@ -256,6 +258,22 @@
             <a-entity   id="lanternLight"
                         mixin="lantern-light"
                         position="4.91 2.52 10.0"
+            ></a-entity>
+
+            <!--scrolls-->
+            <a-entity   id="scroll-01"
+                        obj-model="obj: #scroll-obj"
+                        material="src: #scroll-tex;
+                                  roughness: 0.8;"
+                        position="-2 0 -1.8"
+                        rotation="0 35 0"
+            ></a-entity>
+            <a-entity   id="scroll-02"
+                        obj-model="obj: #scroll-obj"
+                        material="src: #scroll-tex;
+                                  roughness: 0.8;"
+                        position="2 0 -1.8"
+                        rotation="0 -215 0"
             ></a-entity>
 
             <!--dummy-->
