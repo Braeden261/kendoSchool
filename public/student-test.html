@@ -36,7 +36,6 @@
                 console.log('connected');
             });
 
-            
             document.querySelector('#leftArm').addEventListener('click', function(){
                 socket.emit("leftArm_response");
                 console.log('LeftArm_button');
