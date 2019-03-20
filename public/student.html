@@ -8,13 +8,14 @@
         <script src="js/event-manager-component.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <script src="/js/hit-sound-component.js"></script>
+        <script src="/js/menu-component.js"></script>
 
     </head>
     <body>
         <a-scene loading-screen="dotsColor: #e74c3c;
                                  backgroundColor: #353535;
                                  enabled: true;"
-                 physics="debug: true;
+                 physics="debug: false;
                           gravity: -9;
                           maxInterval: 0.02;
                           iterations: 20;
@@ -267,6 +268,7 @@
                     position="-0.5 8 0"
                     scale=" 0.5 0.5 0.5"
                     static-body
+                    material="opacity:0"
             ></a-box>
 
             <a-box
@@ -274,18 +276,19 @@
                     position="0.5 8 0"
                     scale=" 0.5 0.5 0.5"
                     static-body
+                    material="opacity:0"
             ></a-box>
 
 
             <a-entity
-
+                    menu-component
                     spring="target: #anchorA;
                             damping:100;
                             stiffness: 1000;
                             restLength: 5;
                             localAnchorA: 0 0.5 0;"
 
-                    id="lantern-continue"
+                    id="continue"
                     position="-0.5 4 0"
                     body="  
                             type: dynamic;
@@ -311,14 +314,14 @@
                 ></a-entity>
             </a-entity>
             <a-entity
-
+                    menu-component
                     spring="target: #anchorB;
                             damping:100;
                             stiffness: 1000;
                             restLength: 5;
                             localAnchorA: 0 0.5 0;"
 
-                    id="lantern-repeat"
+                    id="repeat"
                     position="0.5 4 0"
                     body="  
                             type: dynamic;
