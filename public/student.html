@@ -265,7 +265,7 @@
             <!--Physical Menu-->
             <a-box
                     id="anchorA"
-                    position="-0.5 8 0"
+                    position="-0.5 15 0"
                     scale=" 0.5 0.5 0.5"
                     static-body
                     material="opacity:0"
@@ -273,7 +273,7 @@
 
             <a-box
                     id="anchorB"
-                    position="0.5 8 0"
+                    position="0.5 15 0"
                     scale=" 0.5 0.5 0.5"
                     static-body
                     material="opacity:0"
@@ -289,7 +289,7 @@
                             localAnchorA: 0 0.5 0;"
 
                     id="continue"
-                    position="-0.5 4 0"
+                    position="-0.5 13 0"
                     body="  
                             type: dynamic;
                             mass: 50;
@@ -307,9 +307,10 @@
                             numSegments: 16;"
                             >
                 <a-entity   
+                    id="contLantern"
                     obj-model="obj:#lanternSingle-obj"
                     scale="1 1 1"
-                    material="src:#lantern-tex; roughness:0.7; metalness:0; transparent:true; opacity:1;"
+                    material="src:#lantern-tex; roughness:0.7; metalness:0; transparent:true; opacity:0;"
                     shadow="cast:false; receive:true;"
                 ></a-entity>
             </a-entity>
@@ -322,7 +323,7 @@
                             localAnchorA: 0 0.5 0;"
 
                     id="repeat"
-                    position="0.5 4 0"
+                    position="0.5 13 0"
                     body="  
                             type: dynamic;
                             mass: 50;
@@ -340,9 +341,10 @@
                             numSegments: 16;"
                             >
                 <a-entity  
+                    id="repeatLantern"
                     obj-model="obj:#lanternSingle-obj"
                     scale="1 1 1"
-                    material="src:#lantern-tex; roughness:0.7; metalness:0; transparent:true; opacity:1;"
+                    material="src:#lantern-tex; roughness:0.7; metalness:0; transparent:true; opacity:0;"
                     shadow="cast:false; receive:true;"
                 ></a-entity>
             </a-entity>
@@ -465,12 +467,52 @@
             let passed = 0;
             let failed = 0;
 
+            let anchorA = document.querySelector('#anchorA');
+            let anchorB = document.querySelector('#anchorB');
+
+            let rLantern = document.querySelector('#repeatLantern');
+            let cLantern = document.querySelector('#contLantern');
+
+            let rBox = document.querySelector('#repeat');
+            let cBox = document.querySelector('#continue');
+
             socket.on('connect', function(userData){
                 console.log('connected');
             });
 
             socket.on('send_instruction', function(data){
                 console.log('Sequence: ' + data.sequence);
+            });
+            
+            socket.on('complete', function(){
+                console.log('physicalMenu');
+                
+                console.log("AnchorA: ", anchorA.id);
+                console.log("AnchorB: ", anchorB.id);
+
+                console.log("rLantern: ", rLantern.id);
+                console.log("cLantern: ", cLantern.id);
+
+                console.log("rBox: ", rBox.id);
+                console.log("cBox: ", cBox.id);
+
+
+                anchorA.setAttribute('position', {x:-0.5, y:8, z:0});
+                anchorB.setAttribute('position', {x:0.5, y:8, z:0});
+                
+                rBox.setAttribute('position', {x:0.5, y:4, z:0});
+                cBox.setAttribute('position', {x:-0.5, y:4, z:0});
+                
+                rLantern.setAttribute('material', {src:'#lantern-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
+                cLantern.setAttribute('material', {src:'#lantern-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
+                
+            });
+
+            socket.on('repeat', function(){
+                resetSeq();
+            });
+            socket.on('continue', function(){
+                resetSeq();
             });
 
             socket.on('percResp', function(data){
@@ -495,6 +537,20 @@
                 ambient.volume = 0.01;
                 ambient.play();
             }
+
+            function resetSeq(){
+
+                anchorA.setAttribute('position', {x:-0.5, y:15, z:0});
+                anchorB.setAttribute('position', {x:0.5, y:15, z:0});
+                
+                rBox.setAttribute('position', {x:0.5, y:13, z:0});
+                cBox.setAttribute('position', {x:-0.5, y:13, z:0});
+                
+                rLantern.setAttribute('material', {src:'#lantern-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
+                cLantern.setAttribute('material', {src:'#lantern-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
+            }
+
+
         </script>
     </body>
 </html>
