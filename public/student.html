@@ -15,7 +15,7 @@
         <a-scene loading-screen="dotsColor: #e74c3c;
                                  backgroundColor: #353535;
                                  enabled: true;"
-                 physics="debug: false;
+                 physics="debug: true;
                           gravity: -9;
                           maxInterval: 0.02;
                           iterations: 20;
@@ -139,7 +139,7 @@
                                   roughness:0.7;
                                   metalness:0;
                                   transparent:true;
-                                  opacity:1;"
+                                  opacity:0.5;"
                         shadow="cast:true;
                                 receive:true;"
             >
@@ -265,7 +265,7 @@
             <!--Physical Menu-->
             <a-box
                     id="anchorA"
-                    position="-0.5 15 0"
+                    position="-0.5 8 0"
                     scale=" 0.5 0.5 0.5"
                     static-body
                     material="opacity:0"
@@ -273,7 +273,7 @@
 
             <a-box
                     id="anchorB"
-                    position="0.5 15 0"
+                    position="0.5 8 0"
                     scale=" 0.5 0.5 0.5"
                     static-body
                     material="opacity:0"
@@ -285,11 +285,11 @@
                     spring="target: #anchorA;
                             damping:100;
                             stiffness: 1000;
-                            restLength: 5;
+                            restLength: 1;
                             localAnchorA: 0 0.5 0;"
 
                     id="continue"
-                    position="-0.5 13 0"
+                    position="-0.5 7 0"
                     body="  
                             type: dynamic;
                             mass: 50;
@@ -319,11 +319,11 @@
                     spring="target: #anchorB;
                             damping:100;
                             stiffness: 1000;
-                            restLength: 5;
+                            restLength: 1;
                             localAnchorA: 0 0.5 0;"
 
                     id="repeat"
-                    position="0.5 13 0"
+                    position="0.5 7 0"
                     body="  
                             type: dynamic;
                             mass: 50;
@@ -497,23 +497,28 @@
                 console.log("cBox: ", cBox.id);
 
 
-                anchorA.setAttribute('position', {x:-0.5, y:8, z:0});
-                anchorB.setAttribute('position', {x:0.5, y:8, z:0});
+                socket.on('seqContinue', function(){
+                    resetSeq();
+                });
+
+                socket.on('seqRepeat', function(){
+                    resetSeq();
+                });
+
+                //anchorA.setAttribute('position', {x:-0.5, y:8, z:0});
+                //anchorB.setAttribute('position', {x:0.5, y:8, z:0});
                 
-                rBox.setAttribute('position', {x:0.5, y:4, z:0});
-                cBox.setAttribute('position', {x:-0.5, y:4, z:0});
+                cBox.setAttribute('spring', {target:'#anchorA', damping:200, stiffness: 1000, restLength:6, localAnchorA:{x:0, y:-0.5, z:0}});
+                rBox.setAttribute('spring', {target:'#anchorB', damping:200, stiffness: 1000, restLength:6, localAnchorA:{x:0, y:-0.5, z:0}});
+              
+                //rBox.setAttribute('position', {x:0.5, y:2, z:0});
+                //cBox.setAttribute('position', {x:-0.5, y:2, z:0});
                 
                 rLantern.setAttribute('material', {src:'#lantern-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
                 cLantern.setAttribute('material', {src:'#lantern-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
                 
             });
 
-            socket.on('repeat', function(){
-                resetSeq();
-            });
-            socket.on('continue', function(){
-                resetSeq();
-            });
 
             socket.on('percResp', function(data){
                 console.log('percentCheck');
@@ -540,14 +545,19 @@
 
             function resetSeq(){
 
-                anchorA.setAttribute('position', {x:-0.5, y:15, z:0});
-                anchorB.setAttribute('position', {x:0.5, y:15, z:0});
+                //anchorA.setAttribute('position', {x:-0.5, y:15, z:0});
+                //anchorB.setAttribute('position', {x:0.5, y:15, z:0});
                 
-                rBox.setAttribute('position', {x:0.5, y:13, z:0});
-                cBox.setAttribute('position', {x:-0.5, y:13, z:0});
+                cBox.setAttribute('spring', {target:'#anchorA', damping:500, stiffness: 1000, restLength:0.5, localAnchorA:{x:0, y:-0.5, z:0}});
+                rBox.setAttribute('spring', {target:'#anchorB', damping:500, stiffness: 1000, restLength:0.5, localAnchorA:{x:0, y:-0.5, z:0}});
                 
-                rLantern.setAttribute('material', {src:'#lantern-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
-                cLantern.setAttribute('material', {src:'#lantern-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
+                //cbox.setAttribute('position', {x:'-0.5', y:7, z:0});
+                //rbox.setAttribute('position', {x:'0.5', y:7, z:0});
+                setTimeout(function(){
+                    rLantern.setAttribute('material', {src:'#lantern-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
+                    cLantern.setAttribute('material', {src:'#lantern-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
+                }, 1000);
+                
             }
 
 
