@@ -272,6 +272,7 @@
             >
                 <!-- Core Collision Box -->
                 <a-entity   id="ribCage"
+                            class="dummyBox"
                             body="type: static;
                                   mass: 50;
                                   linearDamping: 0.02;
@@ -280,14 +281,15 @@
                                               collidesWith: hands, swords, objs, environment;
                                               collisionForces: true;"
                             shape__core="shape: cylinder;
-                                         height: 1.7;
-                                         radiusTop: 0.12;
-                                         radiusBottom: 0.12;
+                                         height: 1.73;
+                                         radiusTop: 0.11;
+                                         radiusBottom: 0.11;
                                          offset: 0 0 0;
                                          numSegments: 16;"
                 >
                     <!-- Geometry -->
                     <a-entity   id="dummy"
+                                class="dummyBox"
                                 obj-model="obj:#dummy-obj"
                                 position="0 -0.85 0"
                                 scale="1.0 1.0 1.0"
@@ -299,6 +301,7 @@
                 </a-entity>
                 <!-- Head Collision Box -->
                 <a-entity   id="head"
+                            class="dummyBox"
                             body="type: static;
                                     mass: 50;
                                     linearDamping: 0.02;
@@ -313,6 +316,7 @@
                 ></a-entity>
                 <!-- Right Arm Collision Box -->
                 <a-entity   id="rightArm"
+                            class="dummyBox"
                             body="type: static;
                                     mass: 50;
                                     linearDamping: 0.02;
@@ -322,11 +326,13 @@
                                                 collisionForces: true;"
                             shape__rightArm="shape: box;
                                                 height: 0.4;
-                                                halfExtents: 0.27 0.045 0.045;
-                                                offset: -0.27 0.4 -0.02;"
+                                                halfExtents: 0.27 0.04 0.04;
+                                                offset: -0.27 0.4 0;"
+                            rotation="0 -4 0"
                 ></a-entity>
                 <!-- Left Arm Collision Box -->
                 <a-entity   id="leftArm"
+                            class="dummyBox"
                             body="type: static;
                                   mass: 50;
                                   linearDamping: 0.02;
@@ -336,11 +342,13 @@
                                               collisionForces: true;"
                             shape__leftArm="shape: box;
                                              height: 0.4;
-                                             halfExtents: 0.27 0.05 0.05;
-                                             offset: 0.27 0.4 -0.02;"
+                                             halfExtents: 0.27 0.04 0.04;
+                                             offset: 0.27 0.4 0;"
+                         rotation="0 3 0"
                 ></a-entity>
                 <!-- Leg Collision Boxes -->
                 <a-entity   id="leg"
+                            class="dummyBox"
                             body="type: static;
                                   mass: 50;
                                   linearDamping: 0.02;
@@ -354,6 +362,7 @@
                             rotation="21 0 0"
                 ></a-entity>
                 <a-entity   id="leg"
+                            class="dummyBox"
                             body="type: static;
                                   mass: 50;
                                   linearDamping: 0.02;
@@ -366,8 +375,9 @@
                                            offset: 0 0.39 0.64;"
                             rotation="75 0 0"
                 ></a-entity>
-                <!-- Left Arm Collision Box -->
+                <!-- Left Abdomen Collision Box -->
                 <a-entity   id="leftAbdomen"
+                            class="dummyBox"
                             body="type: static;
                                   mass: 50;
                                   linearDamping: 0.02;
@@ -377,9 +387,25 @@
                                               collisionForces: true;"
                             shape__leftAbdomen="shape: box;
                                                 height: 0.4;
-                                                halfExtents: 0.27 0.05 0.05;
+                                                halfExtents: 0.27 0.04 0.04;
                                                 offset: 0.35 0 0;"
                             rotation="0 -47 0"
+                ></a-entity>
+                <!-- Right Abdomen Collision Box -->
+                <a-entity   id="rightAbdomen"
+                            class="dummyBox"
+                            body="type: static;
+                                  mass: 50;
+                                  linearDamping: 0.02;
+                                  shape: none;"
+                            collision-filter="group: dummy;
+                                              collidesWith: hands, swords, objs, environment;
+                                              collisionForces: true;"
+                            shape__rightAbdomen="shape: box;
+                                                 height: 0.4;
+                                                 halfExtents: 0.24 0.04 0.04;
+                                                 offset: 0.34 0.04 0;"
+                            rotation="0 -163 0"
                 ></a-entity>
             </a-entity>
             

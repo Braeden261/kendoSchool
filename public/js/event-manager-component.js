@@ -7,8 +7,11 @@ AFRAME.registerComponent('event-manager', {
         Context_AF.handRight        = document.querySelector('#handRight');
         Context_AF.handLeft         = document.querySelector('#handLeft');
         Context_AF.shinai           = document.querySelector('#shinai');
+
+        //Dummy hit boxes
+        Context_AF.dummyBoxes       = document.querySelectorAll('.dummyBox');
        
-        //E V E N T S - H A N D _ R I G H T
+        //E V E N T S - H A N D  C O N T R O L L E R _ R I G H T
         //Grip Closed
         Context_AF.handRight.addEventListener('gripdown', function(event) {
             Context_AF.handRight.addState('grabbing');
@@ -51,7 +54,7 @@ AFRAME.registerComponent('event-manager', {
         });
 
 
-        //E V E N T S - H A N D _ L E F T
+        //E V E N T S - H A N D  C O N T R O L L E R _ L E F T
         //Grip Closed
         Context_AF.handLeft.addEventListener('gripdown', function(event) {
             Context_AF.handLeft.addState('grabbing');
@@ -109,6 +112,13 @@ AFRAME.registerComponent('event-manager', {
         Context_AF.shinai.addEventListener('stateremoved', function(event) {
             console.log("[Shinai ✘ " + event.detail + "]");
         });
+
+        //E V E N T S - D U M M Y  H I T B O X E S
+        for (i = 0; i < Context_AF.dummyBoxes.length; i++) {
+            Context_AF.dummyBoxes[i].addEventListener('collide', function() {
+                this.emit(this.id + '_response');
+            });
+        }
     },
 
     //C O L L I S I O N   D E T A I L S
