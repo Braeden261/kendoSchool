@@ -9,7 +9,15 @@ AFRAME.registerComponent('event-manager', {
         Context_AF.shinai           = document.querySelector('#shinai');
 
         //Dummy hit boxes
-        Context_AF.dummyBoxes       = document.querySelectorAll('.dummyBox');
+        Context_AF.dummyBoxIdList   = [document.querySelector('#head').getAttribute('id'),
+                                       document.querySelector('#neck').getAttribute('id'),
+                                       document.querySelector('#rightArm').getAttribute('id'),
+                                       document.querySelector('#leftArm').getAttribute('id'),
+                                       document.querySelector('#abdomen').getAttribute('id'),
+                                       document.querySelector('#rightHand').getAttribute('id'),
+                                       document.querySelector('#leftHand').getAttribute('id'),
+                                       document.querySelector('#leg').getAttribute('id'),];
+        Context_AF.tempCollider     = '';
        
         //E V E N T S - H A N D  C O N T R O L L E R _ R I G H T
         //Grip Closed
@@ -99,8 +107,12 @@ AFRAME.registerComponent('event-manager', {
         //E V E N T S - S H I N A I
         //Collision
         Context_AF.shinai.addEventListener('collide', function(event) {
-            //console.log(Context_AF.shinai.components)
-            //Context_AF.CollisionDetail(event);
+            if (Context_AF.dummyBoxIdList.includes(event.detail.body.el.id) && event.detail.body.el.id != Context_AF.tempCollider) {
+                Context_AF.tempCollider = event.detail.body.el.id;
+                console.log(event.detail.body.el.id);
+
+                event.detail.body.el.emit(event.detail.body.el.id + "_response");
+            }
         });
 
         //State Added
@@ -112,13 +124,6 @@ AFRAME.registerComponent('event-manager', {
         Context_AF.shinai.addEventListener('stateremoved', function(event) {
             console.log("[Shinai ✘ " + event.detail + "]");
         });
-
-        //E V E N T S - D U M M Y  H I T B O X E S
-        for (i = 0; i < Context_AF.dummyBoxes.length; i++) {
-            Context_AF.dummyBoxes[i].addEventListener('collide', function() {
-                this.emit(this.id + '_response');
-            });
-        }
     },
 
     //C O L L I S I O N   D E T A I L S
