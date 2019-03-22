@@ -8,6 +8,7 @@
         <script src="js/event-manager-component.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <script src="/js/hit-sound-component.js"></script>
+        <script src="/js/menu-component.js"></script>
 
     </head>
     <body>
@@ -52,6 +53,8 @@
 
                 <a-asset-item id="lanternFrames-obj" src="/assets/models/objFiles/lantern/lanterns_frames_lines.obj"></a-asset-item>
                 <a-asset-item id="lanternBodies-obj" src="/assets/models/objFiles/lantern/lanterns_bodies.obj"></a-asset-item>
+                
+                <a-asset-item id="lanternSingle-obj" src="/assets/models/objFiles/lantern/lantern_menu.obj"></a-asset-item>
 
                 <a-asset-item id="bgSword-obj" src="/assets/models/objFiles/bg_models/bg_sword.obj"></a-asset-item>
 
@@ -258,13 +261,101 @@
                         position="4.91 2.52 10.0"
             ></a-entity>
 
+
+            <!--Physical Menu-->
+            <a-box
+                    id="anchorA"
+                    position="-0.5 8 0"
+                    scale=" 0.5 0.5 0.5"
+                    static-body
+                    material="opacity:0"
+            ></a-box>
+
+            <a-box
+                    id="anchorB"
+                    position="0.5 8 0"
+                    scale=" 0.5 0.5 0.5"
+                    static-body
+                    material="opacity:0"
+            ></a-box>
+
+
+            <a-entity
+                    menu-component
+                    spring="target: #anchorA;
+                            damping:100;
+                            stiffness: 1000;
+                            restLength: 1;
+                            localAnchorA: 0 0.5 0;"
+
+                    id="continue"
+                    position="-0.5 7 0"
+                    body="  
+                            type: dynamic;
+                            mass: 50;
+                            linearDamping: 0.02;
+                            shape: none;"
+                    collision-filter="
+                            group: objs;
+                            collidesWith: hands, swords, objs, environment;
+                            collisionForces: true;"
+                    shape__core="shape: cylinder;
+                            height: 0.5;
+                            radiusTop: 0.25;
+                            radiusBottom: 0.25;
+                            offset: 0 0.3 0;
+                            numSegments: 16;"
+                            >
+                <a-entity   
+                    id="contLantern"
+                    obj-model="obj:#lanternSingle-obj"
+                    scale="1 1 1"
+                    material="src:#lantern-tex; roughness:0.7; metalness:0; transparent:true; opacity:0;"
+                    shadow="cast:false; receive:true;"
+                ></a-entity>
+            </a-entity>
+            <a-entity
+                    menu-component
+                    spring="target: #anchorB;
+                            damping:100;
+                            stiffness: 1000;
+                            restLength: 1;
+                            localAnchorA: 0 0.5 0;"
+
+                    id="repeat"
+                    position="0.5 7 0"
+                    body="  
+                            type: dynamic;
+                            mass: 50;
+                            linearDamping: 0.02;
+                            shape: none;"
+                    collision-filter="
+                            group: objs;
+                            collidesWith: hands, swords, objs, environment;
+                            collisionForces: true;"
+                    shape__core="shape: cylinder;
+                            height: 0.5;
+                            radiusTop: 0.25;
+                            radiusBottom: 0.25;
+                            offset: 0 0.3 0;
+                            numSegments: 16;"
+                            >
+                <a-entity  
+                    id="repeatLantern"
+                    obj-model="obj:#lanternSingle-obj"
+                    scale="1 1 1"
+                    material="src:#lantern-tex; roughness:0.7; metalness:0; transparent:true; opacity:0;"
+                    shadow="cast:false; receive:true;"
+                ></a-entity>
+            </a-entity>
+
             <!--dummy-->
             <a-entity   id="dummy-rig"
                         position="0 1.5 -1.0"
             >
                 <a-entity   id="dummy-box"
                             body="type: dynamic;
-                                  mass: 80;
+                                  mass: 1;
                                   linearDamping: 0.02;
                                   shape: none;"
                             collision-filter="group: objs;
@@ -376,6 +467,15 @@
             let passed = 0;
             let failed = 0;
 
+            let anchorA = document.querySelector('#anchorA');
+            let anchorB = document.querySelector('#anchorB');
+
+            let rLantern = document.querySelector('#repeatLantern');
+            let cLantern = document.querySelector('#contLantern');
+
+            let rBox = document.querySelector('#repeat');
+            let cBox = document.querySelector('#continue');
+
             socket.on('connect', function(userData){
                 console.log('connected');
             });
@@ -383,6 +483,42 @@
             socket.on('send_instruction', function(data){
                 console.log('Sequence: ' + data.sequence);
             });
+            
+            socket.on('complete', function(){
+                console.log('physicalMenu');
+                
+                console.log("AnchorA: ", anchorA.id);
+                console.log("AnchorB: ", anchorB.id);
+
+                console.log("rLantern: ", rLantern.id);
+                console.log("cLantern: ", cLantern.id);
+
+                console.log("rBox: ", rBox.id);
+                console.log("cBox: ", cBox.id);
+
+
+                socket.on('seqContinue', function(){
+                    resetSeq();
+                });
+
+                socket.on('seqRepeat', function(){
+                    resetSeq();
+                });
+
+                //anchorA.setAttribute('position', {x:-0.5, y:8, z:0});
+                //anchorB.setAttribute('position', {x:0.5, y:8, z:0});
+                
+                cBox.setAttribute('spring', {target:'#anchorA', damping:200, stiffness: 1000, restLength:6, localAnchorA:{x:0, y:-0.5, z:0}});
+                rBox.setAttribute('spring', {target:'#anchorB', damping:200, stiffness: 1000, restLength:6, localAnchorA:{x:0, y:-0.5, z:0}});
+              
+                //rBox.setAttribute('position', {x:0.5, y:2, z:0});
+                //cBox.setAttribute('position', {x:-0.5, y:2, z:0});
+                
+                rLantern.setAttribute('material', {src:'#lantern-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
+                cLantern.setAttribute('material', {src:'#lantern-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
+                
+            });
+
 
             socket.on('percResp', function(data){
                 console.log('percentCheck');
@@ -406,6 +542,25 @@
                 ambient.volume = 0.01;
                 ambient.play();
             }
+
+            function resetSeq(){
+
+                //anchorA.setAttribute('position', {x:-0.5, y:15, z:0});
+                //anchorB.setAttribute('position', {x:0.5, y:15, z:0});
+                
+                cBox.setAttribute('spring', {target:'#anchorA', damping:500, stiffness: 1000, restLength:0.5, localAnchorA:{x:0, y:-0.5, z:0}});
+                rBox.setAttribute('spring', {target:'#anchorB', damping:500, stiffness: 1000, restLength:0.5, localAnchorA:{x:0, y:-0.5, z:0}});
+                
+                //cbox.setAttribute('position', {x:'-0.5', y:7, z:0});
+                //rbox.setAttribute('position', {x:'0.5', y:7, z:0});
+                setTimeout(function(){
+                    rLantern.setAttribute('material', {src:'#lantern-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
+                    cLantern.setAttribute('material', {src:'#lantern-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
+                }, 1000);
+                
+            }
+
+
         </script>
     </body>
 </html>
