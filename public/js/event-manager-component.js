@@ -18,6 +18,8 @@ AFRAME.registerComponent('event-manager', {
                                        document.querySelector('#leftHand').getAttribute('id'),
                                        document.querySelector('#leg').getAttribute('id'),];
         Context_AF.tempCollider     = '';
+
+        console.log(Context_AF.dummyBoxIdList.length);
        
         //E V E N T S - H A N D  C O N T R O L L E R _ R I G H T
         //Grip Closed
@@ -73,7 +75,7 @@ AFRAME.registerComponent('event-manager', {
                                                             y: Context_AF.handLeft.getAttribute('position').y,
                                                             z: Context_AF.handLeft.getAttribute('position').z});
                 Context_AF.shinai.addState('grabbed');
-                Context_AF.shinai.setAttribute('constraint', {type: 'lock', target:'#handLeft', collideConnected: false, });
+                Context_AF.shinai.setAttribute('constraint', {type: 'lock', target:'#handLeft', collideConnected: false, maxForce: 1e8});
             }
         });
 
@@ -111,7 +113,7 @@ AFRAME.registerComponent('event-manager', {
                 Context_AF.tempCollider = event.detail.body.el.id;
                 console.log(event.detail.body.el.id);
 
-                event.detail.body.el.emit(event.detail.body.el.id + "_response");
+                socket.emit(event.detail.body.el.id + "_response", event.detail.body.el.id);
             }
         });
 

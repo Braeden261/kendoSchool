@@ -8,13 +8,12 @@
         <script src="js/event-manager-component.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <script src="/js/hit-sound-component.js"></script>
-
     </head>
     <body>
-        <a-scene physics="debug: true;
+        <a-scene physics="debug: false;
                           gravity: -9;
-                          maxInterval: 0.02;
-                          iterations: 20;
+                          maxInterval: 0.0667;
+                          iterations: 30;
                           restitution: 0.1;"
                  shadow="type: pcfsoft;" 
                  fog="type: linear;
@@ -25,7 +24,13 @@
             <a-assets>
                 <!-- Mixins -->
                 <a-mixin    id="lantern-light"
-                            light = "type: spot; angle: 50; distance: 5; decay: 1; penumbra: 1; color: #ffd779; intensity: 0.5;"
+                            light = "type: spot;
+                                     angle: 50;
+                                     distance: 5;
+                                     decay: 1;
+                                     penumbra: 1;
+                                     color: #ffd779;
+                                     intensity: 0.5;"
                             rotation = "-90 0 0"
                 ></a-mixin>
 
@@ -215,77 +220,75 @@
                                   emissiveIntensity: 0.3;"
             ></a-entity>
 
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
                         position="-4.915 2.52 -10.0"
             ></a-entity>
 
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
                         position="-4.915 2.52 -5.0"
             ></a-entity>
 
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
                         position="-4.915 2.52 0.0"
             ></a-entity>
 
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
                         position="-4.915 2.52 5.01"
             ></a-entity>
 
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
                         position="-4.915 2.52 10.01"
             ></a-entity>
 
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
                         position="4.91 2.52 -10.01"
             ></a-entity>
 
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
                         position="4.91 2.52 -5.002"
             ></a-entity>
 
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
                         position="4.91 2.52 -0.001"
             ></a-entity>
 
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
                         position="4.91 2.52 4.997"
             ></a-entity>
 
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
                         position="4.91 2.52 10.0"
             ></a-entity>
 
             <!--dummy-->
             <a-entity   id="dummy-rig"
-                        position="0 1.6 -1.0"
+                        position="0 1.4 -1.0"
             >
                 <!-- Base Collision Box -->
                 <a-entity   id="base"
                             class="dummyBox"
                             body="type: dynamic;
                                   mass: 50;
-                                  linearDamping: 0.5;
                                   angularDamping: 1;
                                   shape: none;"
                             collision-filter="group: dummy;
                                               collidesWith: hands, swords, objs, environment;
                                               collisionForces: true;"
-                            spring="target: #groundPlane-platform;
-                                    damping: 20;
-                                    stiffness: 5;
-                                    restLength:0.005;
-                                    localAnchorA: 0 -0.848 0;
-                                    localAnchorB: 0 0.25 -1;"
+                            constraint="type: hinge;
+                                        target: #groundPlane-platform;
+                                        pivot: 0 -0.848 0;
+                                        targetPivot: 0.025 0.25 -1;
+                                        maxForce: 1e7;"
                             shape__base="shape: box;
                                          halfExtents: 0.3 0.016 0.3;
                                          offset: 0 -0.84 0;"
