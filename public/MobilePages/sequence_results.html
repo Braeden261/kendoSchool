@@ -18,9 +18,10 @@
         });
 
         socket.on('response', function(data){
-            currPoint= data.part1;
+            currPoint= data.numResponseSeq;
+            prevSeq = data.prevSeq;
             responseArray[currPoint] = data.part1;
-            console.log("Action #",data.numResponseSeq+1, " = ", responseArray[currPoint]);
+            console.log("Action #",currPoint+1, " = ", responseArray[currPoint]);
         });
 
     </script>
