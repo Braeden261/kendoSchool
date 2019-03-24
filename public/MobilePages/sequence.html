@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="HandheldFriendly" content="true" />
     <link href="style.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400" rel="stylesheet">
     <script src="/socket.io/socket.io.js"></script>
@@ -23,19 +24,35 @@
                     };
                 }
             }
+            
+        }
 
-            function mark(tableCell) {
-                let img = document.getElementById(tableCell.id);
-                if (img.style.border === "5px solid red") {
-                    img.style.border = null;
-                } else {
-                    img.style.border = "5px solid red";
-                } 
+        function mark(tableCell) {
+            var img = document.getElementById(tableCell.id+'notif');
+            if (img.style.visibility === "visible" && img.innerHTML !== "10") {
+                img.innerHTML = parseInt(img.innerHTML) + 1;
+            } else  {
+                img.style.visibility = "visible";
             }
         };
-
+        
         socket.on('send', function(){
             window.location.href='waiting.html';
+        });
+        
+         socket.on('clear', function(){
+            var table = document.getElementById("tableID");
+            console.log(table)
+            if (table != null) {
+                for (var i = 0; i < table.rows.length; i++) {
+                    for (var j = 0; j < table.rows[i].cells.length; j++) {
+                        cell = table.rows[i].cells[j];
+                        notif = document.getElementById(cell.id+'notif');
+                        notif.style.visibility = "hidden";
+                        notif.innerHTML = "1";
+                    }
+                }
+            }
         });
 
         //built in event
@@ -52,7 +69,7 @@
         <img src="images/logokendo.png" class="small-image"> 
     </div>
     <div class="right-icon">
-        <img  src="images/sendicon.png" class="sequence-image" onclick="socket.emit('send')" class="continue"> 
+        <img src="images/sendicon.png" class="sequence-image" onclick="socket.emit('send')">
     </div>
     <div class="bottom-left">
         <img src="images/clearicon.png" class="sequence-image" onclick="socket.emit('clear')">
@@ -61,17 +78,41 @@
         <h2> SELECT THE DESIRED SEQUENCE FOR YOUR STUDENT </h2>
         <table id="tableID" class="sequence">
             <tr>
-                <td id="leftArm"><img src="images/leftarm_text.png" class="sequence-image"> </td>
-                <td id="head"><img src="images/head_text.png" class="sequence-image"> </td>
-                <td id="ribCage"><img src="images/ribcage_text.png" class="sequence-image"> </td>
-                <td id="rightArm"><img src="images/rightarm_text.png" class="sequence-image"> </td>
+                <td id="leftarm">
+                    <div id="leftarmnotif" class="notification">1</div>
+                    <img src="images/leftarm_text.png" class="sequence-image">
+                </td>
+                <td id="head">
+                    <div id="headnotif" class="notification">1</div>
+                    <img src="images/head_text.png" class="sequence-image"> 
+                </td>
+                <td id="ribcage">
+                    <div id="ribcagenotif" class="notification">1</div>
+                    <img src="images/ribcage_text.png" class="sequence-image"> 
+                </td>
+                <td id="rightarm">
+                    <div id="rightarmnotif" class="notification">1</div>
+                    <img src="images/rightarm_text.png" class="sequence-image"> 
+                </td>
             </tr>
 
             <tr>
-                <td id="leftLeg"><img src="images/leftleg_text.png" class="sequence-image"> </td>
-                <td id="pelvis"><img src="images/pelvis_text.png" class="sequence-image"> </td>
-                <td id="abdomen"><img src="images/abdomen_text.png" class="sequence-image"> </td>
-                <td id="rightLeg"><img src="images/rightleg_text.png" class="sequence-image"> </td>
+                <td id="leftleg">
+                    <div id="leftlegnotif" class="notification">1</div>
+                    <img src="images/leftleg_text.png" class="sequence-image">
+                </td>
+                <td id="pelvis">
+                    <div id="pelvisnotif" class="notification">1</div>
+                    <img src="images/pelvis_text.png" class="sequence-image"> 
+                </td>
+                <td id="abdomen">
+                    <div id="abdomennotif" class="notification">1</div>
+                    <img src="images/abdomen_text.png" class="sequence-image">
+                </td>
+                <td id="rightleg">
+                    <div id="rightlegnotif" class="notification">1</div>
+                    <img src="images/rightleg_text.png" class="sequence-image"> 
+                </td>
             </tr>
         </table>
     </div>
