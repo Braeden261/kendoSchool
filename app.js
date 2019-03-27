@@ -60,7 +60,7 @@ socketIO.on('connection', function(socket){
     //Row 1
     socket.on('head', function(){
         if (numSeq < 10){
-            sequence[numSeq] = "2";
+            sequence[numSeq] = "1";
             numSeq++;
             }
             else{
@@ -69,7 +69,7 @@ socketIO.on('connection', function(socket){
     });
     socket.on('neck', function(){
         if (numSeq < 10){
-            sequence[numSeq] = "3";
+            sequence[numSeq] = "2";
             numSeq++;
             }
             else{
@@ -78,7 +78,7 @@ socketIO.on('connection', function(socket){
     });
     socket.on('leftArm', function(){    
         if (numSeq < 10){
-            sequence[numSeq] = "1";
+            sequence[numSeq] = "3";
             numSeq++;
             }
             else{
@@ -169,7 +169,7 @@ socketIO.on('connection', function(socket){
     socket.on('head_response', function(){
         if (start == true){      
             if (numResponseSeq < prevNumSeq){
-                if (prevSeq[numResponseSeq] == 2){
+                if (prevSeq[numResponseSeq] == 1){
                     responseSeq[numResponseSeq] = true;
                     part1 = true;
                     socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
@@ -194,7 +194,7 @@ socketIO.on('connection', function(socket){
     socket.on('neck_response', function(){
         if (start == true){     
             if (numResponseSeq < prevNumSeq){
-                if (prevSeq[numResponseSeq] == 3){
+                if (prevSeq[numResponseSeq] == 2){
                     responseSeq[numResponseSeq] = true;
                     part1 = true;
                     socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
@@ -219,7 +219,7 @@ socketIO.on('connection', function(socket){
     socket.on('leftArm_response', function(){   
         if (start == true){   
             if (numResponseSeq < prevNumSeq){
-                if (prevSeq[numResponseSeq] == 1){
+                if (prevSeq[numResponseSeq] == 3){
                     responseSeq[numResponseSeq] = true;
                     part1 = true;
                     socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
