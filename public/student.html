@@ -9,16 +9,12 @@
         <script src="/socket.io/socket.io.js"></script>
         <script src="/js/hit-sound-component.js"></script>
         <script src="/js/menu-component.js"></script>
-
     </head>
     <body>
-        <a-scene loading-screen="dotsColor: #e74c3c;
-                                 backgroundColor: #353535;
-                                 enabled: true;"
-                 physics="debug: false;
+        <a-scene physics="debug: true;
                           gravity: -9;
-                          maxInterval: 0.02;
-                          iterations: 20;
+                          maxInterval: 0.0667;
+                          iterations: 30;
                           restitution: 0.1;"
                  shadow="type: pcfsoft;" 
                  fog="type: linear;
@@ -29,7 +25,13 @@
             <a-assets>
                 <!-- Mixins -->
                 <a-mixin    id="lantern-light"
-                            light = "type: spot; angle: 50; distance: 5; decay: 1; penumbra: 1; color: #ffd779; intensity: 0.5;"
+                            light = "type: spot;
+                                     angle: 50;
+                                     distance: 5;
+                                     decay: 1;
+                                     penumbra: 1;
+                                     color: #ffd779;
+                                     intensity: 0.5;"
                             rotation = "-90 0 0"
                 ></a-mixin>
 
@@ -57,15 +59,18 @@
                 <a-asset-item id="lanternSingle-obj" src="/assets/models/objFiles/lantern/lantern_menu.obj"></a-asset-item>
 
                 <a-asset-item id="bgSword-obj" src="/assets/models/objFiles/bg_models/bg_sword.obj"></a-asset-item>
-
+              
                 <a-asset-item id="scroll-obj" src="/assets/models/objFiles/scroll/scroll.obj"></a-asset-item>
-
-
-
-                <audio id='hit-sound' src='/assets/sounds/effects/hitSound.mp3'></audio>
-                <audio id="nature-sound" loop>
-                    <source  src="/assets/sounds/ambientSounds.mp3" type="audio/mp3">
-                </audio>
+              
+                <!-- Audio -->
+                <audio  id='hit-sound'
+                        src='/assets/sounds/effects/hitSound.mp3'
+                ></audio>
+                <audio  id="nature-sound"
+                        src="/assets/sounds/ambientSounds.mp3"
+                        type="audio/mp3"
+                        loop
+                ></audio>
 
                 <!-- Mixins -->
                 <a-mixin id="controller"
@@ -84,13 +89,13 @@
                                            collidesWith: swords, objs;
                                            collisionForces: false;"
                 ></a-mixin>
-                
             </a-assets>
 
             <!-- C A M E R A   &   V R   H A N D S -->
             <!--user POV = ~1.8m (6ft) base height + ~0.4m raised platform)-->
-            <a-entity   id="head"
+            <a-entity   id="player"
                         camera
+                        wasd-controls
                         look-controls
                         position="0 1.8 1.00"
             ></a-entity>
@@ -117,17 +122,18 @@
                                  shadowBias: -0.000001;
                                  shadowMapWidth: 2048;
                                  shadowMapHeight: 2048;"
-                        position = "0 7.33 0"
+                        position = "0 7.03 0"
                         rotation = "-90 0 0"
             ></a-entity>
             <a-entity   light = "type: ambient;
                                  intensity: 0.23;
-                                 color: #f86605;"></a-entity>
+                                 color: #f86605;"
+            ></a-entity>
             <a-entity   light = "type: spot;
                                  angle: 25;
                                  penumbra: 1;
                                  color: #ffefca"
-                        position = "0 4.95 -14.27"
+                        position = "0 4.65 -14.27"
                         rotation = "-90 0 0"
             ></a-entity>
             
@@ -136,14 +142,12 @@
             <a-entity   id="dojo"
                         obj-model="obj: #dojo-obj"
                         scale="1.0 1.0 1.0"
-                        position="0 0 0"
+                        position="0 -0.3 0"
                         material="src:#dojo-tex;
-                                  roughness:0.7;
-                                  metalness:0;
-                                  transparent:true;
-                                  opacity:1;"
-                        shadow="cast:true;
-                                receive:true;"
+                                  roughness: 0.7;
+                                  metalness: 0;
+                                  transparent: true;
+                                  opacity: 1;"
             >
                 <!-- environment hit boxes -->
                 <!--platform-->
@@ -154,7 +158,7 @@
                                       width: 3.658;
                                       depth: 3.658;"
                             collision-filter="group: environment;
-                                              collidesWith: swords, objs;
+                                              collidesWith: swords, objs, dummy;
                                               collisionForces: true;"
                             material="color: #bdc3c7;
                                       roughness: 0.7;
@@ -172,7 +176,7 @@
                                       width: 16.2;
                                       depth: 25.5;"
                             collision-filter="group: environment;
-                                              collidesWith: swords, objs;
+                                              collidesWith: swords, objs, dummy;
                                               collisionForces: true;"
                             material="color: #bdc3c7;
                                       roughness: 0.7;
@@ -186,81 +190,87 @@
             <a-entity   id="windows"
                         obj-model="obj:#windows-obj"
                         scale="1.0 1.0 1.0"
-                        position="0 0 0"
+                        position="0 -0.3 0"
                         material="color: #fff9de;
                                   roughness :0.7;
                                   metalness: 0;
                                   transparent: true;
                                   opacity: 0.85;"
-                        shadow="cast: true;
-                                receive: true;"
             ></a-entity>
 
             <!--Lanterns-->
             <a-entity   id="lantern-frames"
                         obj-model="obj:#lanternFrames-obj"
                         scale="1.0 1.0 1.0"
-                        position="0 0 0"
-                        material="src:#lantern-tex; roughness:0.7; metalness:0; transparent:true; opacity:1;"
-                        shadow="cast:true; receive:true;"
+                        position="0 -0.3 0"
+                        material="src:#lantern-tex;
+                                  roughness:0.7;
+                                  metalness:0;
+                                  transparent:true;
+                                  opacity:1;"
             ></a-entity>
 
             <a-entity   id="lantern-bodies"
                         obj-model="obj:#lanternBodies-obj"
                         scale="1.0 1.0 1.0"
-                        position="0 0 0"
-                        material="src:#lantern-tex; roughness:0.7; metalness:0; transparent:true; opacity:0.95; emissive:#ffe3a4; emissiveIntensity:0.3;"
-                        shadow="cast:true; receive:true;"
+                        position="0 -0.3 0"
+                        material="src:#lantern-tex;
+                                  roughness: 0.7;
+                                  metalness: 0;
+                                  transparent: true;
+                                  opacity: 0.95;
+                                  emissive: #ffe3a4;
+                                  emissiveIntensity: 0.3;"
             ></a-entity>
 
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
-                        position="-4.915 2.52 -10.0"
+                        position="-4.915 2.22 -10.0"
             ></a-entity>
 
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
-                        position="-4.915 2.52 -5.0"
+                        position="-4.915 2.22 -5.0"
             ></a-entity>
 
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
-                        position="-4.915 2.52 0.0"
+                        position="-4.915 2.22 0.0"
             ></a-entity>
 
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
-                        position="-4.915 2.52 5.01"
+                        position="-4.915 2.22 5.01"
             ></a-entity>
 
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
-                        position="-4.915 2.52 10.01"
+                        position="-4.915 2.22 10.01"
             ></a-entity>
 
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
-                        position="4.91 2.52 -10.01"
+                        position="4.91 2.22 -10.01"
             ></a-entity>
 
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
-                        position="4.91 2.52 -5.002"
+                        position="4.91 2.22 -5.002"
             ></a-entity>
 
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
-                        position="4.91 2.52 -0.001"
+                        position="4.91 2.22 -0.001"
             ></a-entity>
 
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
-                        position="4.91 2.52 4.997"
+                        position="4.91 2.22 4.997"
             ></a-entity>
 
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
-                        position="4.91 2.52 10.0"
+                        position="4.91 2.22 10.0"
             ></a-entity>
 
 
@@ -269,14 +279,14 @@
                         obj-model="obj: #scroll-obj"
                         material="src: #scroll-tex;
                                   roughness: 0.8;"
-                        position="-2 0 -1.8"
+                        position="-2 -0.3 -1.8"
                         rotation="0 35 0"
             ></a-entity>
             <a-entity   id="scroll-02"
                         obj-model="obj: #scroll-obj"
                         material="src: #scroll-tex;
                                   roughness: 0.8;"
-                        position="2 0 -1.8"
+                        position="2 -0.3 -1.8"
                         rotation="0 -215 0"
             ></a-entity>
 
@@ -371,41 +381,32 @@
 
             <!--dummy-->
             <a-entity   id="dummy-rig"
-                        position="0 1.5 -1.0"
+                        position="0 1.1 -1.0"
             >
-                <a-entity   id="dummy-box"
+                <!-- Base Collision Box -->
+                <a-entity   id="base"
+                            class="dummyBox"
                             body="type: dynamic;
-                                  mass: 1;
-                                  linearDamping: 0.02;
+                                  mass: 50;
+                                  angularDamping: 1;
                                   shape: none;"
-                            collision-filter="group: objs;
+                            collision-filter="group: dummy;
                                               collidesWith: hands, swords, objs, environment;
                                               collisionForces: true;"
-                            shape__core="shape: cylinder;
-                                         height: 1.64;
-                                         radiusTop: 0.12;
-                                         radiusBottom: 0.12;
-                                         offset: 0 0.04 0;
-                                         numSegments: 16;"
-                            shape__face="shape: box;
-                                         height: 0.4;
-                                         halfExtents: 0.04 0.04 0.14;
-                                         offset: -0.01 0.75 0.255;"
-                            shape__arms="shape: box;
-                                         height: 0.4;
-                                         halfExtents: 0.54 0.05 0.05;
-                                         offset: 0 0.4 -0.02;"
-                            shape__leg="shape: box;
-                                         halfExtents: 0.03 0.3 0.2;
-                                         offset: 0 -0.5 0.3;"
+                            constraint="type: hinge;
+                                        target: #groundPlane-platform;
+                                        pivot: 0 -0.848 0;
+                                        targetPivot: 0.025 0.25 -1;
+                                        maxForce: 1e7;"
                             shape__base="shape: box;
                                          halfExtents: 0.3 0.016 0.3;
                                          offset: 0 -0.84 0;"
                             shape__foot="shape: box;
                                          halfExtents: 0.17 0.016 0.17;
                                          offset: 0 -0.84 0.623;"
-                >
-                    <a-entity   id="dummy"
+                >   
+                    <!-- Geometry -->
+                    <a-entity   id="dummy-geo"
                                 obj-model="obj:#dummy-obj"
                                 position="0 -0.85 0"
                                 scale="1.0 1.0 1.0"
@@ -414,8 +415,152 @@
                                           roughness: 0.7;
                                           metalness: 0;"
                     ></a-entity>
+                    <!-- Head Collision Box -->
+                    <a-entity   id="head"
+                                class="dummyBox"
+                                body="type: dynamic;
+                                      shape: none;"
+                                collision-filter="group: dummy;
+                                                  collidesWith: hands, swords, objs, environment;
+                                                  collisionForces: true;"
+                                constraint="type: lock;
+                                            target: #base;"
+                                shape__face="shape: box;
+                                             height: 0.4;
+                                             halfExtents: 0.04 0.04 0.14;
+                                             offset: -0.01 0.75 0.255;"
+                    ></a-entity>
+                    <!-- Neck Collision Box -->
+                    <a-entity   id="neck"
+                                class="dummyBox"
+                                body="type: dynamic;
+                                      shape: none;"
+                                collision-filter="group: dummy;
+                                                  collidesWith: hands, swords, objs, environment;
+                                                  collisionForces: true;"
+                                constraint="type: lock;
+                                            target: #base;"
+                                shape__neck="shape: cylinder;
+                                             height: 0.2;
+                                             radiusTop: 0.12;
+                                             radiusBottom: 0.12;
+                                             offset: 0 0.57 0;
+                                             numSegments: 16;"
+                    ></a-entity>
+                    <!-- Abdomen Collision Box -->
+                    <a-entity   id="abdomen"
+                                class="dummyBox"
+                                body="type: dynamic;
+                                      shape: none;"
+                                collision-filter="group: dummy;
+                                                  collidesWith: hands, swords, objs, environment;
+                                                  collisionForces: true;"
+                                constraint="type: lock;
+                                            target: #base;"
+                                shape__abdomen="shape: cylinder;
+                                                height: 0.2;
+                                                radiusTop: 0.12;
+                                                radiusBottom: 0.12;
+                                                offset: 0 0.215 0;
+                                                numSegments: 16;"
+                    ></a-entity>
+                    <!-- Right Arm Collision Box -->
+                    <a-entity   id="rightArm"
+                                class="dummyBox"
+                                body="type: dynamic;
+                                      shape: none;"
+                                collision-filter="group: dummy;
+                                                  collidesWith: hands, swords, objs, environment;
+                                                  collisionForces: true;"
+                                constraint="type: lock;
+                                            target: #base;"
+                                shape__rightArm="shape: box;
+                                                 height: 0.4;
+                                                 halfExtents: 0.27 0.04 0.04;
+                                                 offset: -0.274 0.4 0;"
+                                rotation="0 -4 0"
+                    ></a-entity>
+                    <!-- Left Arm Collision Box -->
+                    <a-entity   id="leftArm"
+                                class="dummyBox"
+                                body="type: dynamic;
+                                      shape: none;"
+                                collision-filter="group: dummy;
+                                                collidesWith: hands, swords, objs, environment;
+                                                collisionForces: true;"
+                                constraint="type: lock;
+                                            target: #base;"
+                                shape__leftArm="shape: box;
+                                                height: 0.4;
+                                                halfExtents: 0.27 0.04 0.04;
+                                                offset: 0.274 0.4 0;"
+                            rotation="0 3 0"
+                    ></a-entity>
+                    <!-- Left Hand Collision Box -->
+                    <a-entity   id="leftHand"
+                                class="dummyBox"
+                                body="type: dynamic;
+                                    shape: none;"
+                                collision-filter="group: dummy;
+                                                collidesWith: hands, swords, objs, environment;
+                                                collisionForces: true;"
+                                constraint="type: lock;
+                                            target: #base;"
+                                shape__leftAbdomen="shape: box;
+                                                    height: 0.4;
+                                                    halfExtents: 0.27 0.04 0.04;
+                                                    offset: 0.35 0 0;"
+                                rotation="0 -47 0"
+                    ></a-entity>
+                    <!-- Right Hand Collision Box -->
+                    <a-entity   id="rightHand"
+                                class="dummyBox"
+                                body="type: dynamic;
+                                      shape: none;"
+                                collision-filter="group: dummy;
+                                                collidesWith: hands, swords, objs, environment;
+                                                collisionForces: true;"
+                                constraint="type: lock;
+                                            target: #base;"
+                                shape__rightAbdomen="shape: box;
+                                                    height: 0.4;
+                                                    halfExtents: 0.24 0.04 0.04;
+                                                    offset: 0.34 0.04 0;"
+                                rotation="0 -163 0"
+                    ></a-entity>
+                    <!-- Leg Collision Boxes -->
+                    <a-entity   id="leg"
+                                class="dummyBox"
+                                body="type: dynamic;
+                                      shape: none;"
+                                collision-filter="group: dummy;
+                                                collidesWith: hands, swords, objs, environment;
+                                                collisionForces: true;"
+                                constraint="type: lock;
+                                            target: #base;"
+                                shape__legTop="shape: box;
+                                            halfExtents: 0.03 0.02 0.34;
+                                            offset: 0 -0.057 0.19;"
+                                rotation="21 0 0"
+                    ></a-entity>
+                    <a-entity   id="leg"
+                                class="dummyBox"
+                                body="type: dynamic;
+                                      shape: none;"
+                                collision-filter="group: dummy;
+                                                collidesWith: hands, swords, objs, environment;
+                                                collisionForces: true;"
+                                constraint="type: lock;
+                                            target: #base;"
+                                shape__legBottom="shape: box;
+                                            halfExtents: 0.03 0.02 0.25;
+                                            offset: 0 0.39 0.64;"
+                                rotation="75 0 0"
+                    ></a-entity>
                 </a-entity>
+                <!-- End of Hit Boxes-->
             </a-entity>
+            <!-- End of Dummy Rig-->
             
             <!--shinai-->
             <a-entity   id="shinai"
@@ -444,7 +589,7 @@
                                        radiusBottom: 0.018;
                                        numSegments: 8;"
                         collision-filter="group: swords;
-                                          collidesWith: hands, objs, environment;
+                                          collidesWith: hands, objs, environment, dummy;
                                           collisionForces: true;"
                         material="src: #shinai-tex;
                                   roughness: 0.7;
@@ -459,7 +604,7 @@
             <a-entity   id="bgSword"
                         obj-model="obj:#bgSword-obj"
                         scale="1.0 1.0 1.0"
-                        position="0 0.5 -4"
+                        position="0 0.2 -4"
                         material="src:#bgSword-tex; roughness:0.7;"
                         shadow="cast:true; receive:true;"
             ></a-entity>
@@ -536,9 +681,7 @@
                 
                 rLantern.setAttribute('material', {src:'#lantern-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
                 cLantern.setAttribute('material', {src:'#lantern-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
-                
             });
-
 
             socket.on('percResp', function(data){
                 console.log('percentCheck');
@@ -555,7 +698,6 @@
                 console.log("Passed:", passed, "%");
                 console.log("Failed:", failed, "%");
             });
-
 
             window.onload = function(){
                 let ambient = document.querySelector('#nature-sound');
@@ -577,10 +719,7 @@
                     rLantern.setAttribute('material', {src:'#lantern-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
                     cLantern.setAttribute('material', {src:'#lantern-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
                 }, 1000);
-                
             }
-
-
         </script>
     </body>
 </html>
