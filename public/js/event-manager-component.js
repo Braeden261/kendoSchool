@@ -7,8 +7,21 @@ AFRAME.registerComponent('event-manager', {
         Context_AF.handRight        = document.querySelector('#handRight');
         Context_AF.handLeft         = document.querySelector('#handLeft');
         Context_AF.shinai           = document.querySelector('#shinai');
+
+        //Dummy hit boxes
+        Context_AF.dummyBoxIdList   = [document.querySelector('#head').getAttribute('id'),
+                                       document.querySelector('#neck').getAttribute('id'),
+                                       document.querySelector('#rightArm').getAttribute('id'),
+                                       document.querySelector('#leftArm').getAttribute('id'),
+                                       document.querySelector('#abdomen').getAttribute('id'),
+                                       document.querySelector('#rightHand').getAttribute('id'),
+                                       document.querySelector('#leftHand').getAttribute('id'),
+                                       document.querySelector('#leg').getAttribute('id'),];
+        Context_AF.tempCollider     = null;
+
+        console.log(Context_AF.dummyBoxIdList.length);
        
-        //E V E N T S - H A N D _ R I G H T
+        //E V E N T S - H A N D  C O N T R O L L E R _ R I G H T
         //Grip Closed
         Context_AF.handRight.addEventListener('gripdown', function(event) {
             Context_AF.handRight.addState('grabbing');
@@ -51,7 +64,7 @@ AFRAME.registerComponent('event-manager', {
         });
 
 
-        //E V E N T S - H A N D _ L E F T
+        //E V E N T S - H A N D  C O N T R O L L E R _ L E F T
         //Grip Closed
         Context_AF.handLeft.addEventListener('gripdown', function(event) {
             Context_AF.handLeft.addState('grabbing');
@@ -62,7 +75,7 @@ AFRAME.registerComponent('event-manager', {
                                                             y: Context_AF.handLeft.getAttribute('position').y,
                                                             z: Context_AF.handLeft.getAttribute('position').z});
                 Context_AF.shinai.addState('grabbed');
-                Context_AF.shinai.setAttribute('constraint', {type: 'lock', target:'#handLeft', collideConnected: false, });
+                Context_AF.shinai.setAttribute('constraint', {type: 'lock', target:'#handLeft', collideConnected: false, maxForce: 1e8});
             }
         });
 
@@ -96,8 +109,17 @@ AFRAME.registerComponent('event-manager', {
         //E V E N T S - S H I N A I
         //Collision
         Context_AF.shinai.addEventListener('collide', function(event) {
-            //console.log(Context_AF.shinai.components)
-            //Context_AF.CollisionDetail(event);
+            if (Context_AF.dummyBoxIdList.includes(event.detail.body.el.id) && event.detail.body.el.id != Context_AF.tempCollider) {
+                Context_AF.tempCollider = event.detail.body.el.id;
+                
+                setTimeout(function() {
+                    Context_AF.tempCollider = null;
+                    console.log('collider reset');
+                }, 1000);
+
+                socket.emit(event.detail.body.el.id + "_response");
+                Context_AF.CollisionDetail(event);
+            }
         });
 
         //State Added
@@ -113,7 +135,6 @@ AFRAME.registerComponent('event-manager', {
 
     //C O L L I S I O N   D E T A I L S
     CollisionDetail : function(_event) {
-        //console.log(_event.detail);
         console.log("[" + _event.detail.target.el.getAttribute('id') + " 💥 " + _event.detail.body.el.getAttribute('id') + "]");
     },
 });

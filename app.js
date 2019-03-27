@@ -58,7 +58,7 @@ socketIO.on('connection', function(socket){
 
     //Send Sequence
     //Row 1
-    socket.on('leftArm', function(){    
+    socket.on('head', function(){
         if (numSeq < 10){
             sequence[numSeq] = "1";
             numSeq++;
@@ -67,7 +67,7 @@ socketIO.on('connection', function(socket){
                 console.log('sequence_full');
             }
     });
-    socket.on('head', function(){
+    socket.on('neck', function(){
         if (numSeq < 10){
             sequence[numSeq] = "2";
             numSeq++;
@@ -76,7 +76,7 @@ socketIO.on('connection', function(socket){
                 console.log('sequence_full');
             }
     });
-    socket.on('ribCage', function(){
+    socket.on('leftArm', function(){    
         if (numSeq < 10){
             sequence[numSeq] = "3";
             numSeq++;
@@ -95,7 +95,7 @@ socketIO.on('connection', function(socket){
             }
     });
     //Row 2
-    socket.on('leftLeg', function(){
+    socket.on('abdomen', function(){
         if (numSeq < 10){
             sequence[numSeq] = "5";
             numSeq++;
@@ -104,7 +104,7 @@ socketIO.on('connection', function(socket){
                 console.log('sequence_full');
             }
     });
-    socket.on('pelvis', function(){
+    socket.on('leftHand', function(){
         if (numSeq < 10){
             sequence[numSeq] = "6";
             numSeq++;
@@ -113,7 +113,7 @@ socketIO.on('connection', function(socket){
                 console.log('sequence_full');
             }
     });
-    socket.on('abdomen', function(){
+    socket.on('rightHand', function(){
         if (numSeq < 10){
             sequence[numSeq] = "7";
             numSeq++;
@@ -122,7 +122,7 @@ socketIO.on('connection', function(socket){
                 console.log('sequence_full');
             }
     });
-    socket.on('rightLeg', function(){
+    socket.on('leg', function(){
         if (numSeq < 10){
             sequence[numSeq] = "8";
             numSeq++;
@@ -166,11 +166,10 @@ socketIO.on('connection', function(socket){
     });
 
 
-    //Response
+    //Responses
     //Row 1
-    
-    socket.on('leftArm_response', function(){   
-        if (start == true){   
+    socket.on('head_response', function(){
+        if (start == true){      
             if (numResponseSeq < prevNumSeq){
                 if (prevSeq[numResponseSeq] == 1){
                     responseSeq[numResponseSeq] = true;
@@ -191,12 +190,11 @@ socketIO.on('connection', function(socket){
                 socketIO.emit('complete');
                 //socketIO.emit('percResp',{responseSeq,numResponseSeq});
                 start = false;
-
             }
         }
     });
-    socket.on('head_response', function(){
-        if (start == true){      
+    socket.on('neck_response', function(){
+        if (start == true){     
             if (numResponseSeq < prevNumSeq){
                 if (prevSeq[numResponseSeq] == 2){
                     responseSeq[numResponseSeq] = true;
@@ -217,12 +215,11 @@ socketIO.on('connection', function(socket){
                 socketIO.emit('complete');
                 //socketIO.emit('percResp',{responseSeq,numResponseSeq});
                 start = false;
-
             }
         }
     });
-    socket.on('ribCage_response', function(){ 
-        if (start == true){     
+    socket.on('leftArm_response', function(){   
+        if (start == true){   
             if (numResponseSeq < prevNumSeq){
                 if (prevSeq[numResponseSeq] == 3){
                     responseSeq[numResponseSeq] = true;
@@ -243,7 +240,6 @@ socketIO.on('connection', function(socket){
                 socketIO.emit('complete');
                 //socketIO.emit('percResp',{responseSeq,numResponseSeq});
                 start = false;
-
             }
         }
     });
@@ -269,12 +265,11 @@ socketIO.on('connection', function(socket){
                 socketIO.emit('complete');
                 //socketIO.emit('percResp',{responseSeq,numResponseSeq});
                 start = false;
-
             }
         }
     });
     //Row 2
-    socket.on('leftLeg_response', function(){ 
+    socket.on('abdomen_response', function(){ 
         if (start == true){     
             if (numResponseSeq < prevNumSeq){
                 if (prevSeq[numResponseSeq] == 5){
@@ -296,11 +291,10 @@ socketIO.on('connection', function(socket){
                 socketIO.emit('complete');
                 //socketIO.emit('percResp',{responseSeq,numResponseSeq});
                 start = false;
-
             }
         }
     });
-    socket.on('pelvis_response', function(){
+    socket.on('leftHand_response', function(){
         if (start == true){      
             if (numResponseSeq < prevNumSeq){
                 if (prevSeq[numResponseSeq] == 6){
@@ -322,11 +316,10 @@ socketIO.on('connection', function(socket){
                 socketIO.emit('complete');
                 //socketIO.emit('percResp',{responseSeq,numResponseSeq});
                 start = false;
-
             }
         }
     });
-    socket.on('abdomen_response', function(){
+    socket.on('rightHand_response', function(){
         if (start == true){      
             if (numResponseSeq < prevNumSeq){
                 if (prevSeq[numResponseSeq] == 7){
@@ -348,11 +341,10 @@ socketIO.on('connection', function(socket){
                 socketIO.emit('complete');
                 //socketIO.emit('percResp',{responseSeq,numResponseSeq});
                 start = false;
-
             }
         }
     });
-    socket.on('rightLeg_response', function(){
+    socket.on('leg_response', function(){
         if (start == true){    
             if (numResponseSeq < prevNumSeq){
                 if (prevSeq[numResponseSeq] == 8){
@@ -374,10 +366,10 @@ socketIO.on('connection', function(socket){
                 socketIO.emit('complete');
                 //socketIO.emit('percResp',{responseSeq,numResponseSeq});
                 start = false;
-
             }
         }
     });
+    // End of Responses //
     
     socket.on('percent', function(){
         console.log('percent');
