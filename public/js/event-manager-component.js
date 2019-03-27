@@ -17,7 +17,7 @@ AFRAME.registerComponent('event-manager', {
                                        document.querySelector('#rightHand').getAttribute('id'),
                                        document.querySelector('#leftHand').getAttribute('id'),
                                        document.querySelector('#leg').getAttribute('id'),];
-        Context_AF.tempCollider     = '';
+        Context_AF.tempCollider     = null;
 
         console.log(Context_AF.dummyBoxIdList.length);
        
@@ -111,9 +111,14 @@ AFRAME.registerComponent('event-manager', {
         Context_AF.shinai.addEventListener('collide', function(event) {
             if (Context_AF.dummyBoxIdList.includes(event.detail.body.el.id) && event.detail.body.el.id != Context_AF.tempCollider) {
                 Context_AF.tempCollider = event.detail.body.el.id;
-                console.log(event.detail.body.el.id);
+                
+                setTimeout(function() {
+                    Context_AF.tempCollider = null;
+                    console.log('collider reset');
+                }, 1000);
 
-                socket.emit(event.detail.body.el.id + "_response", event.detail.body.el.id);
+                socket.emit(event.detail.body.el.id + "_response");
+                Context_AF.CollisionDetail(event);
             }
         });
 
@@ -130,7 +135,6 @@ AFRAME.registerComponent('event-manager', {
 
     //C O L L I S I O N   D E T A I L S
     CollisionDetail : function(_event) {
-        //console.log(_event.detail);
         console.log("[" + _event.detail.target.el.getAttribute('id') + " 💥 " + _event.detail.body.el.getAttribute('id') + "]");
     },
 });
