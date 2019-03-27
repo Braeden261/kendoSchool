@@ -17,8 +17,7 @@ AFRAME.registerComponent('hit-sound-component', {
             }
             Context_AF.hitSound.volume = 1*mag;
             Context_AF.hitSound.play();
-            console.log("Play Sound");
-            
+            //console.log("Play Sound");
         });
     }
 });
