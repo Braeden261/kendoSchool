@@ -40,6 +40,9 @@
             failed = 100 * ( failed/(data.numResponseSeq) );
             console.log("Passed:", passed, "%");
             console.log("Failed:", failed, "%");
+
+            document.querySelector('.passPercent').innerHTML = passed + "%";
+            document.querySelector('.failPercent').innerHTML = failed + "%";
         });
 
     </script>
@@ -53,8 +56,18 @@
         <h2> YOUR STUDENT'S PERFORMANCE</h2>
         <table>
             <tr>
-                <td class="left-td"><img src="images/green_icon.png" class="performance-image"> </td>
-                <td class="right-td"><img src="images/red_icon.png" class="performance-image"> </td>
+                <td class="left-td">
+                    <div class="container">
+                        <img src="images/green_icon.png" class="performance-image">
+                        <div class="passPercent">#</div> 
+                    </div>
+                </td>
+                <td class="right-td">
+                    <div class="container">
+                        <img src="images/red_icon.png" class="performance-image">
+                        <div class="failPercent">#</div> 
+                    </div>
+                </td>
             </tr>
         </table>
     </div>

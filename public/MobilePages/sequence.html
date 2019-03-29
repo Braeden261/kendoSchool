@@ -9,19 +9,24 @@
         <script>
             //socketio networking
             let socket = io();
+            let length = 0;
 
             window.onload = function () {
                 socket.emit('clear');
                 let table = document.getElementById("tableID");
-                console.log(table)
+                // console.log(table)
                 if (table != null) {
                     for (let i = 0; i < table.rows.length; i++) {
-                        for (let j = 0; j < table.rows[i].cells.length; j++)
-                        table.rows[i].cells[j].onclick = function () {
-                            console.log(this.id)
-                            socket.emit(this.id);
-                            mark(this);
-                        };
+                        for (let j = 0; j < table.rows[i].cells.length; j++) {
+                            table.rows[i].cells[j].onclick = function () {
+                                if (length != 10){
+                                    console.log(this.id)
+                                    socket.emit(this.id);
+                                    mark(this);
+                                    length++;
+                                }
+                            };
+                        } 
                     }
                 }            
             }

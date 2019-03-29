@@ -18,12 +18,24 @@ h3 {
 html, body {
     height: 100%;
 }
+
 body {
     font-family: 'Montserrat', sans-serif;
     font-weight: 100;
     background-color: #353535;
     overflow:hidden;
     margin: 0;
+}
+
+.notification {
+    border-radius: 50%;
+    visibility: hidden;
+    background-color:red;
+    width:20px;
+    height:20px;
+    position:absolute; 
+    right:-5px;
+    top:-5px;
 }
 
 .right-icon {
@@ -115,11 +127,13 @@ body {
 }
 
 .sequence {
+    position: relative;
     border-collapse: separate;
     border-spacing: 20px;
 }
 
 table.sequence td {
+    position: relative;
     color: white;
     background-color: white;
     width: 75px;
@@ -146,4 +160,27 @@ td {
 
 .right-td {
     padding-right: 150px;
+}
+
+.container {
+    position: relative;
+    text-align: center;
+    color: black;
+}
+
+.passPercent, .failPercent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48pt;
+    font-weight: 400;
+}
+
+.failPercent {
+    color: #CF493C;
+}
+
+.passPercent {
+    color: #56BA4D;
 }
