@@ -16,12 +16,45 @@ AFRAME.registerComponent('event-manager', {
                                        document.querySelector('#abdomen').getAttribute('id'),
                                        document.querySelector('#rightHand').getAttribute('id'),
                                        document.querySelector('#leftHand').getAttribute('id'),
-                                       document.querySelector('#leg').getAttribute('id'),];
+                                       document.querySelector('#leg').getAttribute('id')];
         Context_AF.tempCollider     = null;
 
-        console.log(Context_AF.dummyBoxIdList.length);
-       
-        //E V E N T S - H A N D  C O N T R O L L E R _ R I G H T
+        //Sequence Graphics
+        Context_AF.seqGraphicsEK    = [document.querySelector('#display-headEK').getAttribute('id'),
+                                       document.querySelector('#display-neckEK').getAttribute('id'),
+                                       document.querySelector('#display-leftArmEK').getAttribute('id'),
+                                       document.querySelector('#display-rightArmEK').getAttribute('id'),
+                                       document.querySelector('#display-abdomenEK').getAttribute('id'),
+                                       document.querySelector('#display-leftHandEK').getAttribute('id'),
+                                       document.querySelector('#display-rightHandEK').getAttribute('id'),
+                                       document.querySelector('#display-legEK').getAttribute('id')];
+
+        Context_AF.seqGraphicsK    = [document.querySelector('#display-headK').getAttribute('id'),
+                                      document.querySelector('#display-neckK').getAttribute('id'),
+                                      document.querySelector('#display-leftArmK').getAttribute('id'),
+                                      document.querySelector('#display-rightArmK').getAttribute('id'),
+                                      document.querySelector('#display-abdomenK').getAttribute('id'),
+                                      document.querySelector('#display-leftHandK').getAttribute('id'),
+                                      document.querySelector('#display-rightHandK').getAttribute('id'),
+                                      document.querySelector('#display-legK').getAttribute('id')];
+
+        //Strike Sequence
+        Context_AF.currSeqEK = [];
+        Context_AF.currSeqK = [];
+        
+        //S C E N E
+        socket.on('sequence', function(event) {
+            Context_AF.currSeqEK.length = 0;
+            Context_AF.currSeqK.length = 0;
+
+            for (i = 0; i < event.sequence.length; i++) {
+                Context_AF.currSeqEK[i] = Context_AF.seqGraphicsEK[event.sequence[i]];
+                Context_AF.currSeqK[i] = Context_AF.seqGraphicsK[event.sequence[i]];
+                console.log('EK Graphic ' + i + ': ' + Context_AF.currSeqEK[i]);
+            }
+        });
+
+        //H A N D  C O N T R O L L E R _ R I G H T
         //Grip Closed
         Context_AF.handRight.addEventListener('gripdown', function(event) {
             Context_AF.handRight.addState('grabbing');
@@ -35,7 +68,6 @@ AFRAME.registerComponent('event-manager', {
                 Context_AF.shinai.setAttribute('constraint', {type: 'lock', target:'#handRight', collideConnected: false, });
             }
         });
-
         //Grip Release
         Context_AF.handRight.addEventListener('gripup', function(event) {
             Context_AF.handRight.removeState('grabbing');
@@ -46,7 +78,6 @@ AFRAME.registerComponent('event-manager', {
                 Context_AF.shinai.removeAttribute('constraint');
             }
         });
-        
         //Point Start
         Context_AF.handRight.addEventListener('pointingstart', function(event) {
             Context_AF.handRight.addState('pointing');
@@ -54,7 +85,6 @@ AFRAME.registerComponent('event-manager', {
 
             Context_AF.handRight.setAttribute('collision-filter', {collisionForces: true});
         });
-
         //Point End
         Context_AF.handRight.addEventListener('pointingend', function(event) {
             Context_AF.handRight.removeState('pointing');
@@ -63,8 +93,7 @@ AFRAME.registerComponent('event-manager', {
             Context_AF.handRight.setAttribute('collision-filter', {collisionForces: false});
         });
 
-
-        //E V E N T S - H A N D  C O N T R O L L E R _ L E F T
+        //H A N D  C O N T R O L L E R _ L E F T
         //Grip Closed
         Context_AF.handLeft.addEventListener('gripdown', function(event) {
             Context_AF.handLeft.addState('grabbing');
@@ -78,7 +107,6 @@ AFRAME.registerComponent('event-manager', {
                 Context_AF.shinai.setAttribute('constraint', {type: 'lock', target:'#handLeft', collideConnected: false, maxForce: 1e8});
             }
         });
-
         //Grip Release
         Context_AF.handLeft.addEventListener('gripup', function(event) {
             Context_AF.handLeft.removeState('grabbing');
@@ -89,7 +117,6 @@ AFRAME.registerComponent('event-manager', {
                 Context_AF.shinai.removeAttribute('constraint');
             }
         });
-        
         //Point Start
         Context_AF.handLeft.addEventListener('pointingstart', function(event) {
             Context_AF.handLeft.addState('pointing');
@@ -97,7 +124,6 @@ AFRAME.registerComponent('event-manager', {
 
             Context_AF.handLeft.setAttribute('collision-filter', {collisionForces: true});
         });
-
         //Point End
         Context_AF.handLeft.addEventListener('pointingend', function(event) {
             Context_AF.handLeft.removeState('pointing');
@@ -106,7 +132,7 @@ AFRAME.registerComponent('event-manager', {
             Context_AF.handLeft.setAttribute('collision-filter', {collisionForces: false});
         });
 
-        //E V E N T S - S H I N A I
+        //S H I N A I
         //Collision
         Context_AF.shinai.addEventListener('collide', function(event) {
             if (Context_AF.dummyBoxIdList.includes(event.detail.body.el.id) && event.detail.body.el.id != Context_AF.tempCollider) {
@@ -121,12 +147,10 @@ AFRAME.registerComponent('event-manager', {
                 Context_AF.CollisionDetail(event);
             }
         });
-
         //State Added
         Context_AF.shinai.addEventListener('stateadded', function(event) {
             console.log("[Shinai ✔ " + event.detail + "]");
         });
-        
         //State Added
         Context_AF.shinai.addEventListener('stateremoved', function(event) {
             console.log("[Shinai ✘ " + event.detail + "]");

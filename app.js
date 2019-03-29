@@ -135,10 +135,9 @@ socketIO.on('connection', function(socket){
     socket.on('send', function(){
         if (numSeq != 0){
             console.log(numSeq);
-            socketIO.emit('send');
             console.log('send event detected');
             console.log('Sequence: ' + sequence);
-            socketIO.emit('send_instruction', {sequence});
+            socketIO.emit('sequence', {sequence});
             prevSeq = sequence;
             prevNumSeq = numSeq;
             sequence = [];
@@ -162,7 +161,6 @@ socketIO.on('connection', function(socket){
         sequence = [];
         numSeq = 0;
     });
-
 
     //Responses
     //Row 1

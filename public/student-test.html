@@ -90,7 +90,7 @@
                 console.log('connected');
             });
 
-            socket.on('send_instruction', function(data){
+            socket.on('sequence', function(data){
                 console.log('Incoming Sequence: ' + data.sequence); //print data in console
             });
 
