@@ -46,7 +46,9 @@
                 <img id = "scroll-tex" src = "/assets/textures/scrollTexture/scroll_tex.png">
 
                 <img id = "bow-tex" src = "/assets/textures/lanternTexture/menuBow-lantern_tex.png">
-                
+
+                <img id="repeat-tex" src = "/assets/textures/lanternTexture/menuRepeat-lantern_tex.png">
+                <img id="cont-tex" src = "/assets/textures/lanternTexture/menuNew-lantern_tex.png">
 
                 <!-- Models -->
                 <a-asset-item id="dojo-obj" src="/assets/models/objFiles/dojo/dojo_structure.obj"></a-asset-item>
@@ -297,7 +299,7 @@
             <!--Physical Menu-->
             <a-box
                     id="anchorA"
-                    position="-0.5 8 0"
+                    position="-1 8 -1"
                     scale=" 0.5 0.5 0.5"
                     static-body
                     material="opacity:0"
@@ -305,7 +307,7 @@
 
             <a-box
                     id="anchorB"
-                    position="0.5 8 0"
+                    position="1 8 -1"
                     scale=" 0.5 0.5 0.5"
                     static-body
                     material="opacity:0"
@@ -321,7 +323,7 @@
                             localAnchorA: 0 0.5 0;"
 
                     id="continue"
-                    position="-0.5 7 0"
+                    position="-1 7 -1"
                     body="  
                             type: dynamic;
                             mass: 50;
@@ -342,8 +344,9 @@
                     id="contLantern"
                     obj-model="obj:#lanternSingle-obj"
                     scale="1 1 1"
-                    material="src:#lantern-tex; roughness:0.7; metalness:0; transparent:true; opacity:0;"
-                    shadow="cast:false; receive:true;"
+                    rotation="0 180 0"
+                    material="src:#cont-tex; roughness:0.7; metalness:0; transparent:true; opacity:0;"
+                    shadow="cast:false; receive:false;"
                 ></a-entity>
             </a-entity>
             <a-entity
@@ -355,7 +358,7 @@
                             localAnchorA: 0 0.5 0;"
 
                     id="repeat"
-                    position="0.5 7 0"
+                    position="1 7 -1"
                     body="  
                             type: dynamic;
                             mass: 50;
@@ -376,8 +379,9 @@
                     id="repeatLantern"
                     obj-model="obj:#lanternSingle-obj"
                     scale="1 1 1"
-                    material="src:#lantern-tex; roughness:0.7; metalness:0; transparent:true; opacity:0;"
-                    shadow="cast:false; receive:true;"
+                    rotation="0 180 0"
+                    material="src:#repeat-tex; roughness:0.7; metalness:0; transparent:true; opacity:0;"
+                    shadow="cast:false; receive:false;"
                 ></a-entity>
             </a-entity>
 
@@ -731,8 +735,9 @@
                 //rBox.setAttribute('position', {x:0.5, y:2, z:0});
                 //cBox.setAttribute('position', {x:-0.5, y:2, z:0});
                 
-                rLantern.setAttribute('material', {src:'#lantern-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
-                cLantern.setAttribute('material', {src:'#lantern-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
+                rLantern.setAttribute('material', {src:'#repeat-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
+                cLantern.setAttribute('material', {src:'#cont-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
+
             });
 
             socket.on('percResp', function(data){
@@ -781,8 +786,8 @@
                 //cbox.setAttribute('position', {x:'-0.5', y:7, z:0});
                 //rbox.setAttribute('position', {x:'0.5', y:7, z:0});
                 setTimeout(function(){
-                    rLantern.setAttribute('material', {src:'#lantern-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
-                    cLantern.setAttribute('material', {src:'#lantern-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
+                    rLantern.setAttribute('material', {src:'#repeat-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
+                    cLantern.setAttribute('material', {src:'#cont-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
                 }, 1000);
             }
         </script>
