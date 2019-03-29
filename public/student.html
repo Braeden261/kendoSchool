@@ -100,7 +100,16 @@
                         wasd-controls
                         look-controls
                         position="0 1.8 1.00"
-            ></a-entity>
+            >
+                <a-plane
+                        id="loading"
+                        position=" 0 0 0.1"
+                        width="2"
+                        depth="2"
+                        material:"color:black; opacity:1"
+                        >                        
+                        </a-plane>
+            </a-entity>
             
             <!-- Right Hand Controller-->
             <a-entity   id="handRight"
@@ -643,6 +652,30 @@
 
             let rBox = document.querySelector('#repeat');
             let cBox = document.querySelector('#continue');
+
+            let loaded = false;
+            let loadOpacity = 1;
+
+            //Loader
+            window.onload=setTimeout(function(){
+                            loaded=true;
+                        }, 3000);
+            
+
+
+            let interval = setInterval(function(){
+                if (loaded == true){
+                    document.querySelector('#loading').setAttribute('material', {opacity:loadOpacity});
+                    loadOpacity -= 0.01;
+                }
+                if (loadOpacity <= 0){
+                    console.log(loaded);
+                    clearInterval(interval);
+                }
+            },50);
+            
+
+
 
             socket.on('connect', function(userData){
                 console.log('connected');
