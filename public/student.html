@@ -158,7 +158,7 @@
                         material="src:#dojo-tex;
                                   roughness: 0.7;
                                   metalness: 0;
-                                  transparent: true;
+                                  transparent: false;
                                   opacity: 1;"
             >
                 <!-- environment hit boxes -->
@@ -203,7 +203,8 @@
                         obj-model="obj:#windows-obj"
                         scale="1.0 1.0 1.0"
                         position="0 -0.3 0"
-                        material="color: #fff9de;
+                        material="side: double;
+                                  color: #fff9de;
                                   roughness :0.7;
                                   metalness: 0;
                                   transparent: true;
@@ -218,7 +219,7 @@
                         material="src:#lantern-tex;
                                   roughness:0.7;
                                   metalness:0;
-                                  transparent:true;
+                                  transparent:false;
                                   opacity:1;"
             ></a-entity>
 
@@ -226,10 +227,11 @@
                         obj-model="obj:#lanternBodies-obj"
                         scale="1.0 1.0 1.0"
                         position="0 -0.3 0"
-                        material="src:#lantern-tex;
+                        material="side: double;
+                                  src:#lantern-tex;
                                   roughness: 0.7;
                                   metalness: 0;
-                                  transparent: true;
+                                  transparent: false;
                                   opacity: 0.95;
                                   emissive: #ffe3a4;
                                   emissiveIntensity: 0.3;"
