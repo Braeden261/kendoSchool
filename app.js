@@ -171,14 +171,14 @@ socketIO.on('connection', function(socket){
             if (numResponseSeq < prevNumSeq){
                 if (prevSeq[numResponseSeq] == 1){
                     responseSeq[numResponseSeq] = true;
-                    part1 = true;
-                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    value = true;
+                    socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
                 else{
                     responseSeq[numResponseSeq] = false;
-                    part1 = false;
-                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    value = false;
+                    socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
                 console.log("ResponseSize:", numResponseSeq);

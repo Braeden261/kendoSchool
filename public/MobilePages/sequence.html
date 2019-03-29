@@ -27,7 +27,7 @@
             }
 
             function mark(tableCell) {
-                var img = document.getElementById(tableCell.id+'notif');
+                let img = document.getElementById(tableCell.id+'Notif');
                 if (img.style.visibility === "visible" && img.innerHTML !== "10") {
                     img.innerHTML = parseInt(img.innerHTML) + 1;
                 } else  {
@@ -80,39 +80,39 @@
             <table id="tableID" class="sequence">
                 <tr>
                     <td id="head">
-                        <div id="headnotif" class="notification">1</div>
+                        <div id="headNotif" class="notification">1</div>
                         <img src="images/head_text.png" class="sequence-image"> 
                     </td>
                     <td id="neck">
-                        <div id="ribcagenotif" class="notification">1</div>
-                        <img src="images/ribcage_text.png" class="sequence-image"> 
+                        <div id="neckNotif" class="notification">1</div>
+                        <img src="images/neck_text.png" class="sequence-image"> 
                     </td>
                     <td id="leftArm">
-                        <div id="leftarmnotif" class="notification">1</div>
+                        <div id="leftArmNotif" class="notification">1</div>
                         <img src="images/leftarm_text.png" class="sequence-image">
                     </td>
                     <td id="rightArm">
-                        <div id="rightarmnotif" class="notification">1</div>
+                        <div id="rightArmNotif" class="notification">1</div>
                         <img src="images/rightarm_text.png" class="sequence-image"> 
                     </td>
                 </tr>
 
                 <tr>
                     <td id="abdomen">
-                        <div id="abdomennotif" class="notification">1</div>
+                        <div id="abdomenNotif" class="notification">1</div>
                         <img src="images/abdomen_text.png" class="sequence-image">
                     </td>
                     <td id="leftHand">
-                        <div id="leftlegnotif" class="notification">1</div>
-                        <img src="images/leftleg_text.png" class="sequence-image">
+                        <div id="leftHandNotif" class="notification">1</div>
+                        <img src="images/lefthand_text.png" class="sequence-image">
                     </td>
                     <td id="rightHand">
-                        <div id="rightlegnotif" class="notification">1</div>
-                        <img src="images/rightleg_text.png" class="sequence-image"> 
+                        <div id="rightHandNotif" class="notification">1</div>
+                        <img src="images/righthand_text.png" class="sequence-image"> 
                     </td>
                     <td id="leg">
-                        <div id="pelvisnotif" class="notification">1</div>
-                        <img src="images/pelvis_text.png" class="sequence-image"> 
+                        <div id="legNotif" class="notification">1</div>
+                        <img src="images/leg_text.png" class="sequence-image"> 
                     </td>
                 </tr>
             </table>
