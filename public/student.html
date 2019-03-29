@@ -101,14 +101,15 @@
                         look-controls
                         position="0 1.8 1.00"
             >
-                <a-plane
+                <a-entity
+                        geometry="  primitive:plane;
+                                    width:0.5;
+                                    height:0.5"
                         id="loading"
-                        position=" 0 0 0.1"
-                        width="2"
-                        depth="2"
-                        material:"color:black; opacity:1"
+                        position=" 0 0 -0.1"
+                        material="color:black; opacity:1"
                         >                        
-                        </a-plane>
+                        </a-entity>
             </a-entity>
             
             <!-- Right Hand Controller-->
@@ -672,7 +673,7 @@
                     console.log(loaded);
                     clearInterval(interval);
                 }
-            },50);
+            },10);
             
 
 
