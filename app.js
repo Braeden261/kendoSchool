@@ -139,6 +139,8 @@ socketIO.on('connection', function(socket){
             console.log('send event detected');
             console.log('Sequence: ' + sequence);
             socketIO.emit('send_instruction', {sequence});
+            socketIO.emit('bowReq');
+            console.log('bowReq');
             prevSeq = sequence;
             prevNumSeq = numSeq;
             sequence = [];

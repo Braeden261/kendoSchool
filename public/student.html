@@ -45,8 +45,11 @@
                 <img id = "bgSword-tex" src = "/assets/textures/backgroundSwordTexture/TexturePNG/swordTexture.png">
                 <img id = "scroll-tex" src = "/assets/textures/scrollTexture/scroll_tex.png">
 
+                <img id = "bow-tex" src = "/assets/textures/lanternTexture/menuBow-lantern_tex.png">
+
                 <img id="repeat-tex" src = "/assets/textures/lanternTexture/menuRepeat-lantern_tex.png">
                 <img id="cont-tex" src = "/assets/textures/lanternTexture/menuNew-lantern_tex.png">
+
                 <!-- Models -->
                 <a-asset-item id="dojo-obj" src="/assets/models/objFiles/dojo/dojo_structure.obj"></a-asset-item>
                 <a-asset-item id="windows-obj" src="/assets/models/objFiles/dojo/dojo_windows.obj"></a-asset-item>
@@ -381,6 +384,51 @@
                 ></a-entity>
             </a-entity>
 
+            <!--Bow-->
+
+            <a-box
+                    id="anchorC"
+                    position="2 8 0"
+                    scale=" 0.5 0.5 0.5"
+                    static-body
+                    material="opacity:0"
+            ></a-box>
+
+            <a-entity
+                    menu-component
+                    spring="target: #anchorC;
+                            damping:100;
+                            stiffness: 1000;
+                            restLength: 1;
+                            localAnchorA: 0 0.5 0;"
+
+                    id="bow"
+                    position="2 7 0"
+                    body="  
+                            type: dynamic;
+                            mass: 50;
+                            linearDamping: 0.02;
+                            shape: none;"
+                    collision-filter="
+                            group: objs;
+                            collidesWith: hands, swords, objs, environment;
+                            collisionForces: true;"
+                    shape__core="shape: cylinder;
+                            height: 0.5;
+                            radiusTop: 0.25;
+                            radiusBottom: 0.25;
+                            offset: 0 0.3 0;
+                            numSegments: 16;"
+                            >
+                <a-entity  
+                    id="bowLantern"
+                    obj-model="obj:#lanternSingle-obj"
+                    scale="1 1 1"
+                    rotation="0 90 0"
+                    material="src:#bow-tex; roughness:0.7; metalness:0; transparent:true; opacity:0;"
+                    shadow="cast:false; receive:true;"
+                ></a-entity>
+            </a-entity>
 
             <!--dummy-->
             <a-entity   id="dummy-rig"
@@ -637,12 +685,16 @@
 
             let anchorA = document.querySelector('#anchorA');
             let anchorB = document.querySelector('#anchorB');
+            let anchorC = document.querySelector('#anchorC');
 
             let rLantern = document.querySelector('#repeatLantern');
             let cLantern = document.querySelector('#contLantern');
+            let bLantern = document.querySelector('#bowLantern');
+            
 
             let rBox = document.querySelector('#repeat');
             let cBox = document.querySelector('#continue');
+            let bBox = document.querySelector('#bow');
 
             socket.on('connect', function(userData){
                 console.log('connected');
@@ -700,6 +752,19 @@
                 failed = 100 * ( failed/(data.numResponseSeq) );
                 console.log("Passed:", passed, "%");
                 console.log("Failed:", failed, "%");
+            });
+            
+            socket.on('send', function(){
+                bBox.setAttribute('spring', {target:'#anchorC', damping:200, stiffness: 1000, restLength:6, localAnchorA:{x:0, y:-0.5, z:0}});
+                bLantern.setAttribute('material', {src:'#bow-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
+            });
+
+            socket.on('bow', function(){
+                bBox.setAttribute('spring', {target:'#anchorC', damping:500, stiffness: 1000, restLength:0.5, localAnchorA:{x:0, y:-0.5, z:0}});
+                
+                setTimeout(function(){
+                    bLantern.setAttribute('material', {src:'#bow-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
+                }, 1000);
             });
 
             window.onload = function(){
