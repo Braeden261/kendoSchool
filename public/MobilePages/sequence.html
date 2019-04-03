@@ -5,10 +5,10 @@
         <meta name="HandheldFriendly" content="true" />
         <link href="style.css" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400" rel="stylesheet">
+        <script src="../js/aframe-v0.8.2.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
-        <script src="../js/landscape-lock.js"></script>
     </head>
-    <body onload="detectDevice()">
+    <body>
         <div class="top-left">
             <img src="images/logokendo.png" class="small-image"> 
         </div>
@@ -68,6 +68,9 @@
             let sendButton = document.querySelector('.send-image');
             let clearButton = document.querySelector('.clear-image');
             let table = document.querySelector("#tableID");
+            let logo = document.querySelector('.top-left');
+            let clr = document.querySelector('.bottom-left');
+            let snd = document.querySelector('.right-icon');
 
             window.onload = function () {
                 socket.emit('clear');
