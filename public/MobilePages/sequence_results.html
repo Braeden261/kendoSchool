@@ -5,27 +5,7 @@
     <link href="style.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400" rel="stylesheet">
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-    
-        let socket = io();
-
-        let responseArray = [];
-        let currPoint = 0;
-
-        socket.on('complete', function(){
-            socket.emit('resetStart');
-            window.location.href='performance.html';
-        });
-
-        socket.on('response', function(data){
-            currPoint= data.numResponseSeq;
-            prevSeq = data.prevSeq;
-            responseArray[currPoint] = data.value;
-            console.log("Action #",currPoint+1, " = ", responseArray[currPoint]);
-            currPoint++;
-        });
-
-    </script>
+    <script src="../js/aframe-v0.8.2.min.js"></script>
 </head>
 
 <body>
@@ -36,20 +16,87 @@
         <h2> WATCH AND SEE HOW YOUR STUDENT PERFORMS </h2>
         <table id="tableID" class="sequence">
             <tr>
-                <td id="head"><img src="images/head_text.png" class="sequence-image"> </td>
-                <td id="neck"><img src="images/neck_text.png" class="sequence-image"> </td>
-                <td id="leftArm"><img src="images/leftarm_text.png" class="sequence-image"> </td>
-                <td id="rightArm"><img src="images/rightarm_text.png" class="sequence-image"> </td>
+                <td id="cell-01"></td>
+                <td id="cell-02"></td>
+                <td id="cell-03"></td>
+                <td id="cell-04"></td>
+                <td id="cell-05"></td>
             </tr>
 
             <tr>
-                <td id="abdomen"><img src="images/abdomen_text.png" class="sequence-image"> </td>
-                <td id="leftHand"><img src="images/lefthand_text.png" class="sequence-image"> </td>
-                <td id="rightHand"><img src="images/righthand_text.png" class="sequence-image"> </td>
-                <td id="leg"><img src="images/leg_text.png" class="sequence-image"> </td>
+                <td id="cell-06"></td>
+                <td id="cell-07"></td>
+                <td id="cell-08"></td>
+                <td id="cell-09"></td>
+                <td id="cell-10"></td>
             </tr>
         </table>
     </div>
+
+    <script>
+            let socket = io();
+            let responseArray = [];
+            let currPoint = 0;
+            let cells = [   document.querySelector("#cell-01"),
+                            document.querySelector("#cell-02"),
+                            document.querySelector("#cell-03"),
+                            document.querySelector("#cell-04"),
+                            document.querySelector("#cell-05"),
+                            document.querySelector("#cell-06"),
+                            document.querySelector("#cell-07"),
+                            document.querySelector("#cell-08"),
+                            document.querySelector("#cell-09"),
+                            document.querySelector("#cell-10")
+                        ];
+
+            let targets =   [   "images/head_text.png",
+                                "images/neck_text.png",
+                                "images/leftarm_text.png",
+                                "images/rightarm_text.png",
+                                "images/abdomen_text.png",
+                                "images/lefthand_text.png",
+                                "images/righthand_text.png",
+                                "images/leg_text.png"
+                            ];
+
+            window.onload = function() {
+                socket.emit('getSequence');
+                
+                for (i = 0; i < cells.length; i++) {
+                    cells[i].setAttribute("style", "background-color:#353535; border: 4px solid #353535;");
+                }
+            }
+
+            socket.on('sendSequence', function(data) {
+                let prevSeq = data.prevSeq;
+
+                for (i = 0; i < prevSeq.length; i++){
+                    let img = new Image();
+                    img.src = targets[prevSeq[i]-1];
+                    img.className = "sequence-image";
+                    cells[i].appendChild(img);
+                    cells[i].setAttribute("style", "background-color:#FFFFFF; border: 4px solid white;");
+                }
+            });
+    
+            socket.on('complete', function(){
+                socket.emit('resetStart');
+                window.location.href='performance.html';
+            });
+    
+            socket.on('response', function(data){
+                responseArray[data.numResponseSeq] = data.value;
+                console.log("Action #", data.numResponseSeq + 1, " = ", responseArray[data.numResponseSeq]);
+
+                if (data.value == true) {
+                    cells[data.numResponseSeq].setAttribute("style", "border: 4px solid #56BA4D;" )
+                }
+                else if (data.value == false) {
+                    cells[data.numResponseSeq].setAttribute("style", "border: 4px solid #CF493C;" )
+                }
+            });
+    
+    </script>
 </body>
 
 </html>
