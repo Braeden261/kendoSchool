@@ -18,6 +18,7 @@ h3 {
 
 html, body {
     height: 100%;
+    display: block;
 }
 
 body {
@@ -185,3 +186,14 @@ td {
 .passPercent {
     color: #56BA4D;
 }
+
+/* @media only screen and (orientation:portrait) {
+    body {
+        height: 100vw;
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+} */
