@@ -11,7 +11,7 @@
         <script src="/js/menu-component.js"></script>
     </head>
     <body>
-        <a-scene physics="debug: false;
+        <a-scene physics="debug: true;
                           gravity: -9;
                           maxInterval: 0.04;
                           iterations: 20;
@@ -34,24 +34,9 @@
                 <img id="repeat-tex"    src="/assets/textures/lanternTexture/menuRepeat-lantern_tex.png">
                 <img id="cont-tex"      src="/assets/textures/lanternTexture/menuNew-lantern_tex.png">
                 <!-- Graphics -->
-                <video id="display-great"       src="/assets/images/responseGraphics/videos/Great.mp4" autoplay loop></video>
-                <video id="display-weak"        src="/assets/images/responseGraphics/videos/Weak.mp4"></video>
-                <video id="display-headEK"      src="/assets/images/sequenceTargetAnimations/videos/Head(EK).mp4" autoplay loop></video>
-                <video id="display-headK"       src="/assets/images/sequenceTargetAnimations/videos/Head(K).mp4"></video>
-                <video id="display-neckEK"      src="/assets/images/sequenceTargetAnimations/videos/Neck(EK).mp4"></video>
-                <video id="display-neckK"       src="/assets/images/sequenceTargetAnimations/videos/Neck(K).mp4"></video>
-                <video id="display-leftArmEK"   src="/assets/images/sequenceTargetAnimations/videos/LeftArm(EK).mp4"></video>
-                <video id="display-leftArmK"    src="/assets/images/sequenceTargetAnimations/videos/LeftArm(K).mp4"></video>
-                <video id="display-rightArmEK"  src="/assets/images/sequenceTargetAnimations/videos/RightArm(EK).mp4"></video>
-                <video id="display-rightArmK"   src="/assets/images/sequenceTargetAnimations/videos/RightArm(K).mp4"></video>
-                <video id="display-abdomenEK"   src="/assets/images/sequenceTargetAnimations/videos/Abdomen(EK).mp4"></video>
-                <video id="display-abdomenK"    src="/assets/images/sequenceTargetAnimations/videos/Abdomen(K).mp4"></video>
-                <video id="display-leftHandEK"  src="/assets/images/sequenceTargetAnimations/videos/LeftHand(EK).mp4"></video>
-                <video id="display-leftHandK"   src="/assets/images/sequenceTargetAnimations/videos/LeftHand(K).mp4"></video>
-                <video id="display-rightHandEK"  src="/assets/images/sequenceTargetAnimations/videos/RightHand(EK).mp4"></video>
-                <video id="display-rightHandK"   src="/assets/images/sequenceTargetAnimations/videos/RightHand(K).mp4"></video>
-                <video id="display-legEK"       src="/assets/images/sequenceTargetAnimations/videos/Leg(EK).mp4"></video>
-                <video id="display-legK"        src="/assets/images/sequenceTargetAnimations/videos/Leg(K).mp4"></video>
+                <video id="display-great"       src="/assets/images/responseGraphics/videos/Great.mp4" autoplay muted></video>
+                <video id="display-weak"        src="/assets/images/responseGraphics/videos/Weak.mp4" autoplay muted></video>
+                <video id="display-leftScroll"  src="/assets/images/sequenceTargetAnimations/videos/Null.mp4" autoplay muted></video>
                 <!-- Models -->
                 <a-asset-item id="dojo-obj"             src="/assets/models/objFiles/dojo/dojo_structure.obj"></a-asset-item>
                 <a-asset-item id="windows-obj"          src="/assets/models/objFiles/dojo/dojo_windows.obj"></a-asset-item>
@@ -289,15 +274,17 @@
                         geometry="primitive: plane;
                                   height: 0.445;
                                   width: 0.445;"
-                        material="src: #display-great"
+                        material="src: #display-great;
+                                  roughness: 0.8;"
                         position="1.747 1.81 -1.967"
                         rotation="0 -35 0"
             ></a-entity>
-            <a-entity   id="LeftScrollDisplay"
+            <a-entity   id="leftScrollDisplay"
                         geometry="primitive: plane;
                                   height: 0.445;
                                   width: 0.445;"
-                        material="src: #display-headEK"
+                        material="src: #display-leftScroll;
+                                  roughness: 0.8;"
                         position="-1.747 1.81 -1.967"
                         rotation="0 35 0"
             ></a-entity>
@@ -437,7 +424,7 @@
                                 shape__face="shape: box;
                                              height: 0.4;
                                              halfExtents: 0.04 0.04 0.14;
-                                             offset: -0.01 0.75 0.255;"
+                                             offset: -0.01 0.73 0.255;"
                     ></a-entity>
                     <!--Neck Collision Box-->
                     <a-entity   id="neck"
@@ -455,23 +442,6 @@
                                              radiusBottom: 0.12;
                                              offset: 0 0.57 0;
                                              numSegments: 16;"
-                    ></a-entity>
-                    <!--Abdomen Collision Box-->
-                    <a-entity   id="abdomen"
-                                class="dummyBox"
-                                body="type: dynamic;
-                                      shape: none;"
-                                collision-filter="group: dummy;
-                                                  collidesWith: hands, swords, objs, environment;
-                                                  collisionForces: true;"
-                                constraint="type: lock;
-                                            target: #base;"
-                                shape__abdomen="shape: cylinder;
-                                                height: 0.2;
-                                                radiusTop: 0.12;
-                                                radiusBottom: 0.12;
-                                                offset: 0 0.215 0;
-                                                numSegments: 16;"
                     ></a-entity>
                     <!--Right Arm Collision Box-->
                     <a-entity   id="rightArm"
@@ -505,6 +475,23 @@
                                                 offset: 0.274 0.4 0;"
                             rotation="0 3 0"
                     ></a-entity>
+                    <!--Abdomen Collision Box-->
+                    <a-entity   id="abdomen"
+                                class="dummyBox"
+                                body="type: dynamic;
+                                      shape: none;"
+                                collision-filter="group: dummy;
+                                                  collidesWith: hands, swords, objs, environment;
+                                                  collisionForces: true;"
+                                constraint="type: lock;
+                                            target: #base;"
+                                shape__abdomen="shape: cylinder;
+                                                height: 0.2;
+                                                radiusTop: 0.12;
+                                                radiusBottom: 0.12;
+                                                offset: 0 0.215 0;
+                                                numSegments: 16;"
+                    ></a-entity>
                     <!--Left Hand Collision Box-->
                     <a-entity   id="leftHand"
                                 class="dummyBox"
@@ -515,10 +502,10 @@
                                                 collisionForces: true;"
                                 constraint="type: lock;
                                             target: #base;"
-                                shape__leftAbdomen="shape: box;
+                                shape__leftHand="shape: box;
                                                     height: 0.4;
                                                     halfExtents: 0.27 0.04 0.04;
-                                                    offset: 0.35 0 0;"
+                                                    offset: 0.35 -0.01 0;"
                                 rotation="0 -47 0"
                     ></a-entity>
                     <!--Right Hand Collision Box-->
@@ -531,10 +518,10 @@
                                                 collisionForces: true;"
                                 constraint="type: lock;
                                             target: #base;"
-                                shape__rightAbdomen="shape: box;
+                                shape__rightHand="shape: box;
                                                     height: 0.4;
                                                     halfExtents: 0.24 0.04 0.04;
-                                                    offset: 0.34 0.04 0;"
+                                                    offset: 0.34 0.03 0;"
                                 rotation="0 -163 0"
                     ></a-entity>
                     <!--Leg Collision Boxes-->
@@ -633,6 +620,7 @@
                         event-manager
             ></a-entity>
        </a-scene>
+       <!-- SCRIPT -->
        <script>
             let socket = io();
 
