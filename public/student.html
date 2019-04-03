@@ -700,7 +700,10 @@
                 failed = 100 * ( failed/(data.numResponseSeq) );
                 console.log("Passed:", passed, "%");
                 console.log("Failed:", failed, "%");
+                passed = 0;
+                failed = 0;
             });
+
 
             window.onload = function(){
                 let ambient = document.querySelector('#nature-sound');
