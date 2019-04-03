@@ -2,7 +2,7 @@ function deviceDispatch(){
     if (AFRAME.utils.isMobile()){
         //Mobile
         console.log("Mobile");
-        window.location.href = '/master.html';
+        window.location.href = '/MobilePages/sequence.html';
     }
     else if (AFRAME.utils.checkHeadsetConnected()){
         //Headset

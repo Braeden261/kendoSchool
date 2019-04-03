@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400" rel="stylesheet">
+    <script type = "text/javascript">
+            function checkNumberFieldLength(elem) {
+                if (elem.value.length > 4) {
+                    elem.value = elem.value.slice(0,4);
+                } else if (elem.value.length == 4){
+                    console.log('SEND DATA')
+                }
+            }
+      </script>
+</head>
+
+<body>
+    <div class="top-left">
+        <img src="images/logokendo.png" class="small-image"> 
+    </div> 
+    <div class="center-screen">
+        <h1> ENTER ROOM CODE </h1>
+        <input type="number" class="code-input" oninput="checkNumberFieldLength(this);" pattern="[0-9]*" />
+    </div>
+</body>
+
+</html>
