@@ -37,6 +37,11 @@
                 <img id = "dummyMap" src = "/assets/textures/dummyTexture/TexturePNG/dummyTexture.png">
                 <img id = "shinai-tex" src = "/assets/textures/swordTexture/TexturePNG/swordTexture.png">
 
+                <img id = "mlgSword-tex" src = "/assets/textures/ExtraSwordTexture/moonlightGreatSword/moonlightGreatSword-texture.png">
+                <img id = "gSword-tex" src = "/assets/textures/ExtraSwordTexture/greatSword/TexturePNG/greatSword-texture.png">
+
+                <img id = "sRack-tex" src = "/assets/textures/ExtraSwordTexture/swordRack/swordRack-texture.png">
+
                 <img id = "lantern-tex" src = "/assets/textures/lanternTexture/lantern_tex.png">
                 <img id = "bgSword-tex" src = "/assets/textures/backgroundSwordTexture/TexturePNG/swordTexture.png">
 
@@ -48,6 +53,11 @@
 
                 <a-asset-item id="shinai-obj" src="/assets/models/objFiles/sword/sword_v003.obj"></a-asset-item>
                 <a-asset-item id="dummy-obj" src="/assets/models/objFiles/dummy/trainingDummy.obj"></a-asset-item>
+
+                <a-asset-item id="mlgSword-obj" src="/assets/models/objFiles/extraSwords/moonlightGreatsword.obj"></a-asset-item>
+                <a-asset-item id="gSword-obj" src="/assets/models/objFiles/extraSwords/GreatSword.obj"></a-asset-item>
+
+                <a-asset-item id="sRack-obj" src="/assets/models/objFiles/extraSwords/swordRack2.obj"></a-asset-item>
 
                 <a-asset-item id="lanternFrames-obj" src="/assets/models/objFiles/lantern/lanterns_frames_lines.obj"></a-asset-item>
                 <a-asset-item id="lanternBodies-obj" src="/assets/models/objFiles/lantern/lanterns_bodies.obj"></a-asset-item>
@@ -313,12 +323,9 @@
                         body="type: dynamic;
                               mass: 100;
                               shape: none;"
-                        shape__blade="shape: cylinder;
-                                      height: 1.05;
+                        shape__blade="shape: box;
                                       offset: 0 0.12 0;
-                                      radiusTop: 0.02;   
-                                      radiusBottom: 0.016;
-                                      numSegments: 16;"
+                                      halfExtents: 0.01 0.525 0.01;"
                         shape__guard="shape: cylinder;
                                       height: 0.017;
                                       offset: 0 -0.399 0;
@@ -338,11 +345,122 @@
                                   roughness: 0.7;
                                   metalness: 0.2;
                                   visible: true;"
-                        position="0 2 0"
+                        
+                        position="1.1 1.7 1"
+                        rotation="90 0 0"
             >
+            
+
+
+
                 <!--sounds-->
                 <a-entity id="hitSnd" sound="src:#hit-sound"></a-entity>
             </a-entity>
+
+            <!--Moonlight GreatSword-->
+            <a-entity   id="mlgSword"
+                        obj-model="obj:#mlgSword-obj"
+                        hit-sound-component
+                        hoverable
+                        body="type: dynamic;
+                            mass: 100;
+                            shape: none;"
+                        shape__blade="shape: box;
+                                    offset: 0 0.18 0;
+                                    halfExtents: 0.03 0.575 0.009;"
+                        shape__guard="shape: box;
+                                    halfExtents: 0.12 0.025 0.012;
+                                    offset: 0 -0.42 0;"
+                        shape__handle="shape: cylinder;
+                                    height: 0.32;
+                                    offset: 0 -0.608 0;
+                                    radiusTop: 0.018;
+                                    radiusBottom: 0.018;
+                                    numSegments: 8;"
+                        collision-filter="group: swords;
+                                        collidesWith: hands, objs, environment;
+                                        collisionForces: true;"
+                        material="src: #mlgSword-tex;
+                                roughness: 0.7;
+                                metalness: 0.2;
+                                visible: true;"
+                        position="1.1 1.4 1"
+                        rotation="90 0 0"
+            >
+            </a-entity>
+
+            <!--GreatSword-->
+            <a-entity   id="gSword"
+                        obj-model="obj:#gSword-obj"
+                        hit-sound-component
+                        hoverable
+                        body="type: dynamic;
+                            mass: 100;
+                            shape: none;"
+                        shape__blade="shape: box;
+                                    offset: 0 0.21 0;
+                                    halfExtents: 0.04 0.575 0.009;"
+                        shape__guard="shape: box;
+                                    halfExtents: 0.12 0.025 0.02;
+                                    offset: 0 -0.4 0;"
+                        shape__handle="shape: cylinder;
+                                    height: 0.37;
+                                    offset: 0 -0.618 0;
+                                    radiusTop: 0.018;
+                                    radiusBottom: 0.018;
+                                    numSegments: 8;"
+                        collision-filter="group: swords;
+                                        collidesWith: hands, objs, environment;
+                                        collisionForces: true;"
+                        material="src: #gSword-tex;
+                                roughness: 0.7;
+                                metalness: 0.2;
+                                visible: true;"
+                        position="1.1 1 1"
+                        rotation="90 0 0"
+            >
+
+            </a-entity>
+
+
+            <!--Sword Rack-->
+            <a-entity   id="swordRack"
+                        obj-model="obj:#sRack-obj"
+                        body="type: static;
+                              mass: 100;
+                              shape: none;"
+                        shape__back="shape: box;
+                                    halfExtents: 0.15 0.5 0.05;
+                                    offset: 0 0.5 -0.04"
+                        shape__rack1="shape: box;
+                                    halfExtents: 0.15 0.02 0.1;
+                                    offset: 0 0.25 0.1"
+                        shape__rack1Lip="shape: box;
+                                    halfExtents: 0.15 0.02 0.01;
+                                    offset: 0 0.285 0.19"
+                        shape__rack2="shape: box;
+                                    halfExtents: 0.15 0.02 0.1;
+                                    offset: 0 0.48 0.1"
+                        shape__rack2Lip="shape: box;
+                                    halfExtents: 0.15 0.02 0.01;
+                                    offset: 0 0.515 0.19"      
+                        shape__rack3="shape: box;
+                                    halfExtents: 0.15 0.02 0.1;
+                                    offset: 0 0.73 0.06"
+                        shape__rack3Lip="shape: box;
+                                    halfExtents: 0.15 0.02 0.01;
+                                    offset: 0 0.765 0.15"        
+                        collision-filter="group: objs;
+                                          collidesWith: hands, swords, environment;
+                                          collisionForces: true;"
+                        material="src: #sRack-tex;
+                                  roughness: 0.7;
+                                  metalness: 0.2;
+                                  visible: true;"
+                        position="1.2 0.68 1"  
+                        scale="1.2 1.2 1.2"
+                        rotation=" 0 270 0"
+            ></a-entity>
 
             <a-entity   id="bgSword"
                         obj-model="obj:#bgSword-obj"
