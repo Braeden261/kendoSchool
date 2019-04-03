@@ -20,8 +20,9 @@
         socket.on('response', function(data){
             currPoint= data.numResponseSeq;
             prevSeq = data.prevSeq;
-            responseArray[currPoint] = data.part1;
+            responseArray[currPoint] = data.value;
             console.log("Action #",currPoint+1, " = ", responseArray[currPoint]);
+            currPoint++;
         });
 
     </script>
@@ -35,17 +36,17 @@
         <h2> WATCH AND SEE HOW YOUR STUDENT PERFORMS </h2>
         <table id="tableID" class="sequence">
             <tr>
-                <td id="leftarm"><img src="images/leftarm_text.png" class="sequence-image"> </td>
                 <td id="head"><img src="images/head_text.png" class="sequence-image"> </td>
-                <td id="ribcage"><img src="images/ribcage_text.png" class="sequence-image"> </td>
-                <td id="rightarm"><img src="images/rightarm_text.png" class="sequence-image"> </td>
+                <td id="neck"><img src="images/neck_text.png" class="sequence-image"> </td>
+                <td id="leftArm"><img src="images/leftarm_text.png" class="sequence-image"> </td>
+                <td id="rightArm"><img src="images/rightarm_text.png" class="sequence-image"> </td>
             </tr>
 
             <tr>
-                <td id="leftleg"><img src="images/leftleg_text.png" class="sequence-image"> </td>
-                <td id="pelvis"><img src="images/pelvis_text.png" class="sequence-image"> </td>
                 <td id="abdomen"><img src="images/abdomen_text.png" class="sequence-image"> </td>
-                <td id="rightleg"><img src="images/rightleg_text.png" class="sequence-image"> </td>
+                <td id="leftHand"><img src="images/lefthand_text.png" class="sequence-image"> </td>
+                <td id="rightHand"><img src="images/righthand_text.png" class="sequence-image"> </td>
+                <td id="leg"><img src="images/leg_text.png" class="sequence-image"> </td>
             </tr>
         </table>
     </div>

@@ -46,7 +46,7 @@ let prevNumSeq = 0;
 let responseSeq = [];
 let numResponseSeq = 0;
 
-let part1 = false;
+let value = false;
 let start = false;
 
 socketIO.on('connection', function(socket){
@@ -173,14 +173,14 @@ socketIO.on('connection', function(socket){
             if (numResponseSeq < prevNumSeq){
                 if (prevSeq[numResponseSeq] == 1){
                     responseSeq[numResponseSeq] = true;
-                    part1 = true;
-                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    value = true;
+                    socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
                 else{
                     responseSeq[numResponseSeq] = false;
-                    part1 = false;
-                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    value = false;
+                    socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
                 console.log("ResponseSize:", numResponseSeq);
@@ -198,14 +198,14 @@ socketIO.on('connection', function(socket){
             if (numResponseSeq < prevNumSeq){
                 if (prevSeq[numResponseSeq] == 2){
                     responseSeq[numResponseSeq] = true;
-                    part1 = true;
-                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    value = true;
+                    socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
                 else{
                     responseSeq[numResponseSeq] = false;
-                    part1 = false;
-                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    value = false;
+                    socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
                 console.log("ResponseSize:", numResponseSeq);
@@ -223,14 +223,14 @@ socketIO.on('connection', function(socket){
             if (numResponseSeq < prevNumSeq){
                 if (prevSeq[numResponseSeq] == 3){
                     responseSeq[numResponseSeq] = true;
-                    part1 = true;
-                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    value = true;
+                    socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
                 else{
                     responseSeq[numResponseSeq] = false;
-                    part1 = false;
-                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    value = false;
+                    socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
                 console.log("ResponseSize:", numResponseSeq);
@@ -248,14 +248,14 @@ socketIO.on('connection', function(socket){
             if (numResponseSeq < prevNumSeq){
                 if (prevSeq[numResponseSeq] == 4){
                     responseSeq[numResponseSeq] = true;
-                    part1 = true;
-                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    value = true;
+                    socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
                 else{
                     responseSeq[numResponseSeq] = false;
-                    part1 = false;
-                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    value = false;
+                    socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
                 console.log("ResponseSize:", numResponseSeq);
@@ -274,14 +274,14 @@ socketIO.on('connection', function(socket){
             if (numResponseSeq < prevNumSeq){
                 if (prevSeq[numResponseSeq] == 5){
                     responseSeq[numResponseSeq] = true;
-                    part1 = true;
-                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    value = true;
+                    socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
                 else{
                     responseSeq[numResponseSeq] = false;
-                    part1 = false;
-                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    value = false;
+                    socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
                 console.log("ResponseSize:", numResponseSeq);
@@ -299,14 +299,14 @@ socketIO.on('connection', function(socket){
             if (numResponseSeq < prevNumSeq){
                 if (prevSeq[numResponseSeq] == 6){
                     responseSeq[numResponseSeq] = true;
-                    part1 = true;
-                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    value = true;
+                    socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
                 else{
                     responseSeq[numResponseSeq] = false;
-                    part1 = false;
-                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    value = false;
+                    socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
                 console.log("ResponseSize:", numResponseSeq);
@@ -324,14 +324,14 @@ socketIO.on('connection', function(socket){
             if (numResponseSeq < prevNumSeq){
                 if (prevSeq[numResponseSeq] == 7){
                     responseSeq[numResponseSeq] = true;
-                    part1 = true;
-                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    value = true;
+                    socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
                 else{
                     responseSeq[numResponseSeq] = false;
-                    part1 = false;
-                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    value = false;
+                    socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
                 console.log("ResponseSize:", numResponseSeq);
@@ -349,14 +349,14 @@ socketIO.on('connection', function(socket){
             if (numResponseSeq < prevNumSeq){
                 if (prevSeq[numResponseSeq] == 8){
                     responseSeq[numResponseSeq] = true;
-                    part1 = true;
-                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    value = true;
+                    socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
                 else{
                     responseSeq[numResponseSeq] = false;
-                    part1 = false;
-                    socketIO.emit("response" ,{part1, numResponseSeq, prevSeq});
+                    value = false;
+                    socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
                 console.log("ResponseSize:", numResponseSeq);
