@@ -400,6 +400,10 @@ socketIO.on('connection', function(socket){
         }
     });
 
+    socket.on('getSequence', function() {
+        socketIO.emit("sendSequence" ,{prevSeq});
+    });
+
 });
 
 function clearLists(){
