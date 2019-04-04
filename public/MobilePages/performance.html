@@ -41,8 +41,8 @@
             console.log("Passed:", passed, "%");
             console.log("Failed:", failed, "%");
 
-            document.querySelector('.passPercent').innerHTML = passed + "%";
-            document.querySelector('.failPercent').innerHTML = failed + "%";
+            document.querySelector('.passPercent').innerHTML = Math.round(passed) + "%";
+            document.querySelector('.failPercent').innerHTML = Math.round(failed) + "%";
         });
 
     </script>
