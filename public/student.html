@@ -752,6 +752,8 @@
                 failed = 100 * ( failed/(data.numResponseSeq) );
                 console.log("Passed:", passed, "%");
                 console.log("Failed:", failed, "%");
+                passed = 0;
+                failed = 0;
             });
             
             socket.on('send', function(){
@@ -766,6 +768,7 @@
                     bLantern.setAttribute('material', {src:'#bow-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
                 }, 1000);
             });
+
 
             window.onload = function(){
                 let ambient = document.querySelector('#nature-sound');
