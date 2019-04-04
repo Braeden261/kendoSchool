@@ -63,7 +63,6 @@ AFRAME.registerComponent('event-manager', {
             Context_AF.handRight.setAttribute('collision-filter', {collisionForces: false});
         });
 
-
         //E V E N T S - H A N D  C O N T R O L L E R _ L E F T
         //Grip Closed
         Context_AF.handLeft.addEventListener('gripdown', function(event) {
