@@ -40,28 +40,21 @@
                 <img id = "dojo-tex" src = "/assets/textures/dojoTexture/dojo_wallsFloors_texture-02.png">
                 <img id = "dummyMap" src = "/assets/textures/dummyTexture/TexturePNG/dummyTexture.png">
                 <img id = "shinai-tex" src = "/assets/textures/swordTexture/TexturePNG/swordTexture.png">
-                
                 <img id = "lantern-tex" src = "/assets/textures/lanternTexture/lantern_tex.png">
                 <img id = "bgSword-tex" src = "/assets/textures/backgroundSwordTexture/TexturePNG/swordTexture.png">
                 <img id = "scroll-tex" src = "/assets/textures/scrollTexture/scroll_tex.png">
-
                 <img id="repeat-tex" src = "/assets/textures/lanternTexture/menuRepeat-lantern_tex.png">
                 <img id="cont-tex" src = "/assets/textures/lanternTexture/menuNew-lantern_tex.png">
+                
                 <!-- Models -->
                 <a-asset-item id="dojo-obj" src="/assets/models/objFiles/dojo/dojo_structure.obj"></a-asset-item>
                 <a-asset-item id="windows-obj" src="/assets/models/objFiles/dojo/dojo_windows.obj"></a-asset-item>
-
-
                 <a-asset-item id="shinai-obj" src="/assets/models/objFiles/sword/sword_v003.obj"></a-asset-item>
                 <a-asset-item id="dummy-obj" src="/assets/models/objFiles/dummy/trainingDummy.obj"></a-asset-item>
-
                 <a-asset-item id="lanternFrames-obj" src="/assets/models/objFiles/lantern/lanterns_frames_lines.obj"></a-asset-item>
                 <a-asset-item id="lanternBodies-obj" src="/assets/models/objFiles/lantern/lanterns_bodies.obj"></a-asset-item>
-                
                 <a-asset-item id="lanternSingle-obj" src="/assets/models/objFiles/lantern/lantern_menu.obj"></a-asset-item>
-
                 <a-asset-item id="bgSword-obj" src="/assets/models/objFiles/bg_models/bg_sword.obj"></a-asset-item>
-
                 <a-asset-item id="scroll-obj" src="/assets/models/objFiles/scroll/scroll.obj"></a-asset-item>
               
                 <!-- Audio -->
@@ -169,7 +162,6 @@
                                       wireframe: false;"
                             position="0 0.35 0"
                 ></a-entity>
-
                 <!--ground-->
                 <a-entity   id="groundPlane-floor"
                             static-body
@@ -211,7 +203,6 @@
                                   transparent:true;
                                   opacity:1;"
             ></a-entity>
-
             <a-entity   id="lantern-bodies"
                         obj-model="obj:#lanternBodies-obj"
                         scale="1.0 1.0 1.0"
@@ -229,52 +220,42 @@
                         mixin="lantern-light"
                         position="-4.915 2.22 -10.0"
             ></a-entity>
-
             <a-entity   class="lanternLight"
                         mixin="lantern-light"
                         position="-4.915 2.22 -5.0"
             ></a-entity>
-
             <a-entity   class="lanternLight"
                         mixin="lantern-light"
                         position="-4.915 2.22 0.0"
             ></a-entity>
-
             <a-entity   class="lanternLight"
                         mixin="lantern-light"
                         position="-4.915 2.22 5.01"
             ></a-entity>
-
             <a-entity   class="lanternLight"
                         mixin="lantern-light"
                         position="-4.915 2.22 10.01"
             ></a-entity>
-
             <a-entity   class="lanternLight"
                         mixin="lantern-light"
                         position="4.91 2.22 -10.01"
             ></a-entity>
-
             <a-entity   class="lanternLight"
                         mixin="lantern-light"
                         position="4.91 2.22 -5.002"
             ></a-entity>
-
             <a-entity   class="lanternLight"
                         mixin="lantern-light"
                         position="4.91 2.22 -0.001"
             ></a-entity>
-
             <a-entity   class="lanternLight"
                         mixin="lantern-light"
                         position="4.91 2.22 4.997"
             ></a-entity>
-
             <a-entity   class="lanternLight"
                         mixin="lantern-light"
                         position="4.91 2.22 10.0"
             ></a-entity>
-
 
             <!--scrolls-->
             <a-entity   id="scroll-01"
@@ -293,14 +274,13 @@
             ></a-entity>
 
             <!--Physical Menu-->
-            <a-box
-                    id="anchorA"
+            <!--anchors-->
+            <a-box  id="anchorA"
                     position="-0.95 8 -0.8"
                     scale=" 0.5 0.5 0.5"
                     static-body
                     material="opacity:0"
             ></a-box>
-
             <a-box
                     id="anchorB"
                     position="0.95 8 -0.8"
@@ -308,85 +288,120 @@
                     static-body
                     material="opacity:0"
             ></a-box>
-
-
-            <a-entity
-                    menu-component
-                    spring="target: #anchorA;
-                            damping: 500;
-                            stiffness: 2000;
-                            restLength: 0.1;
-                            localAnchorA: 0 0.5 0;"
-
-                    id="continue"
-                    position="-0.95 7 -0.8"
-                    body="  
-                            type: dynamic;
-                            mass: 150;
-                            linearDamping: 0.4;
-                            angularDamping: 1;
-                            shape: none;"
-                    collision-filter="
-                            group: objs;
-                            collidesWith: hands, swords, objs, environment;
-                            collisionForces: true;"
-                    shape__core="shape: cylinder;
-                            height: 0.5;
-                            radiusTop: 0.25;
-                            radiusBottom: 0.25;
-                            offset: 0 0.3 0;
-                            numSegments: 16;"
+            <a-box  id="anchorC"
+                    position="2 8 0"
+                    scale=" 0.5 0.5 0.5"
+                    static-body
+                    material="opacity:0"
+            ></a-box>
+            <!--geometry-->
+            <a-entity   id="continue"
+                        menu-component
+                        spring="target: #anchorA;
+                                damping: 500;
+                                stiffness: 2000;
+                                restLength: 0.1;
+                                localAnchorA: 0 0.5 0;"
+                        position="-0.95 7 -0.8"
+                        body="type: dynamic;
+                              mass: 150;
+                              linearDamping: 0.4;
+                              angularDamping: 1;
+                              shape: none;"
+                        collision-filter="group: objs;
+                                          collidesWith: hands, swords, objs, environment;
+                                          collisionForces: true;"
+                        shape__core="shape: cylinder;
+                                     height: 0.5;
+                                     radiusTop: 0.25;
+                                     radiusBottom: 0.25;
+                                     offset: 0 0.3 0;
+                                     numSegments: 16;"
             >
-                <a-entity   
-                    id="contLantern"
-                    obj-model="obj:#lanternSingle-obj"
-                    scale="1 1 1"
-                    rotation="0 -150 0"
-                    material="src:#cont-tex;
-                              roughness:0.7;
-                              metalness:0;
-                              transparent:true;
-                              opacity:0;"
-                    shadow="cast:false; receive:false;"
+                <a-entity   id="contLantern"
+                            obj-model="obj:#lanternSingle-obj"
+                            scale="1 1 1"
+                            rotation="0 -150 0"
+                            material="src:#cont-tex;
+                                      roughness:0.7;
+                                      metalness:0;
+                                      transparent:true;
+                                      opacity:0;"
+                            shadow="cast:false;
+                                    receive:false;"
                 ></a-entity>
             </a-entity>
-            <a-entity
-                    menu-component
-                    spring="target: #anchorB;
-                            damping: 500;
-                            stiffness: 2000;
-                            restLength: 0.1;
+            <a-entity   id="repeat"
+                        menu-component
+                        spring="target: #anchorB;
+                                damping: 500;
+                                stiffness: 2000;
+                                restLength: 0.1;
+                                localAnchorA: 0 0.5 0;"
+                        position="0.95 7 -0.8"
+                        body="type: dynamic;
+                              mass: 150;
+                              linearDamping: 0.4;
+                              angularDamping: 1;
+                              shape: none;"
+                        collision-filter="group: objs;
+                                          collidesWith: hands, swords, objs, environment;
+                                          collisionForces: true;"
+                        shape__core="shape: cylinder;
+                                     height: 0.5;
+                                     radiusTop: 0.25;
+                                     radiusBottom: 0.25;
+                                     offset: 0 0.3 0;
+                                     numSegments: 16;"
+            >
+                <a-entity   id="repeatLantern"
+                            obj-model="obj:#lanternSingle-obj"
+                            scale="1 1 1"
+                            rotation="0 150 0"
+                            material="src:#repeat-tex;
+                                      roughness:0.7;
+                                      metalness:0;
+                                      transparent:true;
+                                      opacity:0;"
+                            shadow="cast:false;
+                                    receive:false;"
+                ></a-entity>
+            </a-entity>
+            <a-entity   menu-component
+                        spring="target: #anchorC;
+                            damping:100;
+                            stiffness: 1000;
+                            restLength: 1;
                             localAnchorA: 0 0.5 0;"
-
-                    id="repeat"
-                    position="0.95 7 -0.8"
-                    body="  
-                            type: dynamic;
-                            mass: 150;
-                            linearDamping: 0.4;
-                            angularDamping: 1;
-                            shape: none;"
-                    collision-filter="
-                            group: objs;
-                            collidesWith: hands, swords, objs, environment;
-                            collisionForces: true;"
-                    shape__core="shape: cylinder;
-                            height: 0.5;
-                            radiusTop: 0.25;
-                            radiusBottom: 0.25;
-                            offset: 0 0.3 0;
-                            numSegments: 16;"
-                            >
-                <a-entity  
-                    id="repeatLantern"
-                    obj-model="obj:#lanternSingle-obj"
-                    scale="1 1 1"
-                    rotation="0 150 0"
-                    material="src:#repeat-tex; roughness:0.7; metalness:0; transparent:true; opacity:0;"
-                    shadow="cast:false; receive:false;"
+                        id="bow"
+                        position="2 7 0"
+                        body="type: dynamic;
+                              mass: 50;
+                              linearDamping: 0.02;
+                              shape: none;"
+                        collision-filter="group: objs;
+                                          collidesWith: hands, swords, objs, environment;
+                                          collisionForces: true;"
+                        shape__core="shape: cylinder;
+                                     height: 0.5;
+                                     radiusTop: 0.25;
+                                     radiusBottom: 0.25;
+                                     offset: 0 0.3 0;
+                                     numSegments: 16;"
+            >
+                <a-entity   id="bowLantern"
+                            obj-model="obj:#lanternSingle-obj"
+                            scale="1 1 1"
+                            rotation="0 90 0"
+                            material="src:#bow-tex;
+                                      roughness:0.7;
+                                      metalness:0;
+                                      transparent:true;
+                                      opacity:0;"
+                            shadow="cast:false;
+                                    receive:true;"
                 ></a-entity>
             </a-entity>
-
 
             <!--dummy-->
             <a-entity   id="dummy-rig"
@@ -643,7 +658,6 @@
 
             let anchorA = document.querySelector('#anchorA');
             let anchorB = document.querySelector('#anchorB');
-
             let rLantern = document.querySelector('#repeatLantern');
             let cLantern = document.querySelector('#contLantern');
 
@@ -653,49 +667,26 @@
             socket.on('connect', function(userData){
                 console.log('connected');
             });
-
             socket.on('send_instruction', function(data){
                 console.log('Sequence: ' + data.sequence);
             });
             
             socket.on('complete', function(){
-                console.log('physicalMenu');
-                
-                console.log("AnchorA: ", anchorA.id);
-                console.log("AnchorB: ", anchorB.id);
-
-                console.log("rLantern: ", rLantern.id);
-                console.log("cLantern: ", cLantern.id);
-
-                console.log("rBox: ", rBox.id);
-                console.log("cBox: ", cBox.id);
-
-
                 socket.on('seqContinue', function(){
                     resetSeq();
                 });
-
                 socket.on('seqRepeat', function(){
                     resetSeq();
                 });
 
-                //anchorA.setAttribute('position', {x:-0.5, y:8, z:0});
-                //anchorB.setAttribute('position', {x:0.5, y:8, z:0});
-                
-                //cBox.setAttribute('spring', {target:'#anchorA', damping:200, stiffness: 1000, restLength:6, localAnchorA:{x:0, y:-0.5, z:0}});
-                //rBox.setAttribute('spring', {target:'#anchorB', damping:200, stiffness: 1000, restLength:6, localAnchorA:{x:0, y:-0.5, z:0}});
                 rBox.setAttribute('spring', {restLength:5.5});
                 cBox.setAttribute('rotation', {y: -150});
                 cBox.setAttribute('spring', {restLength:5.5});
                 cBox.setAttribute('rotation', {y: 150});
                 
-                //rBox.setAttribute('position', {x:0.5, y:2, z:0});
-                //cBox.setAttribute('position', {x:-0.5, y:2, z:0});
-                
                 rLantern.setAttribute('material', {src:'#repeat-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
                 cLantern.setAttribute('material', {src:'#cont-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
             });
-
             socket.on('percResp', function(data){
                 console.log('percentCheck');
                 for (let i =0; i < data.numResponseSeq; i++){
@@ -711,27 +702,17 @@
                 console.log("Passed:", passed, "%");
                 console.log("Failed:", failed, "%");
             });
-
             window.onload = function(){
                 let ambient = document.querySelector('#nature-sound');
                 ambient.volume = 0.01;
                 ambient.play();
             }
-
             function resetSeq(){
-
-                //anchorA.setAttribute('position', {x:-0.5, y:15, z:0});
-                //anchorB.setAttribute('position', {x:0.5, y:15, z:0});
-                
-                //cBox.setAttribute('spring', {target:'#anchorA', damping:500, stiffness: 1000, restLength:0.5, localAnchorA:{x:0, y:-0.5, z:0}});
-                //rBox.setAttribute('spring', {target:'#anchorB', damping:500, stiffness: 1000, restLength:0.5, localAnchorA:{x:0, y:-0.5, z:0}});
                 cBox.setAttribute('spring', {damping:500, restLength:0.1});
                 cBox.setAttribute('rotation', {y: -150});
                 rBox.setAttribute('spring', {damping:500, restLength:0.1});
                 rBox.setAttribute('rotation', {y: 150});
-                
-                //cbox.setAttribute('position', {x:'-0.5', y:7, z:0});
-                //rbox.setAttribute('position', {x:'0.5', y:7, z:0});
+
                 setTimeout(function(){
                     rLantern.setAttribute('material', {src:'#repeat-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
                     cLantern.setAttribute('material', {src:'#cont-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
