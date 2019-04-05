@@ -53,6 +53,7 @@
                 socket.emit("rightArm_response");
                 console.log('rightArm_button');
             });
+
             document.querySelector('#abdomen').addEventListener('click', function(){
                 socket.emit("abdomen_response");
                 console.log('abdomen_button');
@@ -69,6 +70,7 @@
                 socket.emit("leg_response");
                 console.log('leg_button');
             });
+
             document.querySelector('#bow').addEventListener('click', function(){
                 console.log('bow');
                 socket.emit('bow');
@@ -81,10 +83,6 @@
                 console.log('repeat');
                 socket.emit('repeat');
             });
-
-
-            
-            //Write some socket client code
 
             socket.on('connect', function(userData){
                 console.log('connected');
