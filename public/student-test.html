@@ -7,19 +7,18 @@
     <body>
         <h1>Test Input Page</h1>
         
-        
         <button id="head" style="background-color: green; color: whitesmoke;">Head</button>
         <button id="neck" style="background-color: blue; color: whitesmoke;">Neck</button>
         <button id="leftArm" style="background-color: red; color: whitesmoke;">Left Arm</button>
         <button id="rightArm" style="background-color: blue; color: whitesmoke;">Right Arm</button>
 
         <div>
-            
             <button id="abdomen" style="background-color: blue; color: whitesmoke;">Abdomen</button>
             <button id="leftHand" style="background-color: blue; color: whitesmoke;">Left Hand</button>
             <button id="rightHand" style="background-color: blue; color: whitesmoke;">Right Hand</button>
             <button id="leg" style="background-color: blue; color: whitesmoke;">Leg</button>
         </div>
+        
         <div>
             <button id="bow" style="background-color: blue; color: whitesmoke;">Bow</button>
         </div>
@@ -37,7 +36,6 @@
             socket.on('connect', function(userData){
                 console.log('connected');
             });
-
 
             document.querySelector('#head').addEventListener('click', function(){
                 socket.emit("head_response");
@@ -85,10 +83,6 @@
                 console.log('repeat');
                 socket.emit('repeat');
             });
-
-
-            
-            //Write some socket client code
 
             socket.on('connect', function(userData){
                 console.log('connected');
