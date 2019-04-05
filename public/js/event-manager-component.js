@@ -21,12 +21,20 @@ AFRAME.registerComponent('event-manager', {
         //Dummy hit boxes
         Context_AF.dummyBoxIdList   = ['#head',
                                        '#neck',
-                                       '#rightArm',
                                        '#leftArm',
+                                       '#rightArm',
                                        '#abdomen',
-                                       '#rightHand',
                                        '#leftHand',
+                                       '#rightHand',
                                        '#leg'];
+        Context_AF.dummyHighlights  = [document.querySelector(Context_AF.dummyBoxIdList[0] + 'Highlight'),
+                                       document.querySelector(Context_AF.dummyBoxIdList[1] + 'Highlight'),
+                                       document.querySelector(Context_AF.dummyBoxIdList[2] + 'Highlight'),
+                                       document.querySelector(Context_AF.dummyBoxIdList[3] + 'Highlight'),
+                                       document.querySelector(Context_AF.dummyBoxIdList[4] + 'Highlight'),
+                                       document.querySelector(Context_AF.dummyBoxIdList[5] + 'Highlight'),
+                                       document.querySelector(Context_AF.dummyBoxIdList[6] + 'Highlight'),
+                                       document.querySelector(Context_AF.dummyBoxIdList[7] + 'Highlight')];
         //Sequence Graphics (English + Kanji)
         Context_AF.graphicsEK       = ['/assets/images/sequenceTargetAnimations/videos/Head(EK).mp4',
                                        '/assets/images/sequenceTargetAnimations/videos/Neck(EK).mp4',
@@ -49,28 +57,34 @@ AFRAME.registerComponent('event-manager', {
                                        '/assets/images/sequenceTargetAnimations/videos/Null.mp4'];
         
         //E V E N T   L I S T E N E R S
-        //S C E N E
+        //G A M E
+        //Display Full Sequence On Receive
         socket.on('sequence', function(event) {
             Context_AF.sequenceEK.length = 0;
             Context_AF.sequenceK.length = 0;
             console.log('Sequence Received: ' + event.sequence);
-            for (i = 0; i <= event.sequence.length; i++) {
-                if (i === event.sequence.length) {
-                    Context_AF.sequenceEK[i] = Context_AF.graphicsEK[8];
-                } else {
-                    Context_AF.sequenceEK[i] = Context_AF.graphicsEK[event.sequence[i] - 1];
-                    Context_AF.sequenceK[i] = Context_AF.graphicsK[event.sequence[i] - 1];
+            //2 second delay before displayign sequence
+            setTimeout(function() {
+                //Initialize Array of Sequence Graphics
+                for (i = 0; i <= event.sequence.length; i++) {
+                    if (i === event.sequence.length) {
+                        Context_AF.sequenceEK[i] = Context_AF.graphicsEK[8];
+                    } else {
+                        Context_AF.sequenceEK[i] = Context_AF.graphicsEK[event.sequence[i] - 1];
+                        Context_AF.sequenceK[i] = Context_AF.graphicsK[event.sequence[i] - 1];
+                    }
                 }
-            }
-            
-            let index = 0;
-            let seqInt = setInterval(function() {
-                Context_AF.leftScrollMat.setAttribute('src', Context_AF.sequenceEK[index]);
-                index ++;
-                if (index === event.sequence.length + 1) {
-                    clearInterval(seqInt);
-                } 
-            }, 2500);
+                //Display Graphics
+                let index = 0;
+                let seqInt = setInterval(function() {
+                    Context_AF.leftScrollMat.setAttribute('src', Context_AF.sequenceEK[index]);
+                    Context_AF.dummyHighlights[event.sequence[i]].setAttribute('material', 'color', '#e74c3c');
+                    index ++;
+                    if (index === event.sequence.length + 1) {
+                        clearInterval(seqInt);
+                    } 
+                }, 2500);
+            }, 2000);
         });
        
         //H A N D  C O N T R O L L E R _ R I G H T
