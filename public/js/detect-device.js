@@ -1,18 +1,18 @@
 function deviceDispatch(){
     if (AFRAME.utils.isMobile()){
         //Mobile
-        console.log("Mobile");
+        //console.log("Mobile");
         window.location.href = '/MobilePages/sequence.html';
     }
     else if (AFRAME.utils.checkHeadsetConnected()){
         //Headset
-        console.log("Headset");
+        //console.log("Headset");
         window.location.href = '/student.html';
 
     }
     else if (!AFRAME.utils.checkHeadsetConnected()){
         //Headset
-        console.log("Desktop");
+        //console.log("Desktop");
         window.location.href = '/student-test.html';
 
     }
@@ -22,7 +22,7 @@ function deviceDispatch(){
 function detectDevice(){
     if (AFRAME.utils.isMobile()){
         //Mobile
-        console.log("Mobile");
+        //console.log("Mobile");
 
         let playerImg = document.querySelectorAll(".player-img");
         let masterInstruction =  document.querySelectorAll(".master-instruction");
@@ -63,7 +63,7 @@ function detectDevice(){
     }
     else if (!AFRAME.utils.checkHeadsetConnected()){
         //Headset
-        console.log("Desktop");
+        //console.log("Desktop");
 
     }
 }

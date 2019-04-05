@@ -25,7 +25,7 @@ AFRAME.registerComponent('event-manager', {
         //Grip Closed
         Context_AF.handRight.addEventListener('gripdown', function(event) {
             Context_AF.handRight.addState('grabbing');
-            console.log("[Right ✊]");
+            //console.log("[Right ✊]");
            
             if (Context_AF.shinai.components.hoverable.hoverers.includes(Context_AF.handRight) && !Context_AF.shinai.is('grabbed')) {
                 Context_AF.shinai.setAttribute('position', {x: Context_AF.handRight.getAttribute('position').x,
@@ -39,7 +39,7 @@ AFRAME.registerComponent('event-manager', {
         //Grip Release
         Context_AF.handRight.addEventListener('gripup', function(event) {
             Context_AF.handRight.removeState('grabbing');
-            console.log("[Right ✋]");
+            //console.log("[Right ✋]");
            
             if (Context_AF.shinai.is('grabbed') && Context_AF.shinai.getAttribute('constraint').target.id == 'handRight') {
                 Context_AF.shinai.removeState('grabbed');
@@ -50,7 +50,7 @@ AFRAME.registerComponent('event-manager', {
         //Point Start
         Context_AF.handRight.addEventListener('pointingstart', function(event) {
             Context_AF.handRight.addState('pointing');
-            console.log("[Right ✔ 👉");
+            //console.log("[Right ✔ 👉");
 
             Context_AF.handRight.setAttribute('collision-filter', {collisionForces: true});
         });
@@ -58,7 +58,7 @@ AFRAME.registerComponent('event-manager', {
         //Point End
         Context_AF.handRight.addEventListener('pointingend', function(event) {
             Context_AF.handRight.removeState('pointing');
-            console.log("[Right ✘ 👉");
+            //console.log("[Right ✘ 👉");
 
             Context_AF.handRight.setAttribute('collision-filter', {collisionForces: false});
         });
@@ -68,7 +68,7 @@ AFRAME.registerComponent('event-manager', {
         //Grip Closed
         Context_AF.handLeft.addEventListener('gripdown', function(event) {
             Context_AF.handLeft.addState('grabbing');
-            console.log("[Left ✊]");
+            //console.log("[Left ✊]");
            
             if (Context_AF.shinai.components.hoverable.hoverers.includes(Context_AF.handLeft) && !Context_AF.shinai.is('grabbed')) {
                 Context_AF.shinai.setAttribute('position', {x: Context_AF.handLeft.getAttribute('position').x,
@@ -82,7 +82,7 @@ AFRAME.registerComponent('event-manager', {
         //Grip Release
         Context_AF.handLeft.addEventListener('gripup', function(event) {
             Context_AF.handLeft.removeState('grabbing');
-            console.log("[Left ✋]");
+            //console.log("[Left ✋]");
            
             if (Context_AF.shinai.is('grabbed') && Context_AF.shinai.getAttribute('constraint').target.id == 'handLeft') {
                 Context_AF.shinai.removeState('grabbed');
@@ -93,7 +93,7 @@ AFRAME.registerComponent('event-manager', {
         //Point Start
         Context_AF.handLeft.addEventListener('pointingstart', function(event) {
             Context_AF.handLeft.addState('pointing');
-            console.log("[Left ✔ 👉");
+            //console.log("[Left ✔ 👉");
 
             Context_AF.handLeft.setAttribute('collision-filter', {collisionForces: true});
         });
@@ -101,7 +101,7 @@ AFRAME.registerComponent('event-manager', {
         //Point End
         Context_AF.handLeft.addEventListener('pointingend', function(event) {
             Context_AF.handLeft.removeState('pointing');
-            console.log("[Left ✘ 👉");
+            //console.log("[Left ✘ 👉");
 
             Context_AF.handLeft.setAttribute('collision-filter', {collisionForces: false});
         });
@@ -114,7 +114,7 @@ AFRAME.registerComponent('event-manager', {
                 
                 setTimeout(function() {
                     Context_AF.tempCollider = null;
-                    console.log('collider reset');
+                    //console.log('collider reset');
                 }, 1000);
 
                 socket.emit(event.detail.body.el.id + "_response");
@@ -124,17 +124,17 @@ AFRAME.registerComponent('event-manager', {
 
         //State Added
         Context_AF.shinai.addEventListener('stateadded', function(event) {
-            console.log("[Shinai ✔ " + event.detail + "]");
+            //console.log("[Shinai ✔ " + event.detail + "]");
         });
         
         //State Added
         Context_AF.shinai.addEventListener('stateremoved', function(event) {
-            console.log("[Shinai ✘ " + event.detail + "]");
+           // console.log("[Shinai ✘ " + event.detail + "]");
         });
     },
 
     //C O L L I S I O N   D E T A I L S
     CollisionDetail : function(_event) {
-        console.log("[" + _event.detail.target.el.getAttribute('id') + " 💥 " + _event.detail.body.el.getAttribute('id') + "]");
+        //console.log("[" + _event.detail.target.el.getAttribute('id') + " 💥 " + _event.detail.body.el.getAttribute('id') + "]");
     },
 });

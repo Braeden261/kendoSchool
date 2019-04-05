@@ -697,24 +697,24 @@
             let bBox = document.querySelector('#bow');
 
             socket.on('connect', function(userData){
-                console.log('connected');
+                //console.log('connected');
             });
 
             socket.on('send_instruction', function(data){
-                console.log('Sequence: ' + data.sequence);
+                //console.log('Sequence: ' + data.sequence);
             });
             
             socket.on('complete', function(){
-                console.log('physicalMenu');
+                //console.log('physicalMenu');
                 
-                console.log("AnchorA: ", anchorA.id);
-                console.log("AnchorB: ", anchorB.id);
+                //console.log("AnchorA: ", anchorA.id);
+                //console.log("AnchorB: ", anchorB.id);
 
-                console.log("rLantern: ", rLantern.id);
-                console.log("cLantern: ", cLantern.id);
+                //console.log("rLantern: ", rLantern.id);
+                //console.log("cLantern: ", cLantern.id);
 
-                console.log("rBox: ", rBox.id);
-                console.log("cBox: ", cBox.id);
+                //console.log("rBox: ", rBox.id);
+                //console.log("cBox: ", cBox.id);
 
 
                 socket.on('seqContinue', function(){
@@ -739,7 +739,7 @@
             });
 
             socket.on('percResp', function(data){
-                console.log('percentCheck');
+                //console.log('percentCheck');
                 for (let i =0; i < data.numResponseSeq; i++){
                     if (data.responseSeq[i] == true){
                         passed++;
@@ -750,8 +750,8 @@
                 }
                 passed = 100 * ( passed/(data.numResponseSeq) );
                 failed = 100 * ( failed/(data.numResponseSeq) );
-                console.log("Passed:", passed, "%");
-                console.log("Failed:", failed, "%");
+                //console.log("Passed:", passed, "%");
+                //console.log("Failed:", failed, "%");
                 passed = 0;
                 failed = 0;
             });

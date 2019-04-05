@@ -106,7 +106,7 @@
 
             function clearSequence() {
                 if (length != 0) {
-                    console.log('clear button pressed');
+                    //console.log('clear button pressed');
                     length = 0;
                     socket.emit('clear');
 
@@ -127,13 +127,13 @@
                     }
                 }
                 else if (length == 0) {
-                    console.log('Cannot clear empty sequence');
+                    //console.log('Cannot clear empty sequence');
                 }
             }
 
             function sendSequence() {
                 if (length != 0) {
-                    console.log('send button pressed');
+                    //console.log('send button pressed');
                     socket.emit('send');
                     window.location.href='waiting.html';
                 }
