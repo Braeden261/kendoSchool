@@ -13,7 +13,7 @@ AFRAME.registerComponent('event-manager', {
         Context_AF.scene            = document.querySelector('a-scene')
         Context_AF.handRight        = document.querySelector('#handRight');
         Context_AF.handLeft         = document.querySelector('#handLeft');
-        Context_AF.shinai           = document.querySelector('#shinai');
+        Context_AF.swords           = document.querySelectorAll('.sword');
         Context_AF.rightScroll      = document.querySelector('#rightScrollDisplay');
         Context_AF.leftScroll       = document.querySelector('#leftScrollDisplay');
         Context_AF.rightScrollMat   = document.querySelector('#display-rightScroll');
@@ -72,27 +72,35 @@ AFRAME.registerComponent('event-manager', {
                 } 
             }, 2500);
         });
-
+       
         //H A N D  C O N T R O L L E R _ R I G H T
         //Grip Closed
         Context_AF.handRight.addEventListener('gripdown', function(event) {
             Context_AF.handRight.addState('grabbing');
             console.log("[Right ✊]");
-            if (Context_AF.shinai.components.hoverable.hoverers.includes(Context_AF.handRight) && !Context_AF.shinai.is('grabbed')) {
-                Context_AF.shinai.setAttribute('position', {x: Context_AF.handRight.getAttribute('position').x,
-                                                            y: Context_AF.handRight.getAttribute('position').y,
-                                                            z: Context_AF.handRight.getAttribute('position').z});
-                Context_AF.shinai.addState('grabbed');
-                Context_AF.shinai.setAttribute('constraint', {type: 'lock', target:'#handRight', collideConnected: false, });
+            for (i = 0; i < Context_AF.swords.length; i++) {
+                if (!Context_AF.handRight.is('holding') && Context_AF.swords[i].components.hoverable.hoverers.includes(Context_AF.handRight) && !Context_AF.swords[i].is('grabbed')) {
+                    Context_AF.swords[i].setAttribute('position', {x: Context_AF.handRight.getAttribute('position').x,
+                                                                   y: Context_AF.handRight.getAttribute('position').y,
+                                                                   z: Context_AF.handRight.getAttribute('position').z});
+                    Context_AF.swords[i].setAttribute('constraint', {type: 'lock', target:'#handRight', collideConnected: false, maxForce: '1e7'});
+                    Context_AF.swords[i].addState('grabbed');
+                    Context_AF.handRight.addState('holding');
+                    break;
+                }
             }
         });
         //Grip Release
         Context_AF.handRight.addEventListener('gripup', function(event) {
             Context_AF.handRight.removeState('grabbing');
             console.log("[Right ✋]");
-            if (Context_AF.shinai.is('grabbed') && Context_AF.shinai.getAttribute('constraint').target.id == 'handRight') {
-                Context_AF.shinai.removeState('grabbed');
-                Context_AF.shinai.removeAttribute('constraint');
+            for (i = 0; i < Context_AF.swords.length; i++) {
+                if (Context_AF.swords[i].is('grabbed') && Context_AF.swords[i].getAttribute('constraint').target.id == 'handRight') {
+                    Context_AF.swords[i].removeState('grabbed');
+                    Context_AF.swords[i].removeAttribute('constraint');
+                    Context_AF.handRight.removeState('holding');
+                    break;
+                }
             }
         });
         //Point Start
@@ -112,22 +120,30 @@ AFRAME.registerComponent('event-manager', {
         //Grip Closed
         Context_AF.handLeft.addEventListener('gripdown', function(event) {
             Context_AF.handLeft.addState('grabbing');
-            console.log("[Left ✊]");
-            if (Context_AF.shinai.components.hoverable.hoverers.includes(Context_AF.handLeft) && !Context_AF.shinai.is('grabbed')) {
-                Context_AF.shinai.setAttribute('position', {x: Context_AF.handLeft.getAttribute('position').x,
-                                                            y: Context_AF.handLeft.getAttribute('position').y,
-                                                            z: Context_AF.handLeft.getAttribute('position').z});
-                Context_AF.shinai.addState('grabbed');
-                Context_AF.shinai.setAttribute('constraint', {type: 'lock', target:'#handLeft', collideConnected: false, maxForce: 1e8});
+            console.log("[Right ✊]");
+            for (i = 0; i < Context_AF.swords.length; i++) {
+                if (!Context_AF.handLeft.is('holding') && Context_AF.swords[i].components.hoverable.hoverers.includes(Context_AF.handLeft) && !Context_AF.swords[i].is('grabbed')) {
+                    Context_AF.swords[i].setAttribute('position', {x: Context_AF.handLeft.getAttribute('position').x,
+                                                                   y: Context_AF.handLeft.getAttribute('position').y,
+                                                                   z: Context_AF.handLeft.getAttribute('position').z});
+                    Context_AF.swords[i].setAttribute('constraint', {type: 'lock', target:'#handLeft', collideConnected: false, maxForce: '1e7'});
+                    Context_AF.swords[i].addState('grabbed');
+                    Context_AF.handLeft.addState('holding');
+                    break;
+                }
             }
         });
         //Grip Release
         Context_AF.handLeft.addEventListener('gripup', function(event) {
             Context_AF.handLeft.removeState('grabbing');
-            console.log("[Left ✋]");
-            if (Context_AF.shinai.is('grabbed') && Context_AF.shinai.getAttribute('constraint').target.id == 'handLeft') {
-                Context_AF.shinai.removeState('grabbed');
-                Context_AF.shinai.removeAttribute('constraint');
+            console.log("[Right ✋]");
+            for (i = 0; i < Context_AF.swords.length; i++) {
+                if (Context_AF.swords[i].is('grabbed') && Context_AF.swords[i].getAttribute('constraint').target.id == 'handLeft') {
+                    Context_AF.swords[i].removeState('grabbed');
+                    Context_AF.swords[i].removeAttribute('constraint');
+                    Context_AF.handLeft.removeState('holding');
+                    break;
+                }
             }
         });
         //Point Start
@@ -143,27 +159,29 @@ AFRAME.registerComponent('event-manager', {
             Context_AF.handLeft.setAttribute('collision-filter', {collisionForces: false});
         });
 
-        //S H I N A I
+        //E V E N T S - S W O R D S
         //Collision
-        Context_AF.shinai.addEventListener('collide', function(event) {
-            if (Context_AF.dummyBoxIdList.includes(event.detail.body.el.id) && event.detail.body.el.id != Context_AF.tempCollider) {
-                Context_AF.tempCollider = event.detail.body.el.id;
-                setTimeout(function() {
-                    Context_AF.tempCollider = null;
-                    console.log('collider reset');
-                }, 1000);
-                socket.emit(event.detail.body.el.id + "_response");
-                Context_AF.CollisionDetail(event);
-            }
-        });
-        //State Added
-        Context_AF.shinai.addEventListener('stateadded', function(event) {
-            console.log("[Shinai ✔ " + event.detail + "]");
-        });
-        //State Added
-        Context_AF.shinai.addEventListener('stateremoved', function(event) {
-            console.log("[Shinai ✘ " + event.detail + "]");
-        });
+        for (i = 0; i < Context_AF.swords.length; i++) {
+            Context_AF.swords[i].addEventListener('collide', function(event) {
+                if (Context_AF.dummyBoxIdList.includes(event.detail.body.el.getAttribute('id')) && event.detail.body.el.getAttribute('id') != Context_AF.tempCollider) {
+                    Context_AF.tempCollider = event.detail.body.el.getAttribute('id');
+                    setTimeout(function() {
+                        Context_AF.tempCollider = null;
+                        console.log('collider reset');
+                    }, 1000);
+                    socket.emit(event.detail.body.el.getAttribute('id') + "_response");
+                    Context_AF.CollisionDetail(event);
+                }
+            });
+            //State Added
+            Context_AF.swords[i].addEventListener('stateadded', function(event) {
+                console.log("[" + this.getAttribute('id') + " ✔ " + event.detail + "]");
+            });
+            //State Added
+            Context_AF.swords[i].addEventListener('stateremoved', function(event) {
+                console.log("[" + this.getAttribute('id') + " ✘ " + event.detail + "]");
+            });
+        }
     },
 
     //C O L L I S I O N   D E T A I L S

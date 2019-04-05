@@ -7,6 +7,7 @@ h1 {
 h2 {
     font-size: 12pt;
     color: white;
+    text-align: center;
 }
 
 h3 {
@@ -18,12 +19,24 @@ h3 {
 html, body {
     height: 100%;
 }
+
 body {
     font-family: 'Montserrat', sans-serif;
     font-weight: 100;
-    background-color: #353535;
+    background-color: #333333;
     overflow:hidden;
     margin: 0;
+}
+
+.notification {
+    border-radius: 50%;
+    visibility: hidden;
+    background-color:red;
+    width:20px;
+    height:20px;
+    position:absolute; 
+    right:-5px;
+    top:-5px;
 }
 
 .right-icon {
@@ -45,7 +58,7 @@ body {
 }
 
 .code-input {
-    background-color: #353535;
+    background-color: #333333;
     border: 1px solid rgba(255, 255, 255, .5);
     color: white;
     text-align: center;
@@ -79,7 +92,7 @@ body {
     padding: 20px;
 }
 
-.sequence-image {
+.sequence-image, .send-image, .clear-image {
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -103,7 +116,7 @@ body {
 
 
 .continue {
-    background-color: #353535;
+    background-color: #333333;
     border: 1px solid rgba(255, 255, 255, .5);
     color: white;
     padding: 15px 32px;
@@ -115,11 +128,13 @@ body {
 }
 
 .sequence {
+    position: relative;
     border-collapse: separate;
     border-spacing: 20px;
 }
 
 table.sequence td {
+    position: relative;
     color: white;
     background-color: white;
     width: 75px;
@@ -146,4 +161,27 @@ td {
 
 .right-td {
     padding-right: 150px;
+}
+
+.container {
+    position: relative;
+    text-align: center;
+    color: black;
+}
+
+.passPercent, .failPercent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48pt;
+    font-weight: 400;
+}
+
+.failPercent {
+    color: #CF493C;
+}
+
+.passPercent {
+    color: #56BA4D;
 }

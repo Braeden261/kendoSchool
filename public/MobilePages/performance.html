@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="HandheldFriendly" content="true" />
     <link href="style.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400" rel="stylesheet">
     <script src="/socket.io/socket.io.js"></script>
@@ -40,6 +41,9 @@
             failed = 100 * ( failed/(data.numResponseSeq) );
             console.log("Passed:", passed, "%");
             console.log("Failed:", failed, "%");
+
+            document.querySelector('.passPercent').innerHTML = Math.round(passed) + "%";
+            document.querySelector('.failPercent').innerHTML = Math.round(failed) + "%";
         });
 
     </script>
@@ -53,8 +57,18 @@
         <h2> YOUR STUDENT'S PERFORMANCE</h2>
         <table>
             <tr>
-                <td class="left-td"><img src="images/green_icon.png" class="performance-image"> </td>
-                <td class="right-td"><img src="images/red_icon.png" class="performance-image"> </td>
+                <td class="left-td">
+                    <div class="container">
+                        <img src="images/green_icon.png" class="performance-image">
+                        <div class="passPercent">#</div> 
+                    </div>
+                </td>
+                <td class="right-td">
+                    <div class="container">
+                        <img src="images/red_icon.png" class="performance-image">
+                        <div class="failPercent">#</div> 
+                    </div>
+                </td>
             </tr>
         </table>
     </div>
