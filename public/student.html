@@ -65,8 +65,12 @@
                 <a-asset-item id="scroll-obj"           src="/assets/models/objFiles/scroll/scroll.obj"></a-asset-item>
               
                 <!-- Audio -->
-                <audio  id='hit-sound'      src='/assets/sounds/effects/hitSound.mp3'></audio>
-                <audio  id="nature-sound"   src="/assets/sounds/ambientSounds.mp3"  type="audio/mp3"    loop></audio>
+                <audio  id='hit-sound'          src='/assets/sounds/effects/hitSound.mp3'></audio>
+                <audio  id="nature-sound"       src="/assets/sounds/ambientSounds.mp3"              type="audio/mp3"    loop></audio>
+                <audio  id="idle-track"         src="/assets/sounds/anEasternTale_kylePreston.mp3"  type="audio/mp3"    loop></audio>
+                <audio  id="action-track"       src="/assets/sounds/warDrums_kylePreston.mp3"       type="audio/mp3"    loop></audio>
+                <audio  id="cont-rpt-sound"     src="/assets/sounds/kotoHit_EDITED.mp3"></audio>
+                <audio  id="begin-sound"        src="/assets/sounds/gongHit.mp3"></audio>
 
                 <!-- Mixins -->
                 <a-mixin id="controller"
@@ -838,6 +842,11 @@
             socket.on('bow', function(){
                 bBox.setAttribute('spring', {target:'#anchorC', damping:500, stiffness: 1000, restLength:0.5, localAnchorA:{x:0, y:-0.5, z:0}});
                 
+                //play gong sound when player hits "begin" lantern
+                let gong = document.querySelector('#begin-sound');
+                gong.volume = 0.05;
+                gong.play();
+
                 setTimeout(function(){
                     bLantern.setAttribute('material', {src:'#bow-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
                 }, 1000);
@@ -848,6 +857,10 @@
                 let ambient = document.querySelector('#nature-sound');
                 ambient.volume = 0.01;
                 ambient.play();
+
+                let idle = document.querySelector('#idle-track');
+                idle.volume = 0.03;
+                idle.play();
             }
 
             function resetSeq(){
