@@ -586,7 +586,8 @@
             </a-entity>
             <!-- End of Dummy Rig-->
             
-            <!--shinai-->
+            <!-- Swords -->
+            <!--Shinai-->
             <a-entity   id="shinai"
                         class="sword"
                         obj-model="obj:#shinai-obj"
@@ -618,11 +619,13 @@
                                   metalness: 0.2;
                                   visible: true;"
                         
-                        position="0.95 1.3 0"
-                        rotation="-90 0 0"
+                        position="0.95 1.3 0.8"
+                        rotation="90 0 0"
             >
                 <!--sounds-->
-                <a-entity id="hitSnd" sound="src:#hit-sound"></a-entity>
+                <a-entity id="hitSnd"
+                          sound="src:#hit-sound"
+                ></a-entity>
             </a-entity>
             <!--Moonlight GreatSword-->
             <a-entity   id="mlgSword"
@@ -631,7 +634,7 @@
                         hit-sound-component
                         hoverable
                         body="type: dynamic;
-                              mass: 150;
+                              mass: 110;
                               shape: none;"
                         shape__blade="shape: box;
                                       offset: 0 0.18 0;
@@ -652,10 +655,9 @@
                                   roughness: 0.7;
                                   metalness: 0.2;
                                   visible: true;"
-                        position="0.95 1 0"
-                        rotation="-90 0 0"
-            >
-            </a-entity>
+                        position="0.95 1 0.8"
+                        rotation="90 0 0"
+            ></a-entity>
             <!--GreatSword-->
             <a-entity   id="gSword"
                         class="sword"
@@ -663,7 +665,7 @@
                         hit-sound-component
                         hoverable
                         body="type: dynamic;
-                              mass: 200;
+                              mass: 120;
                               shape: none;"
                         shape__blade="shape: box;
                                       offset: 0 0.21 0;
@@ -684,10 +686,9 @@
                                   roughness: 0.7;
                                   metalness: 0.2;
                                   visible: true;"
-                        position="0.95 0.6 0"
-                        rotation="-90 0 0"
-            >
-            </a-entity>
+                        position="0.89 0.6 0.75"
+                        rotation="90 0 0"
+            ></a-entity>
             <!--Sword Rack-->
             <a-entity   id="swordRack"
                         obj-model="obj:#sRack-obj"
@@ -722,7 +723,7 @@
                                   roughness: 0.7;
                                   metalness: 0.2;
                                   visible: true;"
-                        position="1 0.28 0"  
+                        position="1 0.28 0.72"  
                         scale="1.2 1.2 1.2"
                         rotation=" 0 270 0"
             ></a-entity>
@@ -841,7 +842,7 @@
                 setTimeout(function(){
                     rLantern.setAttribute('material', {src:'#repeat-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
                     cLantern.setAttribute('material', {src:'#cont-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
-                }, 500);
+                }, 1000);
             }
         </script>
     </body>
