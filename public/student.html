@@ -307,7 +307,7 @@
             ></a-entity>
 
             <!--Physical Menu-->
-            <!--anchors-->
+            <!--Anchors-->
             <a-box  id="anchorA"
                     position="-0.95 8 -0.8"
                     scale=" 0.5 0.5 0.5"
@@ -327,7 +327,8 @@
                     static-body
                     material="opacity:0"
             ></a-box>
-            <!--geometry-->
+            <!--Geometry-->
+            <!--"continue"-->
             <a-entity   id="continue"
                         menu-component
                         spring="target: #anchorA;
@@ -364,6 +365,7 @@
                                     receive:false;"
                 ></a-entity>
             </a-entity>
+            <!--"repeat"-->
             <a-entity   id="repeat"
                         menu-component
                         spring="target: #anchorB;
@@ -400,13 +402,14 @@
                                     receive:false;"
                 ></a-entity>
             </a-entity>
-            <a-entity   menu-component
+            <!--"bow"-->
+            <a-entity   id="bow"
+                        menu-component
                         spring="target: #anchorC;
                             damping:100;
                             stiffness: 1000;
                             restLength: 1;
                             localAnchorA: 0 0.5 0;"
-                        id="bow"
                         position="2 7 0"
                         body="type: dynamic;
                               mass: 50;
@@ -467,32 +470,156 @@
                     <!--head-->
                     <a-entity   id="headHighlight"
                                 geometry="primitive: cylinder;
-                                        radius: 0.055;
-                                        height: 0.27;
-                                        segmentsRadial: 8;
-                                        segmentsHeight: 1;"
+                                          radius: 0.055;
+                                          height: 0.27;
+                                          segmentsRadial: 8;
+                                          segmentsHeight: 1;"
                                 material="color: #e74c3c;
-                                        emissive: #e74c3c;
-                                        emissiveIntensity: 0.5;
-                                        transparent: true;
-                                        opacity: 0.5;"
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
                                 position="-0.008 0.746 0.255"
                                 rotation="90 -2 0"
                     ></a-entity>
                     <!--neck-->
                     <a-entity   id="neckHighlight"
                                 geometry="primitive: cylinder;
-                                        radius: 0.13;
-                                        height: 0.22;
-                                        segmentsRadial: 8;
-                                        segmentsHeight: 1;"
+                                          radius: 0.13;
+                                          height: 0.22;
+                                          segmentsRadial: 8;
+                                          segmentsHeight: 1;"
                                 material="color: #e74c3c;
-                                        emissive: #e74c3c;
-                                        emissiveIntensity: 0.5;
-                                        transparent: true;
-                                        opacity: 0.5;"
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
                                 position="0 0.572 0"
                     ></a-entity>
+                    <!--left arm-->
+                    <a-entity   id="leftArmHighlight"
+                                geometry="primitive: cylinder;
+                                          radius: 0.055;
+                                          height: 0.4;
+                                          segmentsRadial: 8;
+                                          segmentsHeight: 1;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="0.337 0.406 -0.019"
+                                rotation="0 3 90"
+                    ></a-entity>
+                    <!--right arm-->
+                    <a-entity   id="rightArmHighlight"
+                                geometry="primitive: cylinder;
+                                          radius: 0.055;
+                                          height: 0.4;
+                                          segmentsRadial: 8;
+                                          segmentsHeight: 1;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="-0.336 0.406 -0.025"
+                                rotation="0 -4 90"
+                    ></a-entity>
+                    <!--abdomen-->
+                    <a-entity   id="abdomenHighlight"
+                                geometry="primitive: cylinder;
+                                          radius: 0.13;
+                                          height: 0.22;
+                                          segmentsRadial: 8;
+                                          segmentsHeight: 1;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="0 0.22 0"
+                    ></a-entity>
+                    <!--left hand-->
+                    <a-entity   id="leftHandHighlight"
+                                geometry="primitive: cylinder;
+                                          radius: 0.055;
+                                          height: 0.48;
+                                          segmentsRadial: 8;
+                                          segmentsHeight: 1;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="0.258 -0.001 0.279"
+                                rotation="0 -47.4 90"
+                    ></a-entity>
+                    <!--right hand-->
+                    <a-entity   id="rightHandHighlight"
+                                geometry="primitive: cylinder;
+                                          radius: 0.055;
+                                          height: 0.44;
+                                          segmentsRadial: 8;
+                                          segmentsHeight: 1;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="-0.341 0.038 0.101"
+                                rotation="0 -163.652 90"
+                    ></a-entity>
+                    <!--leg-->
+                    <a-entity   id="legHighlight1"
+                                geometry="primitive: box;
+                                          height: 0.08;
+                                          width: 0.08;
+                                          depth: 0.45;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="0 -0.150 0.222"
+                                rotation="21.218 0 90"
+                    ></a-entity>
+                    <a-entity   id="legHighlight2"
+                                geometry="primitive: box;
+                                          height: 0.08;
+                                          width: 0.09;
+                                          depth: 0.12;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="0 -0.269 0.446"
+                                rotation="53.408 0 90"
+                    ></a-entity>
+                    <a-entity   id="legHighlight3"
+                                geometry="primitive: box;
+                                          height: 0.08;
+                                          width: 0.09;
+                                          depth: 0.55;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="0 -0.568 0.543"
+                                rotation="75.582 0 90"
+                    ></a-entity> <!--End of Highlighters-->
 
                     <!--Geometry-->
                     <a-entity   id="dummy-geo"
@@ -504,6 +631,8 @@
                                           roughness: 0.7;
                                           metalness: 0;"
                     ></a-entity>
+
+                    <!--Hit Boxes-->
                     <!--Head Collision Box-->
                     <a-entity   id="head"
                                 class="dummyBox"
@@ -538,23 +667,6 @@
                                              offset: 0 0.57 0;
                                              numSegments: 16;"
                     ></a-entity>
-                    <!--Right Arm Collision Box-->
-                    <a-entity   id="rightArm"
-                                class="dummyBox"
-                                mixin="highlighter"
-                                body="type: dynamic;
-                                      shape: none;"
-                                collision-filter="group: dummy;
-                                                  collidesWith: hands, swords, objs, environment;
-                                                  collisionForces: true;"
-                                constraint="type: lock;
-                                            target: #base;"
-                                shape__rightArm="shape: box;
-                                                 height: 0.4;
-                                                 halfExtents: 0.27 0.04 0.04;
-                                                 offset: -0.274 0.4 0;"
-                                rotation="0 -4 0"
-                    ></a-entity>
                     <!--Left Arm Collision Box-->
                     <a-entity   id="leftArm"
                                 class="dummyBox"
@@ -571,6 +683,23 @@
                                                 halfExtents: 0.27 0.04 0.04;
                                                 offset: 0.274 0.4 0;"
                                 rotation="0 3 0"
+                    ></a-entity>
+                    <!--Right Arm Collision Box-->
+                    <a-entity   id="rightArm"
+                                class="dummyBox"
+                                mixin="highlighter"
+                                body="type: dynamic;
+                                      shape: none;"
+                                collision-filter="group: dummy;
+                                                  collidesWith: hands, swords, objs, environment;
+                                                  collisionForces: true;"
+                                constraint="type: lock;
+                                            target: #base;"
+                                shape__rightArm="shape: box;
+                                                 height: 0.4;
+                                                 halfExtents: 0.27 0.04 0.04;
+                                                 offset: -0.274 0.4 0;"
+                                rotation="0 -4 0"
                     ></a-entity>
                     <!--Abdomen Collision Box-->
                     <a-entity   id="abdomen"
@@ -848,7 +977,7 @@
             let bLantern = document.querySelector('#bowLantern');
 
             socket.on('connect', function(userData){
-                console.log('connected');
+                console.log('Student Connected');
             });
             
             socket.on('complete', function(){
