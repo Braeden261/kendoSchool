@@ -62,49 +62,7 @@ AFRAME.registerComponent('event-manager', {
         //G A M E
         //Display Full Sequence Upon Receival
         socket.on('sequence', function(event) {
-            Context_AF.sequenceEK.length = 0;
-            Context_AF.sequenceK.length = 0;
-            console.log('Sequence Received: ' + event.sequence.length);
-            console.log('Sequence: ' + event.sequence);
-            //2 second delay before displayign sequence
-            setTimeout(function() {
-                //Initialize Array of Sequence Graphics
-                for (i = 0; i <= event.sequence.length; i++) {
-                    if (i === event.sequence.length) {
-                        Context_AF.sequenceEK[i] = Context_AF.graphicsEK[8];
-                    } else {
-                        Context_AF.sequenceEK[i] = Context_AF.graphicsEK[event.sequence[i]];
-                        Context_AF.sequenceK[i] = Context_AF.graphicsK[event.sequence[i]];
-                    }
-                }
-                //Display Sequence Kanji+English Graphics
-                let index = 0;
-                let seqInt = setInterval(function() {
-                    if (index > 0) {
-                        if (event.sequence[index - 1] === 7) {
-                            Context_AF.dummyHighlights[event.sequence[index - 1]].setAttribute('material', 'visible', 'false');
-                            Context_AF.dummyHighlights[event.sequence[index - 1] + 1].setAttribute('material', 'visible', 'false');
-                            Context_AF.dummyHighlights[event.sequence[index - 1] + 2].setAttribute('material', 'visible', 'false');
-                        } else {
-                            Context_AF.dummyHighlights[event.sequence[index - 1]].setAttribute('material', 'visible', 'false');
-                        }
-                    }
-                    if (index < event.sequence.length) {
-                        Context_AF.leftScrollMat.setAttribute('src', Context_AF.sequenceEK[index]);
-                        if (event.sequence[index] === 7) {
-                            Context_AF.dummyHighlights[event.sequence[index]].setAttribute('material', 'visible', 'true');
-                            Context_AF.dummyHighlights[event.sequence[index] + 1].setAttribute('material', 'visible', 'true');
-                            Context_AF.dummyHighlights[event.sequence[index] + 2].setAttribute('material', 'visible', 'true');
-                        } else {
-                            Context_AF.dummyHighlights[event.sequence[index]].setAttribute('material', 'visible', 'true');
-                        }
-                        index ++;
-                    } else {
-                        Context_AF.leftScrollMat.setAttribute('src', Context_AF.sequenceEK[index]);
-                        clearInterval(seqInt);
-                    }
-                }, 4000);
-            }, 2000);
+            Context_AF.HighlightSequence(event);
         });
        
         //H A N D  C O N T R O L L E R _ R I G H T
@@ -222,4 +180,52 @@ AFRAME.registerComponent('event-manager', {
     CollisionDetail : function(_event) {
         console.log("[" + _event.detail.target.el.getAttribute('id') + " 💥 " + _event.detail.body.el.getAttribute('id') + "]");
     },
+
+    HighlightSequence : function(_event) {
+        Context_AF = this;
+
+        Context_AF.sequenceEK.length = 0;
+        Context_AF.sequenceK.length = 0;
+        console.log('Sequence Received: ' + _event.sequence.length);
+        console.log('Sequence: ' + _event.sequence);
+        //2 second delay before displayign sequence
+        setTimeout(function() {
+            //Initialize Array of Sequence Graphics
+            for (i = 0; i <= _event.sequence.length; i++) {
+                if (i === _event.sequence.length) {
+                    Context_AF.sequenceEK[i] = Context_AF.graphicsEK[8];
+                } else {
+                    Context_AF.sequenceEK[i] = Context_AF.graphicsEK[_event.sequence[i]];
+                    Context_AF.sequenceK[i] = Context_AF.graphicsK[_event.sequence[i]];
+                }
+            }
+            //Display Sequence Kanji+English Graphics
+            let index = 0;
+            let seqInt = setInterval(function() {
+                if (index > 0) {
+                    if (_event.sequence[index - 1] === 7) {
+                        Context_AF.dummyHighlights[_event.sequence[index - 1]].setAttribute('material', 'visible', 'false');
+                        Context_AF.dummyHighlights[_event.sequence[index - 1] + 1].setAttribute('material', 'visible', 'false');
+                        Context_AF.dummyHighlights[_event.sequence[index - 1] + 2].setAttribute('material', 'visible', 'false');
+                    } else {
+                        Context_AF.dummyHighlights[_event.sequence[index - 1]].setAttribute('material', 'visible', 'false');
+                    }
+                }
+                if (index < _event.sequence.length) {
+                    Context_AF.leftScrollMat.setAttribute('src', Context_AF.sequenceEK[index]);
+                    if (_event.sequence[index] === 7) {
+                        Context_AF.dummyHighlights[_event.sequence[index]].setAttribute('material', 'visible', 'true');
+                        Context_AF.dummyHighlights[_event.sequence[index] + 1].setAttribute('material', 'visible', 'true');
+                        Context_AF.dummyHighlights[_event.sequence[index] + 2].setAttribute('material', 'visible', 'true');
+                    } else {
+                        Context_AF.dummyHighlights[_event.sequence[index]].setAttribute('material', 'visible', 'true');
+                    }
+                    index ++;
+                } else {
+                    Context_AF.leftScrollMat.setAttribute('src', Context_AF.sequenceEK[index]);
+                    clearInterval(seqInt);
+                }
+            }, 4000);
+        }, 2000);
+    }
 });
