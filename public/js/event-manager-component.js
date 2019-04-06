@@ -55,6 +55,15 @@ AFRAME.registerComponent('event-manager', {
                                        '/assets/images/sequenceTargetAnimations/videos/RightHand(K).mp4',
                                        '/assets/images/sequenceTargetAnimations/videos/Leg(K).mp4',
                                        '/assets/images/sequenceTargetAnimations/videos/Null.mp4'];
+
+        //Sound Files
+        Context_AF.ambientSnd           = document.querySelector('#nature-sound');
+        Context_AF.idleTrack            = document.querySelector('#idle-track');
+        Context_AF.actionTrack          = document.querySelector('#action-track');
+        Context_AF.gongSnd              = document.querySelector('#begin-sound');
+        Context_AF.contRptSnd           = document.querySelector('#cont-rpt-sound');
+        Context_AF.fluteSnd             = document.querySelector('#sequence-sound');
+        Context_AF.brushSnd             = document.querySelector('#brush-sound');
         
         //E V E N T   L I S T E N E R S
         //G A M E
@@ -78,6 +87,8 @@ AFRAME.registerComponent('event-manager', {
                 let index = 0;
                 let seqInt = setInterval(function() {
                     Context_AF.leftScrollMat.setAttribute('src', Context_AF.sequenceEK[index]);
+                    Context_AF.brushSnd.volume = 0.05;
+                    Context_AF.brushSnd.play();
                     Context_AF.dummyHighlights[event.sequence[i]].setAttribute('material', 'color', '#e74c3c');
                     index ++;
                     if (index === event.sequence.length + 1) {
@@ -86,6 +97,88 @@ AFRAME.registerComponent('event-manager', {
                 }, 2500);
             }, 2000);
         });
+
+        //Game Sounds & Music
+        //Bow
+        socket.on('bow', function() {
+            Context_AF.gongSnd.volume = 0.07;
+            Context_AF.gongSnd.currentTime = 0;
+            Context_AF.gongSnd.play();
+            setTimeout(function() {
+                Context_AF.el.removeState('idle');
+            }, 1500);
+            Context_AF.el.addState('action');
+        });
+        //Receive Sequence
+        socket.on('sequence', function() {
+            Context_AF.fluteSnd.volume = 0.07;
+            Context_AF.fluteSnd.play();
+            fadeAudio(Context_AF.idleTrack);
+        });
+        //Sequence Complete
+        socket.on('complete', function() {
+            Context_AF.gongSnd.volume = 0.07;
+            Context_AF.gongSnd.currentTime = 0;
+            Context_AF.gongSnd.play();
+            setTimeout(function() {
+                Context_AF.el.removeState('action');
+                Context_AF.el.addState('idle');
+            }, 1500);
+        });
+        //Continue
+        socket.on('seqContinue', function() {
+            Context_AF.contRptSnd.volume = 0.07;
+            Context_AF.contRptSnd.play();
+        });
+        //Repeat
+        socket.on('seqRepeat', function() {
+            Context_AF.contRptSnd.volume = 0.07;
+            Context_AF.contRptSnd.play();
+        });
+        //State Added
+        Context_AF.el.addEventListener('stateadded', function(event) {
+            console.log("state added: " + event.detail);
+            if (event.detail =='idle') {
+                Context_AF.ambientSnd.volume = 0.01;
+                Context_AF.ambientSnd.currentTime = 0;
+                Context_AF.ambientSnd.play();
+
+                Context_AF.idleTrack.volume = 0.05;
+                Context_AF.idleTrack.currentTime = 0;
+                Context_AF.idleTrack.play();
+            }
+
+            if (event.detail =='action') {
+                setTimeout(function() {
+                    Context_AF.actionTrack.volume = 0.05;
+                    Context_AF.actionTrack.currentTime = 0;
+                    Context_AF.actionTrack.play();
+                }, 2500);
+            }
+        });
+        //State Removed
+        Context_AF.el.addEventListener('stateremoved', function(event) {
+            console.log("state removed: " + event.detail);
+            if (event.detail =='idle') {
+                Context_AF.ambientSnd.pause();
+                Context_AF.idleTrack.pause();
+            }
+
+            if (event.detail =='action') {
+                Context_AF.actionTrack.pause();
+            }
+        });
+        //Fade Out Audio
+        fadeAudio = function(_sound) {
+            let fadeOut = setInterval(function() {
+                if (_sound.volume > 0.01) {
+                    _sound.volume -= 0.005;
+                }
+                else {
+                    clearInterval(fadeOut);
+                }
+            }, 100);
+        }
        
         //H A N D  C O N T R O L L E R _ R I G H T
         //Grip Closed

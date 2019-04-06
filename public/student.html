@@ -58,9 +58,15 @@
                 <a-asset-item id="scroll-obj"           src="/assets/models/objFiles/scroll/scroll.obj"></a-asset-item>
 
                 <!-- Audio -->
-                <audio  id='hit-sound'      src='/assets/sounds/effects/hitSound.mp3'></audio>
-                <audio  id="nature-sound"   src="/assets/sounds/ambientSounds.mp3"  type="audio/mp3"    loop></audio>
-                
+                <audio  id='hit-sound'          src='/assets/sounds/effects/hitSound.mp3'></audio>
+                <audio  id="nature-sound"       src="/assets/sounds/ambientSounds.mp3"              type="audio/mp3"    loop></audio>
+                <audio  id="idle-track"         src="/assets/sounds/anEasternTale_kylePreston.mp3"  type="audio/mp3"    loop></audio>
+                <audio  id="action-track"       src="/assets/sounds/warDrums_kylePreston.mp3"       type="audio/mp3"    loop></audio>
+                <audio  id="cont-rpt-sound"     src="/assets/sounds/kotoHit_EDITED.mp3"></audio>
+                <audio  id="begin-sound"        src="/assets/sounds/gongHit.wav"></audio>
+                <audio  id="sequence-sound"     src="/assets/sounds/fluteSignal.wav"></audio>
+                <audio  id="brush-sound"        src="/assets/sounds/brushStroke_double.mp3"></audio>
+
                 <!-- Mixins -->
                 <!--controller-->
                 <a-mixin id="controller"
@@ -847,8 +853,11 @@
             let cLantern = document.querySelector('#contLantern');
             let bLantern = document.querySelector('#bowLantern');
 
+            let chandler = document.querySelector('#Chandler');
+
             socket.on('connect', function(userData){
-                console.log('connected');
+                chandler.addState('idle');
+                console.log(chandler.states);
             });
             
             socket.on('complete', function(){
@@ -893,7 +902,7 @@
 
             socket.on('bow', function(){
                 bBox.setAttribute('spring', {target:'#anchorC', damping:500, stiffness: 1000, restLength:0.5, localAnchorA:{x:0, y:-0.5, z:0}});
-                
+
                 setTimeout(function(){
                     bLantern.setAttribute('material', {src:'#bow-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
                 }, 1000);
@@ -903,6 +912,10 @@
                 let ambient = document.querySelector('#nature-sound');
                 ambient.volume = 0.01;
                 ambient.play();
+
+                let idleTrack = document.querySelector('#idle-track');
+                idleTrack.volume = 0.05;
+                idleTrack.play();
             }
             function resetSeq(){
                 cBox.setAttribute('spring', {damping:500, restLength:0.1});
