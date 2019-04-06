@@ -6,8 +6,12 @@ AFRAME.registerComponent('event-manager', {
         //Strike Sequence Graphics Arrays
         Context_AF.sequenceEK        = [];
         Context_AF.sequenceK         = [];
+
+        Context_AF.waitingMaster = "/assets/images/waitingForMasterAnimation/waitingForMaster.mp4";
+
         //Shinai Collider
         Context_AF.tempCollider     = null;
+
 
         //S C E N E   E N T I T I E S
         Context_AF.scene            = document.querySelector('a-scene')
@@ -58,12 +62,31 @@ AFRAME.registerComponent('event-manager', {
         
         //E V E N T   L I S T E N E R S
         //G A M E
+        socket.on('masterConnected', function() {
+            
+        Context_AF.el.addState('waitingForMaster');
+        console.log("master connected");
+        });
+
+
+
+        setInterval(function(){
+            if (Context_AF.el.is('waitingForMaster') ){
+                Context_AF.leftScrollMat.setAttribute('src', Context_AF.waitingMaster);
+                
+                console.log('waiting');
+            }
+        }, 500);
+        
+
         //Display Full Sequence On Receive
         socket.on('sequence', function(event) {
+            Context_AF.el.removeState('waitingForMaster');
+            Context_AF.el.addState('response');
             Context_AF.sequenceEK.length = 0;
             Context_AF.sequenceK.length = 0;
             console.log('Sequence Received: ' + event.sequence);
-            //2 second delay before displayign sequence
+            //2 second delay before displaying sequence
             setTimeout(function() {
                 //Initialize Array of Sequence Graphics
                 for (i = 0; i <= event.sequence.length; i++) {

@@ -56,6 +56,11 @@ socketIO.on('connection', function(socket){
         console.log(socket.id + ' disconnected');
     });
 
+    socket.on('masterConnected', function(){
+        socketIO.emit('masterConnected');
+        console.log('masterConnected');
+    });
+
     //Send Sequence
     //Row 1
     socket.on('head', function(){
