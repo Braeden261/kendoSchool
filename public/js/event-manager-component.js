@@ -67,9 +67,8 @@ AFRAME.registerComponent('event-manager', {
         //G A M E
       
         socket.on('masterConnected', function() {
-            
+            console.log("master connected");
             Context_AF.leftScrollMat.setAttribute('src', "/assets/images/waitingForMasterAnimation/waitingForMaster.mp4");
-        console.log("master connected");
         });
 
 
@@ -200,7 +199,7 @@ AFRAME.registerComponent('event-manager', {
 
     HighlightSequence : function(_event) {
         Context_AF = this;
-
+        Context_AF.leftScrollMat.setAttribute('src', Context_AF.graphicsEK[8]);
         Context_AF.sequenceEK.length = 0;
         Context_AF.sequenceK.length = 0;
         console.log('Sequence Received: ' + _event.sequence.length);
