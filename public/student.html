@@ -775,6 +775,12 @@
             let cLantern = document.querySelector('#contLantern');
             let bLantern = document.querySelector('#bowLantern');
 
+            let gongSound = document.querySelector('#begin-sound');
+            let ambientSound = document.querySelector('#nature-sound');
+            let idleTrack = document.querySelector('#idle-track');
+            let actionTrack = document.querySelector('#action-track');
+            let contRptSound = document.querySelector('#cont-rpt-sound');
+
             socket.on('connect', function(userData){
                 console.log('connected');
             });
@@ -841,11 +847,6 @@
 
             socket.on('bow', function(){
                 bBox.setAttribute('spring', {target:'#anchorC', damping:500, stiffness: 1000, restLength:0.5, localAnchorA:{x:0, y:-0.5, z:0}});
-                
-                //play gong sound when player hits "begin" lantern
-                let gong = document.querySelector('#begin-sound');
-                gong.volume = 0.05;
-                gong.play();
 
                 setTimeout(function(){
                     bLantern.setAttribute('material', {src:'#bow-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
@@ -854,13 +855,11 @@
 
 
             window.onload = function(){
-                let ambient = document.querySelector('#nature-sound');
-                ambient.volume = 0.01;
-                ambient.play();
+                ambientSound.volume = 0.01;
+                ambientSound.play();
 
-                let idle = document.querySelector('#idle-track');
-                idle.volume = 0.03;
-                idle.play();
+                idleTrack.volume = 0.03;
+                idleTrack.play();
             }
 
             function resetSeq(){
