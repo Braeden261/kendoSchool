@@ -4,8 +4,8 @@ AFRAME.registerComponent('event-manager', {
         //V A R I A B L ES
         const Context_AF            = this;
         //Strike Sequence Graphics Arrays
-        Context_AF.sequenceEK        = [];
-        Context_AF.sequenceK         = [];
+        Context_AF.sequenceEK       = [];
+        Context_AF.sequenceK        = [];
         //Shinai Collider
         Context_AF.tempCollider     = null;
 
@@ -27,14 +27,16 @@ AFRAME.registerComponent('event-manager', {
                                        '#leftHand',
                                        '#rightHand',
                                        '#leg'];
-        Context_AF.dummyHighlights  = [document.querySelector(Context_AF.dummyBoxIdList[0] + 'Highlight'),
-                                       document.querySelector(Context_AF.dummyBoxIdList[1] + 'Highlight'),
-                                       document.querySelector(Context_AF.dummyBoxIdList[2] + 'Highlight'),
-                                       document.querySelector(Context_AF.dummyBoxIdList[3] + 'Highlight'),
-                                       document.querySelector(Context_AF.dummyBoxIdList[4] + 'Highlight'),
-                                       document.querySelector(Context_AF.dummyBoxIdList[5] + 'Highlight'),
-                                       document.querySelector(Context_AF.dummyBoxIdList[6] + 'Highlight'),
-                                       document.querySelector(Context_AF.dummyBoxIdList[7] + 'Highlight')];
+        Context_AF.dummyHighlights  = [document.querySelector('#headHighlight'),
+                                       document.querySelector('#neckHighlight'),
+                                       document.querySelector('#leftArmHighlight'),
+                                       document.querySelector('#rightArmHighlight'),
+                                       document.querySelector('#abdomenHighlight'),
+                                       document.querySelector('#leftHandHighlight'),
+                                       document.querySelector('#rightHandHighlight'),
+                                       document.querySelector('#legHighlight1'),
+                                       document.querySelector('#legHighlight2'),
+                                       document.querySelector('#legHighlight3'),];
         //Sequence Graphics (English + Kanji)
         Context_AF.graphicsEK       = ['/assets/images/sequenceTargetAnimations/videos/Head(EK).mp4',
                                        '/assets/images/sequenceTargetAnimations/videos/Neck(EK).mp4',
@@ -58,11 +60,12 @@ AFRAME.registerComponent('event-manager', {
         
         //E V E N T   L I S T E N E R S
         //G A M E
-        //Display Full Sequence On Receive
+        //Display Full Sequence Upon Receival
         socket.on('sequence', function(event) {
             Context_AF.sequenceEK.length = 0;
             Context_AF.sequenceK.length = 0;
-            console.log('Sequence Received: ' + event.sequence);
+            console.log('Sequence Received: ' + event.sequence.length);
+            console.log('Sequence: ' + event.sequence);
             //2 second delay before displayign sequence
             setTimeout(function() {
                 //Initialize Array of Sequence Graphics
@@ -70,20 +73,37 @@ AFRAME.registerComponent('event-manager', {
                     if (i === event.sequence.length) {
                         Context_AF.sequenceEK[i] = Context_AF.graphicsEK[8];
                     } else {
-                        Context_AF.sequenceEK[i] = Context_AF.graphicsEK[event.sequence[i] - 1];
-                        Context_AF.sequenceK[i] = Context_AF.graphicsK[event.sequence[i] - 1];
+                        Context_AF.sequenceEK[i] = Context_AF.graphicsEK[event.sequence[i]];
+                        Context_AF.sequenceK[i] = Context_AF.graphicsK[event.sequence[i]];
                     }
                 }
-                //Display Graphics
+                //Display Sequence Kanji+English Graphics
                 let index = 0;
                 let seqInt = setInterval(function() {
-                    Context_AF.leftScrollMat.setAttribute('src', Context_AF.sequenceEK[index]);
-                    Context_AF.dummyHighlights[event.sequence[i]].setAttribute('material', 'color', '#e74c3c');
-                    index ++;
-                    if (index === event.sequence.length + 1) {
+                    if (index > 0) {
+                        if (event.sequence[index - 1] === 7) {
+                            Context_AF.dummyHighlights[event.sequence[index - 1]].setAttribute('material', 'visible', 'false');
+                            Context_AF.dummyHighlights[event.sequence[index - 1] + 1].setAttribute('material', 'visible', 'false');
+                            Context_AF.dummyHighlights[event.sequence[index - 1] + 2].setAttribute('material', 'visible', 'false');
+                        } else {
+                            Context_AF.dummyHighlights[event.sequence[index - 1]].setAttribute('material', 'visible', 'false');
+                        }
+                    }
+                    if (index < event.sequence.length) {
+                        Context_AF.leftScrollMat.setAttribute('src', Context_AF.sequenceEK[index]);
+                        if (event.sequence[index] === 7) {
+                            Context_AF.dummyHighlights[event.sequence[index]].setAttribute('material', 'visible', 'true');
+                            Context_AF.dummyHighlights[event.sequence[index] + 1].setAttribute('material', 'visible', 'true');
+                            Context_AF.dummyHighlights[event.sequence[index] + 2].setAttribute('material', 'visible', 'true');
+                        } else {
+                            Context_AF.dummyHighlights[event.sequence[index]].setAttribute('material', 'visible', 'true');
+                        }
+                        index ++;
+                    } else {
+                        Context_AF.leftScrollMat.setAttribute('src', Context_AF.sequenceEK[index]);
                         clearInterval(seqInt);
-                    } 
-                }, 2500);
+                    }
+                }, 4000);
             }, 2000);
         });
        
@@ -191,7 +211,7 @@ AFRAME.registerComponent('event-manager', {
             Context_AF.swords[i].addEventListener('stateadded', function(event) {
                 console.log("[" + this.getAttribute('id') + " ✔ " + event.detail + "]");
             });
-            //State Added
+            //State Removed
             Context_AF.swords[i].addEventListener('stateremoved', function(event) {
                 console.log("[" + this.getAttribute('id') + " ✘ " + event.detail + "]");
             });
