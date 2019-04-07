@@ -11,7 +11,7 @@
         <script src="/js/menu-component.js"></script>
     </head>
     <body>
-        <a-scene physics="debug: false;
+        <a-scene physics="debug: true;
                           gravity: -9;
                           maxInterval: 0.02;
                           iterations: 20;
@@ -288,7 +288,7 @@
                     material="opacity:0"
             ></a-box>
             <a-box  id="anchorC"
-                    position="2 8 0"
+                    position="-1.25 8 0"
                     scale=" 0.5 0.5 0.5"
                     static-body
                     material="opacity:0"
@@ -369,15 +369,16 @@
             </a-entity>
             <a-entity   menu-component
                         spring="target: #anchorC;
-                            damping:100;
-                            stiffness: 1000;
-                            restLength: 1;
-                            localAnchorA: 0 0.5 0;"
+                                damping: 500;
+                                stiffness: 2000;
+                                restLength: 0.1;
+                                localAnchorA: 0 0.5 0;"
                         id="bow"
-                        position="2 7 0"
+                        position="-1.25 7 0"
                         body="type: dynamic;
-                              mass: 50;
-                              linearDamping: 0.02;
+                              mass: 150;
+                              linearDamping: 0.4;
+                              angularDamping: 1;
                               shape: none;"
                         collision-filter="group: objs;
                                           collidesWith: hands, swords, objs, environment;
@@ -392,7 +393,7 @@
                 <a-entity   id="bowLantern"
                             obj-model="obj:#lanternSingle-obj"
                             scale="1 1 1"
-                            rotation="0 90 0"
+                            rotation="0 -110 0"
                             material="src:#bow-tex;
                                       roughness:0.7;
                                       metalness:0;
@@ -816,15 +817,16 @@
             });
             
             socket.on('send', function(){
-                bBox.setAttribute('spring', {target:'#anchorC', damping:200, stiffness: 1000, restLength:6, localAnchorA:{x:0, y:-0.5, z:0}});
-                bLantern.setAttribute('material', {src:'#bow-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
+                bBox.setAttribute('spring', {restLength:5.5});
+                bBox.setAttribute('rotation', {y: -110});
+                bLantern.setAttribute('material', {opacity:1});
             });
 
             socket.on('bow', function(){
-                bBox.setAttribute('spring', {target:'#anchorC', damping:500, stiffness: 1000, restLength:0.5, localAnchorA:{x:0, y:-0.5, z:0}});
+                bBox.setAttribute('spring', {restLength:0.5});
                 
                 setTimeout(function(){
-                    bLantern.setAttribute('material', {src:'#bow-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
+                    bLantern.setAttribute('material', {opacity:0});
                 }, 1000);
             });
 
