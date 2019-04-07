@@ -266,6 +266,7 @@ AFRAME.registerComponent('event-manager', {
                     Context_AF.seqIndex ++;
                 } else {
                     Context_AF.leftScrollMat.setAttribute('src', Context_AF.sequenceEK[Context_AF.seqIndex]);
+                    dropBow();
                     clearInterval(seqInt);
                 }
             }, 4000);

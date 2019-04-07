@@ -1017,11 +1017,11 @@
                 failed = 0;
             });
             
-            socket.on('send', function(){
+            function dropBow(){
                 bBox.setAttribute('spring', {restLength:5.5});
                 bBox.setAttribute('rotation', {y: -110});
                 bLantern.setAttribute('material', {opacity:1});
-            });
+            }
 
             socket.on('bow', function(){
                 bBox.setAttribute('spring', {restLength:0.5});
