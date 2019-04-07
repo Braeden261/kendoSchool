@@ -11,6 +11,10 @@ AFRAME.registerComponent('event-manager', {
         //Shinai Collider
         Context_AF.tempCollider     = null;
 
+        
+
+
+
         //S C E N E   E N T I T I E S
         Context_AF.scene            = document.querySelector('a-scene')
         Context_AF.handRight        = document.querySelector('#handRight');
@@ -50,7 +54,7 @@ AFRAME.registerComponent('event-manager', {
         Context_AF.graphicsK        = ['/assets/images/sequenceTargetAnimations/videos/Head(K).mp4',
                                        '/assets/images/sequenceTargetAnimations/videos/Neck(K).mp4',
                                        '/assets/images/sequenceTargetAnimations/videos/LeftArm(K).mp4',
-                                       '/assets/images/sequenceTargetAnimations/videos/RightArm(K).mp4',
+                                       '/assets/images/sequenceTargetAnimations/videos/RightArm(K)2.mp4',
                                        '/assets/images/sequenceTargetAnimations/videos/Abdomen(K).mp4',
                                        '/assets/images/sequenceTargetAnimations/videos/LeftHand(K).mp4',
                                        '/assets/images/sequenceTargetAnimations/videos/RightHand(K).mp4',
@@ -266,7 +270,7 @@ AFRAME.registerComponent('event-manager', {
                     Context_AF.seqIndex ++;
                 } else {
                     Context_AF.leftScrollMat.setAttribute('src', Context_AF.sequenceEK[Context_AF.seqIndex]);
-                    dropBow();
+                    dropBow();1
                     clearInterval(seqInt);
                 }
             }, 4000);
