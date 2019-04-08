@@ -56,11 +56,16 @@ socketIO.on('connection', function(socket){
         console.log(socket.id + ' disconnected');
     });
 
+    socket.on('masterConnected', function(){
+        socketIO.emit('masterConnected');
+        console.log('masterConnected');
+    });
+
     //Send Sequence
     //Row 1
     socket.on('head', function(){
         if (numSeq < 10){
-            sequence[numSeq] = "1";
+            sequence[numSeq] = 0;
             numSeq++;
             }
             else{
@@ -69,7 +74,7 @@ socketIO.on('connection', function(socket){
     });
     socket.on('neck', function(){
         if (numSeq < 10){
-            sequence[numSeq] = "2";
+            sequence[numSeq] = 1;
             numSeq++;
             }
             else{
@@ -78,7 +83,7 @@ socketIO.on('connection', function(socket){
     });
     socket.on('leftArm', function(){    
         if (numSeq < 10){
-            sequence[numSeq] = "3";
+            sequence[numSeq] = 2;
             numSeq++;
             }
             else{
@@ -87,7 +92,7 @@ socketIO.on('connection', function(socket){
     });
     socket.on('rightArm', function(){
         if (numSeq < 10){
-            sequence[numSeq] = "4";
+            sequence[numSeq] = 3;
             numSeq++;
             }
             else{
@@ -97,7 +102,7 @@ socketIO.on('connection', function(socket){
     //Row 2
     socket.on('abdomen', function(){
         if (numSeq < 10){
-            sequence[numSeq] = "5";
+            sequence[numSeq] = 4;
             numSeq++;
             }
             else{
@@ -106,7 +111,7 @@ socketIO.on('connection', function(socket){
     });
     socket.on('leftHand', function(){
         if (numSeq < 10){
-            sequence[numSeq] = "6";
+            sequence[numSeq] = 5;
             numSeq++;
             }
             else{
@@ -115,7 +120,7 @@ socketIO.on('connection', function(socket){
     });
     socket.on('rightHand', function(){
         if (numSeq < 10){
-            sequence[numSeq] = "7";
+            sequence[numSeq] = 6;
             numSeq++;
             }
             else{
@@ -124,7 +129,7 @@ socketIO.on('connection', function(socket){
     });
     socket.on('leg', function(){
         if (numSeq < 10){
-            sequence[numSeq] = "8";
+            sequence[numSeq] = 7;
             numSeq++;
             }
             else{
@@ -169,7 +174,7 @@ socketIO.on('connection', function(socket){
     socket.on('head_response', function(){
         if (start == true){      
             if (numResponseSeq < prevNumSeq){
-                if (prevSeq[numResponseSeq] == 1){
+                if (prevSeq[numResponseSeq] == 0){
                     responseSeq[numResponseSeq] = true;
                     value = true;
                     socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
@@ -194,7 +199,7 @@ socketIO.on('connection', function(socket){
     socket.on('neck_response', function(){
         if (start == true){     
             if (numResponseSeq < prevNumSeq){
-                if (prevSeq[numResponseSeq] == 2){
+                if (prevSeq[numResponseSeq] == 1){
                     responseSeq[numResponseSeq] = true;
                     value = true;
                     socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
@@ -219,7 +224,7 @@ socketIO.on('connection', function(socket){
     socket.on('leftArm_response', function(){   
         if (start == true){   
             if (numResponseSeq < prevNumSeq){
-                if (prevSeq[numResponseSeq] == 3){
+                if (prevSeq[numResponseSeq] == 2){
                     responseSeq[numResponseSeq] = true;
                     value = true;
                     socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
@@ -244,7 +249,7 @@ socketIO.on('connection', function(socket){
     socket.on('rightArm_response', function(){   
         if (start == true){   
             if (numResponseSeq < prevNumSeq){
-                if (prevSeq[numResponseSeq] == 4){
+                if (prevSeq[numResponseSeq] == 3){
                     responseSeq[numResponseSeq] = true;
                     value = true;
                     socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
@@ -270,7 +275,7 @@ socketIO.on('connection', function(socket){
     socket.on('abdomen_response', function(){ 
         if (start == true){     
             if (numResponseSeq < prevNumSeq){
-                if (prevSeq[numResponseSeq] == 5){
+                if (prevSeq[numResponseSeq] == 4){
                     responseSeq[numResponseSeq] = true;
                     value = true;
                     socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
@@ -295,7 +300,7 @@ socketIO.on('connection', function(socket){
     socket.on('leftHand_response', function(){
         if (start == true){      
             if (numResponseSeq < prevNumSeq){
-                if (prevSeq[numResponseSeq] == 6){
+                if (prevSeq[numResponseSeq] == 5){
                     responseSeq[numResponseSeq] = true;
                     value = true;
                     socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
@@ -320,6 +325,31 @@ socketIO.on('connection', function(socket){
     socket.on('rightHand_response', function(){
         if (start == true){      
             if (numResponseSeq < prevNumSeq){
+                if (prevSeq[numResponseSeq] == 6){
+                    responseSeq[numResponseSeq] = true;
+                    value = true;
+                    socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
+                    numResponseSeq++;
+                }
+                else{
+                    responseSeq[numResponseSeq] = false;
+                    value = false;
+                    socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
+                    numResponseSeq++;
+                }
+                console.log("ResponseSize:", numResponseSeq);
+            }
+            if(numResponseSeq >= prevNumSeq){
+                console.log('complete');
+                socketIO.emit('complete');
+                //socketIO.emit('percResp',{responseSeq,numResponseSeq});
+                start = false;
+            }
+        }
+    });
+    socket.on('leg1_response', function(){
+        if (start == true){    
+            if (numResponseSeq < prevNumSeq){
                 if (prevSeq[numResponseSeq] == 7){
                     responseSeq[numResponseSeq] = true;
                     value = true;
@@ -342,10 +372,10 @@ socketIO.on('connection', function(socket){
             }
         }
     });
-    socket.on('leg_response', function(){
+    socket.on('leg2_response', function(){
         if (start == true){    
             if (numResponseSeq < prevNumSeq){
-                if (prevSeq[numResponseSeq] == 8){
+                if (prevSeq[numResponseSeq] == 7){
                     responseSeq[numResponseSeq] = true;
                     value = true;
                     socketIO.emit("response" ,{value, numResponseSeq, prevSeq});

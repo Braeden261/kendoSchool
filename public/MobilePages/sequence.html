@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html>
     <head>
+        <title>Kendo Gakko</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="HandheldFriendly" content="true" />
         <link href="style.css" rel="stylesheet" type="text/css">
@@ -74,6 +75,8 @@
 
             window.onload = function () {
                 socket.emit('clear');
+                socket.emit('masterConnected');
+                console.log('load');
                 // send and clear buttons can't be clicked if the sequence is empty
                 sendButton.style.opacity = '0.5';
                 clearButton.style.opacity = '0.5';

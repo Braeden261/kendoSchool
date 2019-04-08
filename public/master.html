@@ -18,10 +18,16 @@
         <script>
             //Write some socket client code
             let socket = io();
+            
+            window.onload = function(){
+                socket.emit('masterConnected');
+                console.log('load');
+            }
 
             //built in event
             socket.on('connect', function(userData){
                 console.log('connected');
+                
             });
 
             
