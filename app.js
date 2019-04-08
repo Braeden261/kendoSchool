@@ -25,14 +25,6 @@ app.get('/student', function(req, res) {
     res.sendFile(__dirname + '/public/student.html'); //send/serve this index.html file
 });
 
-app.get('/master', function(req, res) {
-    res.sendFile(__dirname + '/public/master.html')
-});
-
-app.get('/student-test', function(req, res) {
-    res.sendFile(__dirname + '/public/student-test.html')
-});
-
 //socket = one client
 //socketIO = all clients
 //Sockets stuff
@@ -58,7 +50,7 @@ socketIO.on('connection', function(socket){
 
     socket.on('masterConnected', function(){
         socketIO.emit('masterConnected');
-        console.log('masterConnected');
+        //console.log('masterConnected');
     });
 
     //Send Sequence
@@ -68,36 +60,36 @@ socketIO.on('connection', function(socket){
             sequence[numSeq] = 0;
             numSeq++;
             }
-            else{
-                console.log('sequence_full');
-            }
+            //else{
+            //    console.log('sequence_full');
+            //}
     });
     socket.on('neck', function(){
         if (numSeq < 10){
             sequence[numSeq] = 1;
             numSeq++;
             }
-            else{
-                console.log('sequence_full');
-            }
+            //else{
+            //    console.log('sequence_full');
+            //}
     });
     socket.on('leftArm', function(){    
         if (numSeq < 10){
             sequence[numSeq] = 2;
             numSeq++;
             }
-            else{
-                console.log('sequence_full');
-            }
+            //else{
+            //    console.log('sequence_full');
+            //}
     });
     socket.on('rightArm', function(){
         if (numSeq < 10){
             sequence[numSeq] = 3;
             numSeq++;
             }
-            else{
-                console.log('sequence_full');
-            }
+            //else{
+            //    console.log('sequence_full');
+            //}
     });
     //Row 2
     socket.on('abdomen', function(){
@@ -105,46 +97,46 @@ socketIO.on('connection', function(socket){
             sequence[numSeq] = 4;
             numSeq++;
             }
-            else{
-                console.log('sequence_full');
-            }
+            //else{
+            //    console.log('sequence_full');
+            //}
     });
     socket.on('leftHand', function(){
         if (numSeq < 10){
             sequence[numSeq] = 5;
             numSeq++;
             }
-            else{
-                console.log('sequence_full');
-            }
+            //else{
+            //    console.log('sequence_full');
+            //}
     });
     socket.on('rightHand', function(){
         if (numSeq < 10){
             sequence[numSeq] = 6;
             numSeq++;
             }
-            else{
-                console.log('sequence_full');
-            }
+            //else{
+            //    console.log('sequence_full');
+            //}
     });
     socket.on('leg', function(){
         if (numSeq < 10){
             sequence[numSeq] = 7;
             numSeq++;
             }
-            else{
-                console.log('sequence_full');
-            }
+            //else{
+            //    console.log('sequence_full');
+            //}
     });
     //Send
     socket.on('send', function(){
         if (numSeq != 0){
-            console.log(numSeq);
-            console.log('send event detected');
-            console.log('Sequence: ' + sequence);
+            //console.log(numSeq);
+            //console.log('send event detected');
+            //console.log('Sequence: ' + sequence);
             socketIO.emit('sequence', {sequence});
             socketIO.emit('bowReq');
-            console.log('bowReq');
+            //console.log('bowReq');
             prevSeq = sequence;
             prevNumSeq = numSeq;
             sequence = [];
@@ -155,16 +147,16 @@ socketIO.on('connection', function(socket){
             responseSeq = [];
             numResponseSeq = 0;
 
-            console.log("SendSize:", prevNumSeq);
+            //console.log("SendSize:", prevNumSeq);
             
         }
-        else{
-            console.log("Not Enough Items in Sequence");
-        }
+        //else{
+        //    console.log("Not Enough Items in Sequence");
+        //}
     });
     //Clear
     socket.on('clear', function(){
-        console.log('clear event detected');
+        //console.log('clear event detected');
         sequence = [];
         numSeq = 0;
     });
@@ -186,10 +178,10 @@ socketIO.on('connection', function(socket){
                     socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
-                console.log("ResponseSize:", numResponseSeq);
+                //console.log("ResponseSize:", numResponseSeq);
             }
             if(numResponseSeq >= prevNumSeq){
-                console.log('complete');
+                //console.log('complete');
                 socketIO.emit('complete');
                 //socketIO.emit('percResp',{responseSeq,numResponseSeq});
                 start = false;
@@ -211,10 +203,10 @@ socketIO.on('connection', function(socket){
                     socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
-                console.log("ResponseSize:", numResponseSeq);
+                //console.log("ResponseSize:", numResponseSeq);
             }
             if(numResponseSeq >= prevNumSeq){
-                console.log('complete');
+                //console.log('complete');
                 socketIO.emit('complete');
                 //socketIO.emit('percResp',{responseSeq,numResponseSeq});
                 start = false;
@@ -236,10 +228,10 @@ socketIO.on('connection', function(socket){
                     socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
-                console.log("ResponseSize:", numResponseSeq);
+                //console.log("ResponseSize:", numResponseSeq);
             }
             if(numResponseSeq >= prevNumSeq){
-                console.log('complete');
+                //console.log('complete');
                 socketIO.emit('complete');
                 //socketIO.emit('percResp',{responseSeq,numResponseSeq});
                 start = false;
@@ -261,10 +253,10 @@ socketIO.on('connection', function(socket){
                     socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
-                console.log("ResponseSize:", numResponseSeq);
+                //console.log("ResponseSize:", numResponseSeq);
             }
             if(numResponseSeq >= prevNumSeq){
-                console.log('complete');
+                //console.log('complete');
                 socketIO.emit('complete');
                 //socketIO.emit('percResp',{responseSeq,numResponseSeq});
                 start = false;
@@ -287,10 +279,10 @@ socketIO.on('connection', function(socket){
                     socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
-                console.log("ResponseSize:", numResponseSeq);
+                //console.log("ResponseSize:", numResponseSeq);
             }
             if(numResponseSeq >= prevNumSeq){
-                console.log('complete');
+                //console.log('complete');
                 socketIO.emit('complete');
                 //socketIO.emit('percResp',{responseSeq,numResponseSeq});
                 start = false;
@@ -312,10 +304,10 @@ socketIO.on('connection', function(socket){
                     socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
-                console.log("ResponseSize:", numResponseSeq);
+                //console.log("ResponseSize:", numResponseSeq);
             }
             if(numResponseSeq >= prevNumSeq){
-                console.log('complete');
+                //console.log('complete');
                 socketIO.emit('complete');
                 //socketIO.emit('percResp',{responseSeq,numResponseSeq});
                 start = false;
@@ -337,10 +329,10 @@ socketIO.on('connection', function(socket){
                     socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
-                console.log("ResponseSize:", numResponseSeq);
+                //console.log("ResponseSize:", numResponseSeq);
             }
             if(numResponseSeq >= prevNumSeq){
-                console.log('complete');
+                //console.log('complete');
                 socketIO.emit('complete');
                 //socketIO.emit('percResp',{responseSeq,numResponseSeq});
                 start = false;
@@ -362,10 +354,10 @@ socketIO.on('connection', function(socket){
                     socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
-                console.log("ResponseSize:", numResponseSeq);
+                //console.log("ResponseSize:", numResponseSeq);
             }
             if(numResponseSeq >= prevNumSeq){
-                console.log('complete');
+                //console.log('complete');
                 socketIO.emit('complete');
                 //socketIO.emit('percResp',{responseSeq,numResponseSeq});
                 start = false;
@@ -387,10 +379,10 @@ socketIO.on('connection', function(socket){
                     socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
                     numResponseSeq++;
                 }
-                console.log("ResponseSize:", numResponseSeq);
+                //console.log("ResponseSize:", numResponseSeq);
             }
             if(numResponseSeq >= prevNumSeq){
-                console.log('complete');
+                //console.log('complete');
                 socketIO.emit('complete');
                 //socketIO.emit('percResp',{responseSeq,numResponseSeq});
                 start = false;
@@ -400,7 +392,7 @@ socketIO.on('connection', function(socket){
     // End of Responses //
     
     socket.on('percent', function(){
-        console.log('percent');
+        //console.log('percent');
         socketIO.emit('percResp',{responseSeq,numResponseSeq});
     });
 
@@ -423,10 +415,10 @@ socketIO.on('connection', function(socket){
 
     socket.on('bow',function(){
         if(start == false){
-            console.log('bow');
+            //console.log('bow');
             start = true;
             socketIO.emit('bow');
-            console.log("Start:", start);
+            //console.log("Start:", start);
         }
     });
 

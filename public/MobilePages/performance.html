@@ -15,7 +15,7 @@
         
 
         window.onload = function () {
-            console.log('percent');
+            //console.log('percent');
             socket.emit('percent');
         }
 
@@ -39,8 +39,8 @@
             }
             passed = 100 * ( passed/(data.numResponseSeq) );
             failed = 100 * ( failed/(data.numResponseSeq) );
-            console.log("Passed:", passed, "%");
-            console.log("Failed:", failed, "%");
+            //console.log("Passed:", passed, "%");
+            //console.log("Failed:", failed, "%");
 
             document.querySelector('.passPercent').innerHTML = Math.round(passed) + "%";
             document.querySelector('.failPercent').innerHTML = Math.round(failed) + "%";

@@ -103,7 +103,6 @@
             <!--user POV = ~1.8m (6ft) base height + ~0.4m raised platform)-->
             <a-entity   id="player"
                         camera
-                        wasd-controls
                         look-controls
                         position="0 1.8 1.00"
             ></a-entity>
@@ -1004,7 +1003,7 @@
             });
          
             socket.on('percResp', function(data){
-                console.log('percentCheck');
+                //console.log('percentCheck');
                 for (let i =0; i < data.numResponseSeq; i++){
                     if (data.responseSeq[i] == true){
                         passed++;
@@ -1015,8 +1014,8 @@
                 }
                 passed = 100 * ( passed/(data.numResponseSeq) );
                 failed = 100 * ( failed/(data.numResponseSeq) );
-                console.log("Passed:", passed, "%");
-                console.log("Failed:", failed, "%");
+                //console.log("Passed:", passed, "%");
+                //console.log("Failed:", failed, "%");
                 passed = 0;
                 failed = 0;
             });

@@ -88,7 +88,7 @@
     
             socket.on('response', function(data){
                 responseArray[data.numResponseSeq] = data.value;
-                console.log("Action #", data.numResponseSeq + 1, " = ", responseArray[data.numResponseSeq]);
+                //console.log("Action #", data.numResponseSeq + 1, " = ", responseArray[data.numResponseSeq]);
 
                 if (data.value == true) {
                     cells[data.numResponseSeq].setAttribute("style", "border: 4px solid #56BA4D;" )

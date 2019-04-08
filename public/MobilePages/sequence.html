@@ -76,7 +76,7 @@
             window.onload = function () {
                 socket.emit('clear');
                 socket.emit('masterConnected');
-                console.log('load');
+                //console.log('load');
                 // send and clear buttons can't be clicked if the sequence is empty
                 sendButton.style.opacity = '0.5';
                 clearButton.style.opacity = '0.5';
@@ -109,7 +109,7 @@
 
             function clearSequence() {
                 if (length != 0) {
-                    console.log('clear button pressed');
+                    //console.log('clear button pressed');
                     length = 0;
                     socket.emit('clear');
 
@@ -129,20 +129,20 @@
                         }
                     }
                 }
-                else if (length == 0) {
-                    console.log('Cannot clear empty sequence');
-                }
+                //else if (length == 0) {
+                //    console.log('Cannot clear empty sequence');
+                //}
             }
 
             function sendSequence() {
                 if (length != 0) {
-                    console.log('send button pressed');
+                    //console.log('send button pressed');
                     socket.emit('send');
                     window.location.href='waiting.html';
                 }
-                else {
-                    console.log('Cannot send empty sequence');
-                }
+                //else {
+                //    console.log('Cannot send empty sequence');
+                //}
             }
 
             //built in event
