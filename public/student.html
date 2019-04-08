@@ -11,7 +11,6 @@
         <script src="/js/menu-component.js"></script>
     </head>
     <body>
-
         <a-scene physics="debug: false;
                           gravity: -9.8;
                           maxInterval: 0.02;
@@ -25,8 +24,8 @@
         >
             <a-assets>
                 <!-- Scroll Displays -->
-                <video id="display-rightScroll"  src="/assets/images/sequenceTargetAnimations/videos/Null.mp4" autoplay muted></video>
-                <video id="display-leftScroll"  src="/assets/images/sequenceTargetAnimations/videos/Null.mp4" autoplay muted></video>
+                <video id="display-leftScroll"  src="/assets/images/waitingForMasterAnimation/waitingForMaster.mp4" autoplay muted loop></video>
+                <video id="display-rightScroll"  src="/assets/images/waitingForMasterAnimation/waitingForMaster.mp4" autoplay muted loop></video>
               
                 <!-- Textures -->
                 <img id="skymap"        src="/assets/textures/skyTexture/sky-02.png">
@@ -985,6 +984,7 @@
             socket.on('connect', function(userData){
                 console.log('Student Connected');
             });
+
             socket.on('complete', function(){
                 setTimeout(function() {
                     cBox.setAttribute('spring', {restLength:5.5});
@@ -1002,6 +1002,7 @@
             socket.on('seqRepeat', function(){
                 resetSeq();
             });
+         
             socket.on('percResp', function(data){
                 console.log('percentCheck');
                 for (let i =0; i < data.numResponseSeq; i++){

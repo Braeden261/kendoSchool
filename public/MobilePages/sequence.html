@@ -75,6 +75,8 @@
 
             window.onload = function () {
                 socket.emit('clear');
+                socket.emit('masterConnected');
+                console.log('load');
                 // send and clear buttons can't be clicked if the sequence is empty
                 sendButton.style.opacity = '0.5';
                 clearButton.style.opacity = '0.5';

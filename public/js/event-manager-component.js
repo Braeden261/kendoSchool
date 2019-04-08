@@ -10,7 +10,7 @@ AFRAME.registerComponent('event-manager', {
         Context_AF.seqLength        = 0;
         //Temporarly Stored Collider
         Context_AF.tempCollider     = null;
-
+      
         //S C E N E   E N T I T I E S
         Context_AF.scene            = document.querySelector('a-scene')
         Context_AF.handRight        = document.querySelector('#handRight');
@@ -28,6 +28,7 @@ AFRAME.registerComponent('event-manager', {
                                        'rightHand',
                                        'leg1',
                                        'leg2'];
+        //Dummy Highlighters
         Context_AF.dummyHighlights  = [document.querySelector('#headHighlight'),
                                        document.querySelector('#neckHighlight'),
                                        document.querySelector('#leftArmHighlight'),
@@ -61,11 +62,25 @@ AFRAME.registerComponent('event-manager', {
                                        '/assets/images/responseGraphics/videos/Weak.mp4']
         //Blank Graphic
         Context_AF.nullAddress      = '/assets/images/sequenceTargetAnimations/videos/Null.mp4'
+        //Waiting For Master Animation
+        Context_AF.waitingMaster    = '/assets/images/waitingForMasterAnimation/waitingForMaster.mp4'
         
         //E V E N T   L I S T E N E R S
         //G A M E
+        //On Master Connection
+        socket.on('masterConnected', function() {
+            console.log("master connected");
+            Context_AF.rightScrollMat.setAttribute('loop', 'true');
+            Context_AF.rightScrollMat.setAttribute('src', Context_AF.waitingMaster);
+            Context_AF.leftScrollMat.setAttribute('loop', 'true');
+            Context_AF.leftScrollMat.setAttribute('src', Context_AF.waitingMaster);
+        });
         //Receive Sequence From Master (Display Sequence)
         socket.on('sequence', function(event) {
+            Context_AF.rightScrollMat.removeAttribute('loop');
+            Context_AF.rightScrollMat.setAttribute('src', Context_AF.nullAddress);
+            Context_AF.leftScrollMat.removeAttribute('loop');
+            Context_AF.leftScrollMat.setAttribute('src', Context_AF.nullAddress);
             Context_AF.HighlightSequence(event);
         });
         //Bow (Begin Sequence)
@@ -78,21 +93,7 @@ AFRAME.registerComponent('event-manager', {
         });
         //Strike Response
         socket.on('response', function(data) {
-            if (Context_AF.el.is('action')) {
-                if (data.value) {
-                    Context_AF.rightScrollMat.setAttribute('src', Context_AF.responseEK[0]);
-                } else {
-                    Context_AF.rightScrollMat.setAttribute('src', Context_AF.responseEK[1]);
-                }
-                setTimeout(function() {
-                    if (Context_AF.seqIndex < Context_AF.seqLength - 1) {
-                        Context_AF.rightScrollMat.setAttribute('src', Context_AF.nullAddress);
-                        Context_AF.seqIndex++;
-                        console.log(Context_AF.seqIndex);
-                        Context_AF.leftScrollMat.setAttribute('src', Context_AF.sequenceK[Context_AF.seqIndex]);
-                    }
-                }, 1500);
-            }
+            Context_AF.DisplayResponse(data);
         });
         //Sequence Completed
         socket.on('complete', function() {
@@ -228,7 +229,6 @@ AFRAME.registerComponent('event-manager', {
 
     HighlightSequence : function(_event) {
         Context_AF = this;
-
         Context_AF.sequenceEK.length = Context_AF.sequenceK.length = Context_AF.seqLength = _event.sequence.length;
         console.log('Sequence Received: ' + Context_AF.seqLength);
         console.log('Sequence: ' + _event.sequence);
@@ -273,5 +273,25 @@ AFRAME.registerComponent('event-manager', {
                 }
             }, 4000);
         }, 2000);
+    },
+
+    DisplayResponse : function(_data) {
+        Context_AF = this;
+
+        if (Context_AF.el.is('action')) {
+            if (_data.value) {
+                Context_AF.rightScrollMat.setAttribute('src', Context_AF.responseEK[0]);
+            } else {
+                Context_AF.rightScrollMat.setAttribute('src', Context_AF.responseEK[1]);
+            }
+            setTimeout(function() {
+                if (Context_AF.seqIndex < Context_AF.seqLength - 1) {
+                    Context_AF.rightScrollMat.setAttribute('src', Context_AF.nullAddress);
+                    Context_AF.seqIndex++;
+                    console.log(Context_AF.seqIndex);
+                    Context_AF.leftScrollMat.setAttribute('src', Context_AF.sequenceK[Context_AF.seqIndex]);
+                }
+            }, 1500);
+        }
     }
 });
