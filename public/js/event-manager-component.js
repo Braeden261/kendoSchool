@@ -51,7 +51,7 @@ AFRAME.registerComponent('event-manager', {
         Context_AF.graphicsK        = ['/assets/images/sequenceTargetAnimations/videos/Head(K).mp4',
                                        '/assets/images/sequenceTargetAnimations/videos/Neck(K).mp4',
                                        '/assets/images/sequenceTargetAnimations/videos/LeftArm(K).mp4',
-                                       '/assets/images/sequenceTargetAnimations/videos/RightArm(K)2.mp4',
+                                       '/assets/images/sequenceTargetAnimations/videos/RightArm(K).mp4',
                                        '/assets/images/sequenceTargetAnimations/videos/Abdomen(K).mp4',
                                        '/assets/images/sequenceTargetAnimations/videos/LeftHand(K).mp4',
                                        '/assets/images/sequenceTargetAnimations/videos/RightHand(K).mp4',
