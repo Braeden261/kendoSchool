@@ -12,7 +12,7 @@
     </head>
     <body>
 
-        <a-scene physics="debug: false;
+        <a-scene physics="debug: true;
                           gravity: -9.8;
                           maxInterval: 0.02;
                           iterations: 20;
@@ -312,20 +312,20 @@
                     position="-0.95 8 -0.8"
                     scale=" 0.5 0.5 0.5"
                     static-body
-                    material="opacity:0"
+                    material="opacity: 0"
             ></a-box>
 
             <a-box  id="anchorB"
                     position="0.95 8 -0.8"
                     scale=" 0.5 0.5 0.5"
                     static-body
-                    material="opacity:0"
+                    material="opacity: 0"
             ></a-box>
             <a-box  id="anchorC"
-                    position="-1.25 8 0"
+                    position="-0.95 8 -0.2"
                     scale=" 0.5 0.5 0.5"
                     static-body
-                    material="opacity:0"
+                    material="opacity: 0"
             ></a-box>
             <!--Geometry-->
             <!--"continue"-->
@@ -410,8 +410,7 @@
                                 stiffness: 2000;
                                 restLength: 0.1;
                                 localAnchorA: 0 0.5 0;"
-                        id="bow"
-                        position="-1.25 7 0"
+                        position="-0.95 7 -0.2"
                         body="type: dynamic;
                               mass: 150;
                               linearDamping: 0.4;
@@ -424,7 +423,7 @@
                                      height: 0.5;
                                      radiusTop: 0.25;
                                      radiusBottom: 0.25;
-                                     offset: 0 0.3 0;
+                                     offset: 0 0.35 0;
                                      numSegments: 16;"
             >
                 <a-entity   id="bowLantern"
@@ -756,8 +755,9 @@
                                 rotation="0 -163 0"
                     ></a-entity>
                     <!--Leg Collision Boxes-->
-                    </a-entity  id="leg">
-                        <a-entity   class="dummyBox"
+                    </a-entity>
+                        <a-entity   id="leg1"
+                                    class="dummyBox"
                                     mixin="highlighter"
                                     body="type: dynamic;
                                           shape: none;"
@@ -771,7 +771,8 @@
                                                    offset: 0 -0.057 0.19;"
                                     rotation="21 0 0"
                         ></a-entity>
-                        <a-entity   class="dummyBox"
+                        <a-entity   id="leg2"
+                                    class="dummyBox"
                                     mixin="highlighter"
                                     body="type: dynamic;
                                         shape: none;"
@@ -1017,9 +1018,10 @@
                 failed = 0;
             });
             
+            //Drop "Bow/Begin" lantern
             function dropBow(){
                 bBox.setAttribute('spring', {restLength:5.5});
-                bBox.setAttribute('rotation', {y: -110});
+                bBox.setAttribute('rotation', {y: -150});
                 bLantern.setAttribute('material', {opacity:1});
             }
 
