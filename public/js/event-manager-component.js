@@ -200,7 +200,6 @@ AFRAME.registerComponent('event-manager', {
         //Collision
         for (i = 0; i < Context_AF.swords.length; i++) {
             Context_AF.swords[i].addEventListener('collide', function(event) {
-                Context_AF.CollisionDetail(event);
                 if (Context_AF.el.is('action') && Context_AF.dummyBoxIdList.includes(event.detail.body.el.getAttribute('id')) && event.detail.body.el.getAttribute('id') != Context_AF.tempCollider) {
                     Context_AF.tempCollider = event.detail.body.el.getAttribute('id');
                     setTimeout(function() {

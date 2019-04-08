@@ -982,24 +982,23 @@
             socket.on('connect', function(userData){
                 console.log('Student Connected');
             });
-            
             socket.on('complete', function(){
-                socket.on('seqContinue', function(){
-                    resetSeq();
-                });
-                socket.on('seqRepeat', function(){
-                    resetSeq();
-                });
-
-                cBox.setAttribute('spring', {restLength:5.5});
-                cBox.setAttribute('rotation', {y: -150});
-                rBox.setAttribute('spring', {restLength:5.5});
-                rBox.setAttribute('rotation', {y: 150});
-                
-                rLantern.setAttribute('material', {src:'#repeat-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
-                cLantern.setAttribute('material', {src:'#cont-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
+                setTimeout(function() {
+                    cBox.setAttribute('spring', {restLength:5.5});
+                    cBox.setAttribute('rotation', {y: -150});
+                    rBox.setAttribute('spring', {restLength:5.5});
+                    rBox.setAttribute('rotation', {y: 150});
+                    
+                    rLantern.setAttribute('material', {src:'#repeat-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
+                    cLantern.setAttribute('material', {src:'#cont-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
+                }, 1500);
             });
-         
+            socket.on('seqContinue', function(){
+                    resetSeq();
+                });
+            socket.on('seqRepeat', function(){
+                resetSeq();
+            });
             socket.on('percResp', function(data){
                 console.log('percentCheck');
                 for (let i =0; i < data.numResponseSeq; i++){
