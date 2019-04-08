@@ -347,7 +347,32 @@ socketIO.on('connection', function(socket){
             }
         }
     });
-    socket.on('leg_response', function(){
+    socket.on('leg1_response', function(){
+        if (start == true){    
+            if (numResponseSeq < prevNumSeq){
+                if (prevSeq[numResponseSeq] == 7){
+                    responseSeq[numResponseSeq] = true;
+                    value = true;
+                    socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
+                    numResponseSeq++;
+                }
+                else{
+                    responseSeq[numResponseSeq] = false;
+                    value = false;
+                    socketIO.emit("response" ,{value, numResponseSeq, prevSeq});
+                    numResponseSeq++;
+                }
+                console.log("ResponseSize:", numResponseSeq);
+            }
+            if(numResponseSeq >= prevNumSeq){
+                console.log('complete');
+                socketIO.emit('complete');
+                //socketIO.emit('percResp',{responseSeq,numResponseSeq});
+                start = false;
+            }
+        }
+    });
+    socket.on('leg2_response', function(){
         if (start == true){    
             if (numResponseSeq < prevNumSeq){
                 if (prevSeq[numResponseSeq] == 7){
