@@ -7,8 +7,6 @@ AFRAME.registerComponent('event-manager', {
 
         Context_AF.sequenceEK        = [];
         Context_AF.sequenceK         = [];
-
-        Context_AF.waitingMaster = "/assets/images/waitingForMasterAnimation/waitingForMaster.mp4";
       
         //Shinai Collider
         Context_AF.tempCollider     = null;
@@ -62,23 +60,19 @@ AFRAME.registerComponent('event-manager', {
                                        '/assets/images/sequenceTargetAnimations/videos/RightHand(K).mp4',
                                        '/assets/images/sequenceTargetAnimations/videos/Leg(K).mp4',
                                        '/assets/images/sequenceTargetAnimations/videos/Null.mp4'];
+        //Waiting For Master
+        Context_AF.waitingMaster = "/assets/images/waitingForMasterAnimation/waitingForMaster.mp4";
         
         //E V E N T   L I S T E N E R S
         //G A M E
-      
         socket.on('masterConnected', function() {
             console.log("master connected");
-            Context_AF.leftScrollMat.setAttribute('src', "/assets/images/waitingForMasterAnimation/waitingForMaster.mp4");
+            Context_AF.leftScrollMat.setAttribute('src', "c");
         });
-
-
-
-        
 
         //Display Full Sequence Upon Receival
         socket.on('sequence', function(event) {
             Context_AF.HighlightSequence(event);
-
         });
        
         //H A N D  C O N T R O L L E R _ R I G H T
