@@ -312,20 +312,20 @@
                     position="-0.95 8 -0.8"
                     scale=" 0.5 0.5 0.5"
                     static-body
-                    material="opacity:0"
+                    material="opacity: 0"
             ></a-box>
 
             <a-box  id="anchorB"
                     position="0.95 8 -0.8"
                     scale=" 0.5 0.5 0.5"
                     static-body
-                    material="opacity:0"
+                    material="opacity: 0"
             ></a-box>
             <a-box  id="anchorC"
-                    position="-1.25 8 0"
+                    position="-0.95 8 -0.2"
                     scale=" 0.5 0.5 0.5"
                     static-body
-                    material="opacity:0"
+                    material="opacity: 0"
             ></a-box>
             <!--Geometry-->
             <!--"continue"-->
@@ -410,8 +410,7 @@
                                 stiffness: 2000;
                                 restLength: 0.1;
                                 localAnchorA: 0 0.5 0;"
-                        id="bow"
-                        position="-1.25 7 0"
+                        position="-0.95 7 -0.2"
                         body="type: dynamic;
                               mass: 150;
                               linearDamping: 0.4;
@@ -424,7 +423,7 @@
                                      height: 0.5;
                                      radiusTop: 0.25;
                                      radiusBottom: 0.25;
-                                     offset: 0 0.3 0;
+                                     offset: 0 0.35 0;
                                      numSegments: 16;"
             >
                 <a-entity   id="bowLantern"
@@ -756,8 +755,9 @@
                                 rotation="0 -163 0"
                     ></a-entity>
                     <!--Leg Collision Boxes-->
-                    </a-entity  id="leg">
-                        <a-entity   class="dummyBox"
+                    </a-entity>
+                        <a-entity   id="leg1"
+                                    class="dummyBox"
                                     mixin="highlighter"
                                     body="type: dynamic;
                                           shape: none;"
@@ -771,7 +771,8 @@
                                                    offset: 0 -0.057 0.19;"
                                     rotation="21 0 0"
                         ></a-entity>
-                        <a-entity   class="dummyBox"
+                        <a-entity   id="leg2"
+                                    class="dummyBox"
                                     mixin="highlighter"
                                     body="type: dynamic;
                                         shape: none;"
@@ -984,24 +985,23 @@
             socket.on('connect', function(userData){
                 console.log('Student Connected');
             });
-            
             socket.on('complete', function(){
-                socket.on('seqContinue', function(){
-                    resetSeq();
-                });
-                socket.on('seqRepeat', function(){
-                    resetSeq();
-                });
-
-                cBox.setAttribute('spring', {restLength:5.5});
-                cBox.setAttribute('rotation', {y: -150});
-                rBox.setAttribute('spring', {restLength:5.5});
-                rBox.setAttribute('rotation', {y: 150});
-                
-                rLantern.setAttribute('material', {src:'#repeat-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
-                cLantern.setAttribute('material', {src:'#cont-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
+                setTimeout(function() {
+                    cBox.setAttribute('spring', {restLength:5.5});
+                    cBox.setAttribute('rotation', {y: -150});
+                    rBox.setAttribute('spring', {restLength:5.5});
+                    rBox.setAttribute('rotation', {y: 150});
+                    
+                    rLantern.setAttribute('material', {src:'#repeat-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
+                    cLantern.setAttribute('material', {src:'#cont-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
+                }, 1500);
             });
-         
+            socket.on('seqContinue', function(){
+                    resetSeq();
+                });
+            socket.on('seqRepeat', function(){
+                resetSeq();
+            });
             socket.on('percResp', function(data){
                 console.log('percentCheck');
                 for (let i =0; i < data.numResponseSeq; i++){
@@ -1020,14 +1020,15 @@
                 failed = 0;
             });
             
-            socket.on('send', function(){
+            //Drop "Bow/Begin" lantern
+            function dropBow(){
                 bBox.setAttribute('spring', {restLength:5.5});
-                bBox.setAttribute('rotation', {y: -110});
+                bBox.setAttribute('rotation', {y: -150});
                 bLantern.setAttribute('material', {opacity:1});
-            });
+            }
 
             socket.on('bow', function(){
-                bBox.setAttribute('spring', {restLength:0.5});
+                bBox.setAttribute('spring', {restLength:0.1});
                 
                 setTimeout(function(){
                     bLantern.setAttribute('material', {opacity:0});

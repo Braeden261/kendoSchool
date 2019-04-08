@@ -8,7 +8,7 @@ AFRAME.registerComponent('event-manager', {
         Context_AF.sequenceK        = [];
         Context_AF.seqIndex         = 0;
         Context_AF.seqLength        = 0;
-        //Shinai Collider
+        //Temporarly Stored Collider
         Context_AF.tempCollider     = null;
 
         //S C E N E   E N T I T I E S
@@ -19,14 +19,15 @@ AFRAME.registerComponent('event-manager', {
         Context_AF.rightScrollMat   = document.querySelector('#display-rightScroll');
         Context_AF.leftScrollMat    = document.querySelector('#display-leftScroll');
         //Dummy hit boxes
-        Context_AF.dummyBoxIdList   = ['#head',
-                                       '#neck',
-                                       '#leftArm',
-                                       '#rightArm',
-                                       '#abdomen',
-                                       '#leftHand',
-                                       '#rightHand',
-                                       '#leg'];
+        Context_AF.dummyBoxIdList   = ['head',
+                                       'neck',
+                                       'leftArm',
+                                       'rightArm',
+                                       'abdomen',
+                                       'leftHand',
+                                       'rightHand',
+                                       'leg1',
+                                       'leg2'];
         Context_AF.dummyHighlights  = [document.querySelector('#headHighlight'),
                                        document.querySelector('#neckHighlight'),
                                        document.querySelector('#leftArmHighlight'),
@@ -101,6 +102,7 @@ AFRAME.registerComponent('event-manager', {
         socket.on('seqRepeat', function() {
             Context_AF.leftScrollMat.setAttribute('src', Context_AF.nullAddress);
             Context_AF.rightScrollMat.setAttribute('src', Context_AF.nullAddress);
+            dropBow();
         });
         //Continue Sequence
         socket.on('seqContinue', function() {
@@ -198,7 +200,7 @@ AFRAME.registerComponent('event-manager', {
         //Collision
         for (i = 0; i < Context_AF.swords.length; i++) {
             Context_AF.swords[i].addEventListener('collide', function(event) {
-                if (Context_AF.dummyBoxIdList.includes(event.detail.body.el.getAttribute('id')) && event.detail.body.el.getAttribute('id') != Context_AF.tempCollider) {
+                if (Context_AF.el.is('action') && Context_AF.dummyBoxIdList.includes(event.detail.body.el.getAttribute('id')) && event.detail.body.el.getAttribute('id') != Context_AF.tempCollider) {
                     Context_AF.tempCollider = event.detail.body.el.getAttribute('id');
                     setTimeout(function() {
                         Context_AF.tempCollider = null;
@@ -266,6 +268,7 @@ AFRAME.registerComponent('event-manager', {
                     Context_AF.seqIndex ++;
                 } else {
                     Context_AF.leftScrollMat.setAttribute('src', Context_AF.sequenceEK[Context_AF.seqIndex]);
+                    dropBow();
                     clearInterval(seqInt);
                 }
             }, 4000);
