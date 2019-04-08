@@ -11,8 +11,9 @@
         <script src="/js/menu-component.js"></script>
     </head>
     <body>
-        <a-scene physics="debug: true;
-                          gravity: -9;
+
+        <a-scene physics="debug: false;
+                          gravity: -9.8;
                           maxInterval: 0.02;
                           iterations: 20;
                           restitution: 0.1;"
@@ -23,18 +24,10 @@
                       far: 45.88;"
         >
             <a-assets>
-                <!-- Mixins -->
-                <a-mixin    id="lantern-light"
-                            light="type: spot;
-                                   angle: 50;
-                                   distance: 5;
-                                   decay: 1;
-                                   penumbra: 1;
-                                   color: #ffd779;
-                                   intensity: 0.5;"
-                            rotation="-90 0 0"
-                ></a-mixin>
-
+                <!-- Scroll Displays -->
+                <video id="display-rightScroll"  src="/assets/images/sequenceTargetAnimations/videos/Null.mp4" autoplay muted></video>
+                <video id="display-leftScroll"  src="/assets/images/sequenceTargetAnimations/videos/Null.mp4" autoplay muted></video>
+              
                 <!-- Textures -->
                 <img id="skymap"        src="/assets/textures/skyTexture/sky-02.png">
                 <img id="dojo-tex"      src="/assets/textures/dojoTexture/dojo_wallsFloors_texture-02.png">
@@ -67,8 +60,9 @@
                 <!-- Audio -->
                 <audio  id='hit-sound'      src='/assets/sounds/effects/hitSound.mp3'></audio>
                 <audio  id="nature-sound"   src="/assets/sounds/ambientSounds.mp3"  type="audio/mp3"    loop></audio>
-
+                
                 <!-- Mixins -->
+                <!--controller-->
                 <a-mixin id="controller"
                          super-hands="colliderEvent: collisions;
                                       colliderEventProperty: els;
@@ -84,6 +78,25 @@
                          collision-filter="group: hands;
                                            collidesWith: swords, objs;
                                            collisionForces: false;"
+                ></a-mixin>
+                <!--lantern light-->
+                <a-mixin    id="lantern-light"
+                            light = "type: spot;
+                                     angle: 50;
+                                     distance: 5;
+                                     decay: 1;
+                                     penumbra: 1;
+                                     color: #ffd779;
+                                     intensity: 0.5;"
+                            rotation = "-90 0 0"
+                ></a-mixin>
+                <!--highlighter-->
+                <a-mixin    id="highlighter"
+                            material="color: #e74c3c;
+                                      emissive: #e74c3c;
+                                      emissiveIntensity: 0.5;
+                                      transparent: true;
+                                      opacity: 1;"
                 ></a-mixin>
             </a-assets>
 
@@ -180,6 +193,7 @@
                                       wireframe: false;"
                             position="0 -0.25 0"
                 ></a-entity>
+                <!--windows-->
                 <a-entity   id="windows"
                             obj-model="obj:#windows-obj"
                             scale="1.0 1.0 1.0"
@@ -189,7 +203,7 @@
                                     transparent: true;
                                     opacity: 0.95;"
                 ></a-entity>
-            </a-entity>
+            </a-entity><!-- end of dojo-->
 
             <!--Lanterns-->
             <!--geometry-->
@@ -255,7 +269,7 @@
             <a-entity   class="lanternLight"
                         mixin="lantern-light"
                         position="4.91 2.22 10.0"
-            ></a-entity>
+            ></a-entity><!--End of Lanterns-->
 
             <!--Scrolls-->
             <a-entity   id="scroll-01"
@@ -272,15 +286,35 @@
                         position="2 -0.3 -1.8"
                         rotation="0 -215 0"
             ></a-entity>
+            <!--Video Textures-->
+            <a-entity   id="rightScrollDisplay"
+                        geometry="primitive: plane;
+                                  height: 0.445;
+                                  width: 0.445;"
+                        material="src: #display-rightScroll;
+                                  roughness: 0.8;"
+                        position="1.747 1.81 -1.967"
+                        rotation="0 -35 0"
+            ></a-entity>
+            <a-entity   id="leftScrollDisplay"
+                        geometry="primitive: plane;
+                                  height: 0.445;
+                                  width: 0.445;"
+                        material="src: #display-leftScroll;
+                                  roughness: 0.8;"
+                        position="-1.747 1.81 -1.967"
+                        rotation="0 35 0"
+            ></a-entity>
 
             <!--Physical Menu-->
-            <!--anchors-->
+            <!--Anchors-->
             <a-box  id="anchorA"
                     position="-0.95 8 -0.8"
                     scale=" 0.5 0.5 0.5"
                     static-body
                     material="opacity:0"
             ></a-box>
+
             <a-box  id="anchorB"
                     position="0.95 8 -0.8"
                     scale=" 0.5 0.5 0.5"
@@ -293,8 +327,8 @@
                     static-body
                     material="opacity:0"
             ></a-box>
-            <!--geometry-->
-
+            <!--Geometry-->
+            <!--"continue"-->
             <a-entity   id="continue"
                         menu-component
                         spring="target: #anchorA;
@@ -331,6 +365,7 @@
                                     receive:false;"
                 ></a-entity>
             </a-entity>
+            <!--"repeat"-->
             <a-entity   id="repeat"
                         menu-component
                         spring="target: #anchorB;
@@ -367,7 +402,9 @@
                                     receive:false;"
                 ></a-entity>
             </a-entity>
-            <a-entity   menu-component
+            <!--"bow"-->
+            <a-entity   id="bow"
+                        menu-component
                         spring="target: #anchorC;
                                 damping: 500;
                                 stiffness: 2000;
@@ -402,15 +439,16 @@
                             shadow="cast:false;
                                     receive:true;"
                 ></a-entity>
-            </a-entity>
+            </a-entity><!--End of Physical Menu-->
 
-            <!--dummy-->
+            <!--Dummy-->
             <a-entity   id="dummy-rig"
                         position="0 1.1 -1.0"
             >
-                <!-- Base Collision Box -->
+                <!--Base Collision Box-->
                 <a-entity   id="base"
                             class="dummyBox"
+                            mixin="highlighter"
                             body="type: dynamic;
                                   mass: 50;
                                   angularDamping: 1;
@@ -429,8 +467,163 @@
                             shape__foot="shape: box;
                                          halfExtents: 0.17 0.016 0.17;
                                          offset: 0 -0.84 0.623;"
-                >   
-                    <!-- Geometry -->
+                >
+                    <!--Highlighters-->
+                    <!--head-->
+                    <a-entity   id="headHighlight"
+                                geometry="primitive: cylinder;
+                                          radius: 0.055;
+                                          height: 0.27;
+                                          segmentsRadial: 8;
+                                          segmentsHeight: 1;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="-0.008 0.746 0.255"
+                                rotation="90 -2 0"
+                    ></a-entity>
+                    <!--neck-->
+                    <a-entity   id="neckHighlight"
+                                geometry="primitive: cylinder;
+                                          radius: 0.13;
+                                          height: 0.22;
+                                          segmentsRadial: 8;
+                                          segmentsHeight: 1;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="0 0.572 0"
+                    ></a-entity>
+                    <!--left arm-->
+                    <a-entity   id="leftArmHighlight"
+                                geometry="primitive: cylinder;
+                                          radius: 0.055;
+                                          height: 0.4;
+                                          segmentsRadial: 8;
+                                          segmentsHeight: 1;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="0.337 0.406 -0.019"
+                                rotation="0 3 90"
+                    ></a-entity>
+                    <!--right arm-->
+                    <a-entity   id="rightArmHighlight"
+                                geometry="primitive: cylinder;
+                                          radius: 0.055;
+                                          height: 0.4;
+                                          segmentsRadial: 8;
+                                          segmentsHeight: 1;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="-0.336 0.406 -0.025"
+                                rotation="0 -4 90"
+                    ></a-entity>
+                    <!--abdomen-->
+                    <a-entity   id="abdomenHighlight"
+                                geometry="primitive: cylinder;
+                                          radius: 0.13;
+                                          height: 0.22;
+                                          segmentsRadial: 8;
+                                          segmentsHeight: 1;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="0 0.22 0"
+                    ></a-entity>
+                    <!--left hand-->
+                    <a-entity   id="leftHandHighlight"
+                                geometry="primitive: cylinder;
+                                          radius: 0.055;
+                                          height: 0.48;
+                                          segmentsRadial: 8;
+                                          segmentsHeight: 1;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="0.258 -0.001 0.279"
+                                rotation="0 -47.4 90"
+                    ></a-entity>
+                    <!--right hand-->
+                    <a-entity   id="rightHandHighlight"
+                                geometry="primitive: cylinder;
+                                          radius: 0.055;
+                                          height: 0.44;
+                                          segmentsRadial: 8;
+                                          segmentsHeight: 1;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="-0.341 0.038 0.101"
+                                rotation="0 -163.652 90"
+                    ></a-entity>
+                    <!--leg-->
+                    <a-entity   id="legHighlight1"
+                                geometry="primitive: box;
+                                          height: 0.08;
+                                          width: 0.08;
+                                          depth: 0.45;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="0 -0.150 0.222"
+                                rotation="21.218 0 90"
+                    ></a-entity>
+                    <a-entity   id="legHighlight2"
+                                geometry="primitive: box;
+                                          height: 0.08;
+                                          width: 0.09;
+                                          depth: 0.12;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="0 -0.269 0.446"
+                                rotation="53.408 0 90"
+                    ></a-entity>
+                    <a-entity   id="legHighlight3"
+                                geometry="primitive: box;
+                                          height: 0.08;
+                                          width: 0.09;
+                                          depth: 0.55;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="0 -0.568 0.543"
+                                rotation="75.582 0 90"
+                    ></a-entity><!--End of Highlighters-->
+
+                    <!--Geometry-->
                     <a-entity   id="dummy-geo"
                                 obj-model="obj:#dummy-obj"
                                 position="0 -0.85 0"
@@ -439,10 +632,13 @@
                                 material="src: #dummyMap;
                                           roughness: 0.7;
                                           metalness: 0;"
-                    ></a-entity>
-                    <!-- Head Collision Box -->
+                    ></a-entity><!--End of Geometry-->
+
+                    <!--Hit Boxes-->
+                    <!--Head Collision Box-->
                     <a-entity   id="head"
                                 class="dummyBox"
+                                mixin="highlighter"
                                 body="type: dynamic;
                                       shape: none;"
                                 collision-filter="group: dummy;
@@ -453,11 +649,12 @@
                                 shape__face="shape: box;
                                              height: 0.4;
                                              halfExtents: 0.04 0.04 0.14;
-                                             offset: -0.01 0.75 0.255;"
+                                             offset: -0.01 0.73 0.255;"
                     ></a-entity>
-                    <!-- Neck Collision Box -->
+                    <!--Neck Collision Box-->
                     <a-entity   id="neck"
                                 class="dummyBox"
+                                mixin="highlighter"
                                 body="type: dynamic;
                                       shape: none;"
                                 collision-filter="group: dummy;
@@ -472,9 +669,44 @@
                                              offset: 0 0.57 0;
                                              numSegments: 16;"
                     ></a-entity>
-                    <!-- Abdomen Collision Box -->
+                    <!--Left Arm Collision Box-->
+                    <a-entity   id="leftArm"
+                                class="dummyBox"
+                                mixin="highlighter"
+                                body="type: dynamic;
+                                      shape: none;"
+                                collision-filter="group: dummy;
+                                                collidesWith: hands, swords, objs, environment;
+                                                collisionForces: true;"
+                                constraint="type: lock;
+                                            target: #base;"
+                                shape__leftArm="shape: box;
+                                                height: 0.4;
+                                                halfExtents: 0.27 0.04 0.04;
+                                                offset: 0.274 0.4 0;"
+                                rotation="0 3 0"
+                    ></a-entity>
+                    <!--Right Arm Collision Box-->
+                    <a-entity   id="rightArm"
+                                class="dummyBox"
+                                mixin="highlighter"
+                                body="type: dynamic;
+                                      shape: none;"
+                                collision-filter="group: dummy;
+                                                  collidesWith: hands, swords, objs, environment;
+                                                  collisionForces: true;"
+                                constraint="type: lock;
+                                            target: #base;"
+                                shape__rightArm="shape: box;
+                                                 height: 0.4;
+                                                 halfExtents: 0.27 0.04 0.04;
+                                                 offset: -0.274 0.4 0;"
+                                rotation="0 -4 0"
+                    ></a-entity>
+                    <!--Abdomen Collision Box-->
                     <a-entity   id="abdomen"
                                 class="dummyBox"
+                                mixin="highlighter"
                                 body="type: dynamic;
                                       shape: none;"
                                 collision-filter="group: dummy;
@@ -489,41 +721,10 @@
                                                 offset: 0 0.215 0;
                                                 numSegments: 16;"
                     ></a-entity>
-                    <!-- Right Arm Collision Box -->
-                    <a-entity   id="rightArm"
-                                class="dummyBox"
-                                body="type: dynamic;
-                                      shape: none;"
-                                collision-filter="group: dummy;
-                                                  collidesWith: hands, swords, objs, environment;
-                                                  collisionForces: true;"
-                                constraint="type: lock;
-                                            target: #base;"
-                                shape__rightArm="shape: box;
-                                                 height: 0.4;
-                                                 halfExtents: 0.27 0.04 0.04;
-                                                 offset: -0.274 0.4 0;"
-                                rotation="0 -4 0"
-                    ></a-entity>
-                    <!-- Left Arm Collision Box -->
-                    <a-entity   id="leftArm"
-                                class="dummyBox"
-                                body="type: dynamic;
-                                      shape: none;"
-                                collision-filter="group: dummy;
-                                                collidesWith: hands, swords, objs, environment;
-                                                collisionForces: true;"
-                                constraint="type: lock;
-                                            target: #base;"
-                                shape__leftArm="shape: box;
-                                                height: 0.4;
-                                                halfExtents: 0.27 0.04 0.04;
-                                                offset: 0.274 0.4 0;"
-                                rotation="0 3 0"
-                    ></a-entity>
-                    <!-- Left Hand Collision Box -->
+                    <!--Left Hand Collision Box-->
                     <a-entity   id="leftHand"
                                 class="dummyBox"
+                                mixin="highlighter"
                                 body="type: dynamic;
                                     shape: none;"
                                 collision-filter="group: dummy;
@@ -531,62 +732,63 @@
                                                 collisionForces: true;"
                                 constraint="type: lock;
                                             target: #base;"
-                                shape__leftAbdomen="shape: box;
+                                shape__leftHand="shape: box;
                                                     height: 0.4;
                                                     halfExtents: 0.27 0.04 0.04;
-                                                    offset: 0.35 0 0;"
+                                                    offset: 0.35 -0.01 0;"
                                 rotation="0 -47 0"
                     ></a-entity>
-                    <!-- Right Hand Collision Box -->
+                    <!--Right Hand Collision Box-->
                     <a-entity   id="rightHand"
                                 class="dummyBox"
+                                mixin="highlighter"
                                 body="type: dynamic;
                                       shape: none;"
                                 collision-filter="group: dummy;
-                                                collidesWith: hands, swords, objs, environment;
-                                                collisionForces: true;"
+                                                  collidesWith: hands, swords, objs, environment;
+                                                  collisionForces: true;"
                                 constraint="type: lock;
                                             target: #base;"
-                                shape__rightAbdomen="shape: box;
-                                                    height: 0.4;
-                                                    halfExtents: 0.24 0.04 0.04;
-                                                    offset: 0.34 0.04 0;"
+                                shape__rightHand="shape: box;
+                                                  height: 0.4;
+                                                  halfExtents: 0.24 0.04 0.04;
+                                                  offset: 0.34 0.03 0;"
                                 rotation="0 -163 0"
                     ></a-entity>
-                    <!-- Leg Collision Boxes -->
-                    <a-entity   id="leg"
-                                class="dummyBox"
-                                body="type: dynamic;
-                                      shape: none;"
-                                collision-filter="group: dummy;
-                                                collidesWith: hands, swords, objs, environment;
-                                                collisionForces: true;"
-                                constraint="type: lock;
-                                            target: #base;"
-                                shape__legTop="shape: box;
-                                            halfExtents: 0.03 0.02 0.34;
-                                            offset: 0 -0.057 0.19;"
-                                rotation="21 0 0"
-                    ></a-entity>
-                    <a-entity   id="leg"
-                                class="dummyBox"
-                                body="type: dynamic;
-                                      shape: none;"
-                                collision-filter="group: dummy;
-                                                collidesWith: hands, swords, objs, environment;
-                                                collisionForces: true;"
-                                constraint="type: lock;
-                                            target: #base;"
-                                shape__legBottom="shape: box;
-                                            halfExtents: 0.03 0.02 0.25;
-                                            offset: 0 0.39 0.64;"
-                                rotation="75 0 0"
-                    ></a-entity>
-                </a-entity>
-                <!-- End of Hit Boxes-->
-            </a-entity>
-            <!-- End of Dummy Rig-->
-            
+                    <!--Leg Collision Boxes-->
+                    </a-entity  id="leg">
+                        <a-entity   class="dummyBox"
+                                    mixin="highlighter"
+                                    body="type: dynamic;
+                                          shape: none;"
+                                    collision-filter="group: dummy;
+                                                      collidesWith: hands, swords, objs, environment;
+                                                      collisionForces: true;"
+                                    constraint="type: lock;
+                                                target: #base;"
+                                    shape__legTop="shape: box;
+                                                   halfExtents: 0.03 0.02 0.34;
+                                                   offset: 0 -0.057 0.19;"
+                                    rotation="21 0 0"
+                        ></a-entity>
+                        <a-entity   class="dummyBox"
+                                    mixin="highlighter"
+                                    body="type: dynamic;
+                                        shape: none;"
+                                    collision-filter="group: dummy;
+                                                      collidesWith: hands, swords, objs, environment;
+                                                      collisionForces: true;"
+                                    constraint="type: lock;
+                                                target: #base;"
+                                    shape__legBottom="shape: box;
+                                                      halfExtents: 0.03 0.02 0.25;
+                                                      offset: 0 0.39 0.64;"
+                                    rotation="75 0 0"
+                        ></a-entity>
+                    </a-entity>
+                </a-entity><!--End of Hit Boxes-->
+            </a-entity><!-- End of Dummy Rig-->
+
             <!-- Swords -->
             <!--Shinai-->
             <a-entity   id="shinai"
@@ -628,6 +830,7 @@
                           sound="src:#hit-sound"
                 ></a-entity>
             </a-entity>
+
             <!--Moonlight GreatSword-->
             <a-entity   id="mlgSword"
                         class="sword"
@@ -659,6 +862,7 @@
                         position="0.95 1 0.8"
                         rotation="90 0 0"
             ></a-entity>
+
             <!--GreatSword-->
             <a-entity   id="gSword"
                         class="sword"
@@ -690,6 +894,7 @@
                         position="0.89 0.6 0.75"
                         rotation="90 0 0"
             ></a-entity>
+
             <!--Sword Rack-->
             <a-entity   id="swordRack"
                         obj-model="obj:#sRack-obj"
@@ -727,7 +932,7 @@
                         position="1 0.28 0.72"  
                         scale="1.2 1.2 1.2"
                         rotation=" 0 270 0"
-            ></a-entity>
+            ></a-entity><!--End of Swords-->
 
             <!--Sword Decoration-->
             <a-entity   id="bgSword"
@@ -740,7 +945,7 @@
                                 receive:true;"
             ></a-entity>
 
-            <!-- Sky Dome -->
+            <!--Sky Dome-->
             <a-entity   id = "sky"
                         geometry = "primitive: sphere;
                                     radius: 500;"
@@ -752,11 +957,12 @@
                                     fog: false;"
             ></a-entity>
             
-            <!-- Event Handler -->
+            <!--Event Handler-->
             <a-entity   id="Chandler"
                         event-manager
             ></a-entity>
        </a-scene>
+       <!-- SCRIPT -->
        <script>
             let socket = io();
 
@@ -776,10 +982,7 @@
             let bLantern = document.querySelector('#bowLantern');
 
             socket.on('connect', function(userData){
-                console.log('connected');
-            });
-            socket.on('send_instruction', function(data){
-                console.log('Sequence: ' + data.sequence);
+                console.log('Student Connected');
             });
             
             socket.on('complete', function(){
@@ -798,6 +1001,7 @@
                 rLantern.setAttribute('material', {src:'#repeat-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
                 cLantern.setAttribute('material', {src:'#cont-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
             });
+         
             socket.on('percResp', function(data){
                 console.log('percentCheck');
                 for (let i =0; i < data.numResponseSeq; i++){
