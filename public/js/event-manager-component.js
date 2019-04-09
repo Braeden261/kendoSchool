@@ -103,7 +103,7 @@ AFRAME.registerComponent('event-manager', {
             //reset sequence index
             Context_AF.seqIndex = 0;
             //play sounds
-            Context_AF.gongSnd.volume = 0.07;
+            Context_AF.gongSnd.volume = 0.05;
             Context_AF.gongSnd.currentTime = 0;
             Context_AF.gongSnd.play();
             //show first target in sequence after 1.5s timeout
@@ -125,7 +125,7 @@ AFRAME.registerComponent('event-manager', {
         });
         //Sequence Completed
         socket.on('complete', function() {
-            Context_AF.gongSnd.volume = 0.07;
+            Context_AF.gongSnd.volume = 0.05;
             Context_AF.gongSnd.currentTime = 0;
             Context_AF.gongSnd.play();
             setTimeout(function() {
@@ -135,7 +135,7 @@ AFRAME.registerComponent('event-manager', {
         });
         //Continue Sequence
         socket.on('seqContinue', function() {
-            Context_AF.contRptSnd.volume = 0.07;
+            Context_AF.contRptSnd.volume = 0.05;
             Context_AF.contRptSnd.currentTime = 0;
             Context_AF.contRptSnd.play();
             Context_AF.leftScrollMat.setAttribute('src', Context_AF.nullAddress);
@@ -143,7 +143,7 @@ AFRAME.registerComponent('event-manager', {
         });
         //Repeat Sequence
         socket.on('seqRepeat', function() {
-            Context_AF.contRptSnd.volume = 0.07;
+            Context_AF.contRptSnd.volume = 0.05;
             Context_AF.contRptSnd.currentTime = 0;
             Context_AF.contRptSnd.play();
             Context_AF.leftScrollMat.setAttribute('src', Context_AF.nullAddress);

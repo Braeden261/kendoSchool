@@ -65,7 +65,7 @@
                 <audio  id="begin-sound"        src="/assets/sounds/gongHit.wav"></audio>
                 <audio  id="sequence-sound"     src="/assets/sounds/fluteSignal.wav"></audio>
                 <audio  id="brush-sound"        src="/assets/sounds/brushStroke_double.mp3"></audio>
-                <audio  id="whoosh-sound"       src="/assets/sounds/whoosh.wav"></audio>
+                <audio  id="whoosh-sound"       src="/assets/sounds/whoosh2.wav"></audio>
 
                 <!-- Mixins -->
                 <!--controller-->
@@ -1008,9 +1008,11 @@
                     rLantern.setAttribute('material', {src:'#repeat-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
                     cLantern.setAttribute('material', {src:'#cont-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
                     //play sounds
-                    whoosh.volume = 1;
-                    whoosh.currentTime = 0;
-                    whoosh.play();
+                    setTimeout(function() {
+                        whoosh.volume = 0.1;
+                        whoosh.currentTime = 0;
+                        whoosh.play();
+                    }, 700);
                 }, 1500);
             });
             socket.on('seqContinue', function(){
@@ -1044,9 +1046,11 @@
                 bBox.setAttribute('rotation', {y: -150});
                 bLantern.setAttribute('material', {opacity:1});
                 //play sounds
-                whoosh.volume = 1;
-                whoosh.currentTime = 0;
-                whoosh.play();
+                setTimeout(function() {
+                    whoosh.volume = 0.1;
+                    whoosh.currentTime = 0;
+                    whoosh.play();
+                }, 700);
             }
 
             socket.on('bow', function(){
