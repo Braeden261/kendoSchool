@@ -109,6 +109,11 @@ AFRAME.registerComponent('event-manager', {
             //show first target in sequence after 1.5s timeout
             setTimeout(function() {
                 Context_AF.el.removeState('idle');
+                //play sounds
+                Context_AF.brushSnd.volume = 0.05;
+                Context_AF.brushSnd.currentTime = 0;
+                Context_AF.brushSnd.play();
+                //display first sequence target
                 Context_AF.leftScrollMat.setAttribute('src', Context_AF.sequenceK[Context_AF.seqIndex]);
             }, 1500);
             //set new game state
@@ -352,15 +357,31 @@ AFRAME.registerComponent('event-manager', {
 
         if (Context_AF.el.is('action')) {
             if (_data.value) {
+                //play sounds
+                Context_AF.brushSnd.volume = 0.05;
+                Context_AF.brushSnd.currentTime = 0;
+                Context_AF.brushSnd.play();
+                //display strike feedback
                 Context_AF.rightScrollMat.setAttribute('src', Context_AF.responseEK[0]);
             } else {
+                //play sounds
+                Context_AF.brushSnd.volume = 0.05;
+                Context_AF.brushSnd.currentTime = 0;
+                Context_AF.brushSnd.play();
+                //display strike feedback
                 Context_AF.rightScrollMat.setAttribute('src', Context_AF.responseEK[1]);
             }
             setTimeout(function() {
                 if (Context_AF.seqIndex < Context_AF.seqLength - 1) {
+                    //hide previous target
                     Context_AF.rightScrollMat.setAttribute('src', Context_AF.nullAddress);
+                    //increment sequence index
                     Context_AF.seqIndex++;
-                    console.log(Context_AF.seqIndex);
+                    //play sounds
+                    Context_AF.brushSnd.volume = 0.05;
+                    Context_AF.brushSnd.currentTime = 0;
+                    Context_AF.brushSnd.play();
+                    //display new target
                     Context_AF.leftScrollMat.setAttribute('src', Context_AF.sequenceK[Context_AF.seqIndex]);
                 }
             }, 1500);

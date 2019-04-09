@@ -65,6 +65,7 @@
                 <audio  id="begin-sound"        src="/assets/sounds/gongHit.wav"></audio>
                 <audio  id="sequence-sound"     src="/assets/sounds/fluteSignal.wav"></audio>
                 <audio  id="brush-sound"        src="/assets/sounds/brushStroke_double.mp3"></audio>
+                <audio  id="whoosh-sound"       src="/assets/sounds/whoosh.wav"></audio>
 
                 <!-- Mixins -->
                 <!--controller-->
@@ -989,6 +990,8 @@
 
             let chandler = document.querySelector('#Chandler');
 
+            let whoosh = document.querySelector('#whoosh-sound');
+
             socket.on('connect', function(userData){
                 console.log('Student Connected');
                 chandler.addState('idle');
@@ -996,13 +999,18 @@
 
             socket.on('complete', function(){
                 setTimeout(function() {
+                    //drop lanterns
                     cBox.setAttribute('spring', {restLength:5.5});
                     cBox.setAttribute('rotation', {y: -150});
                     rBox.setAttribute('spring', {restLength:5.5});
                     rBox.setAttribute('rotation', {y: 150});
-                    
+                    //reset opacity to 1
                     rLantern.setAttribute('material', {src:'#repeat-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
                     cLantern.setAttribute('material', {src:'#cont-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
+                    //play sounds
+                    whoosh.volume = 1;
+                    whoosh.currentTime = 0;
+                    whoosh.play();
                 }, 1500);
             });
             socket.on('seqContinue', function(){
@@ -1035,6 +1043,10 @@
                 bBox.setAttribute('spring', {restLength:5.5});
                 bBox.setAttribute('rotation', {y: -150});
                 bLantern.setAttribute('material', {opacity:1});
+                //play sounds
+                whoosh.volume = 1;
+                whoosh.currentTime = 0;
+                whoosh.play();
             }
 
             socket.on('bow', function(){
