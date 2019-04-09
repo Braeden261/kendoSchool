@@ -57,9 +57,16 @@
                 <a-asset-item id="scroll-obj"           src="/assets/models/objFiles/scroll/scroll.obj"></a-asset-item>
 
                 <!-- Audio -->
-                <audio  id='hit-sound'      src='/assets/sounds/effects/hitSound.mp3'></audio>
-                <audio  id="nature-sound"   src="/assets/sounds/ambientSounds.mp3"  type="audio/mp3"    loop></audio>
-                
+                <audio  id='hit-sound'          src='/assets/sounds/effects/hitSound.mp3'></audio>
+                <audio  id="nature-sound"       src="/assets/sounds/ambientSounds.mp3"              type="audio/mp3"    loop></audio>
+                <audio  id="idle-track"         src="/assets/sounds/anEasternTale_kylePreston.mp3"  type="audio/mp3"    loop></audio>
+                <audio  id="action-track"       src="/assets/sounds/warDrums_kylePreston.mp3"       type="audio/mp3"    loop></audio>
+                <audio  id="cont-rpt-sound"     src="/assets/sounds/kotoHit_EDITED.mp3"></audio>
+                <audio  id="begin-sound"        src="/assets/sounds/gongHit.wav"></audio>
+                <audio  id="sequence-sound"     src="/assets/sounds/fluteSignal.wav"></audio>
+                <audio  id="brush-sound"        src="/assets/sounds/brushStroke_double.mp3"></audio>
+                <audio  id="whoosh-sound"       src="/assets/sounds/whoosh2.wav"></audio>
+
                 <!-- Mixins -->
                 <!--controller-->
                 <a-mixin id="controller"
@@ -981,19 +988,31 @@
             let cLantern = document.querySelector('#contLantern');
             let bLantern = document.querySelector('#bowLantern');
 
+            let chandler = document.querySelector('#Chandler');
+
+            let whoosh = document.querySelector('#whoosh-sound');
+
             socket.on('connect', function(userData){
                 console.log('Student Connected');
+                chandler.addState('idle');
             });
 
             socket.on('complete', function(){
                 setTimeout(function() {
+                    //drop lanterns
                     cBox.setAttribute('spring', {restLength:5.5});
                     cBox.setAttribute('rotation', {y: -150});
                     rBox.setAttribute('spring', {restLength:5.5});
                     rBox.setAttribute('rotation', {y: 150});
-                    
+                    //reset opacity to 1
                     rLantern.setAttribute('material', {src:'#repeat-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
                     cLantern.setAttribute('material', {src:'#cont-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
+                    //play sounds
+                    setTimeout(function() {
+                        whoosh.volume = 0.1;
+                        whoosh.currentTime = 0;
+                        whoosh.play();
+                    }, 700);
                 }, 1500);
             });
             socket.on('seqContinue', function(){
@@ -1026,11 +1045,16 @@
                 bBox.setAttribute('spring', {restLength:5.5});
                 bBox.setAttribute('rotation', {y: -150});
                 bLantern.setAttribute('material', {opacity:1});
+                //play sounds
+                setTimeout(function() {
+                    whoosh.volume = 0.1;
+                    whoosh.currentTime = 0;
+                    whoosh.play();
+                }, 700);
             }
 
             socket.on('bow', function(){
                 bBox.setAttribute('spring', {restLength:0.1});
-                
                 setTimeout(function(){
                     bLantern.setAttribute('material', {opacity:0});
                 }, 1000);
@@ -1040,6 +1064,10 @@
                 let ambient = document.querySelector('#nature-sound');
                 ambient.volume = 0.01;
                 ambient.play();
+
+                let idleTrack = document.querySelector('#idle-track');
+                idleTrack.volume = 0.06;
+                idleTrack.play();
             }
             function resetSeq(){
                 cBox.setAttribute('spring', {damping:500, restLength:0.1});
