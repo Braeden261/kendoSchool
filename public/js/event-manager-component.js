@@ -9,7 +9,7 @@ AFRAME.registerComponent('event-manager', {
         Context_AF.seqIndex         = 0;
         Context_AF.seqLength        = 0;
         //Temporarly Stored Collider
-        Context_AF.tempCollider     = null;
+        Context_AF.tempCollider     = false;
       
         //S C E N E   R E F E R E N C E S
         Context_AF.scene            = document.querySelector('a-scene')
@@ -159,14 +159,14 @@ AFRAME.registerComponent('event-manager', {
                 Context_AF.ambientSnd.currentTime = 0;
                 Context_AF.ambientSnd.play();
                 //idle state music
-                Context_AF.idleTrack.volume = 0.05;
+                Context_AF.idleTrack.volume = 0.06;
                 Context_AF.idleTrack.currentTime = 0;
                 Context_AF.idleTrack.play();
             }
             //action state music
             if (event.detail =='action') {
                 setTimeout(function() {
-                    Context_AF.actionTrack.volume = 0.05;
+                    Context_AF.actionTrack.volume = 0.06;
                     Context_AF.actionTrack.currentTime = 0;
                     Context_AF.actionTrack.play();
                 }, 2500);
@@ -275,10 +275,10 @@ AFRAME.registerComponent('event-manager', {
         //Collision
         for (i = 0; i < Context_AF.swords.length; i++) {
             Context_AF.swords[i].addEventListener('collide', function(event) {
-                if (Context_AF.el.is('action') && Context_AF.dummyBoxIdList.includes(event.detail.body.el.getAttribute('id')) && event.detail.body.el.getAttribute('id') != Context_AF.tempCollider) {
-                    Context_AF.tempCollider = event.detail.body.el.getAttribute('id');
+                if (Context_AF.el.is('action') && Context_AF.dummyBoxIdList.includes(event.detail.body.el.getAttribute('id')) && !Context_AF.tempCollider) {
+                    Context_AF.tempCollider = true;
                     setTimeout(function() {
-                        Context_AF.tempCollider = null;
+                        Context_AF.tempCollider = false;
                         console.log('collider reset');
                     }, 1000);
                     socket.emit(event.detail.body.el.getAttribute('id') + "_response");
