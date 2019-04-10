@@ -8,13 +8,11 @@
         <script src="js/event-manager-component.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <script src="/js/hit-sound-component.js"></script>
+        <script src="/js/menu-component.js"></script>
     </head>
     <body>
-        <a-scene loading-screen="dotsColor: #e74c3c;
-                                 backgroundColor: #353535;
-                                 enabled: true;"
-                 physics="debug: false;
-                          gravity: -9;
+        <a-scene physics="debug: false;
+                          gravity: -9.8;
                           maxInterval: 0.02;
                           iterations: 20;
                           restitution: 0.1;"
@@ -25,43 +23,52 @@
                       far: 45.88;"
         >
             <a-assets>
-                <!-- Mixins -->
-                <a-mixin    id="lantern-light"
-                            light = "type: spot; angle: 50; distance: 5; decay: 1; penumbra: 1; color: #ffd779; intensity: 0.5;"
-                            rotation = "-90 0 0"
-                ></a-mixin>
-
+                <!-- Scroll Displays -->
+                <video id="display-leftScroll"  src="/assets/images/waitingForMasterAnimation/waitingForMaster.mp4" autoplay muted loop></video>
+                <video id="display-rightScroll"  src="/assets/images/waitingForMasterAnimation/waitingForMaster.mp4" autoplay muted loop></video>
+              
                 <!-- Textures -->
-                <img id = "skymap" src = "/assets/textures/skyTexture/sky-02.png">
-                <img id = "dojo-tex" src = "/assets/textures/dojoTexture/dojo_wallsFloors_texture-02.png">
-                <img id = "dummyMap" src = "/assets/textures/dummyTexture/TexturePNG/dummyTexture.png">
-                <img id = "shinai-tex" src = "/assets/textures/swordTexture/TexturePNG/swordTexture.png">
-
-                <img id = "lantern-tex" src = "/assets/textures/lanternTexture/lantern_tex.png">
-                <img id = "bgSword-tex" src = "/assets/textures/backgroundSwordTexture/TexturePNG/swordTexture.png">
-
+                <img id="skymap"        src="/assets/textures/skyTexture/sky-02.png">
+                <img id="dojo-tex"      src="/assets/textures/dojoTexture/dojo_wallsFloors_texture-02.png">
+                <img id="dummyMap"      src="/assets/textures/dummyTexture/TexturePNG/dummyTexture.png">
+                <img id="shinai-tex"    src="/assets/textures/swordTexture/TexturePNG/swordTexture.png">
+                <img id="mlgSword-tex"  src="/assets/textures/ExtraSwordTexture/moonlightGreatSword/moonlightGreatSword-texture.png">
+                <img id="gSword-tex"    src="/assets/textures/ExtraSwordTexture/greatSword/TexturePNG/greatSword-texture.png">
+                <img id="sRack-tex"     src="/assets/textures/ExtraSwordTexture/swordRack/swordRack-texture.png">
+                <img id="lantern-tex"   src="/assets/textures/lanternTexture/lantern_tex.png">
+                <img id="bgSword-tex"   src="/assets/textures/backgroundSwordTexture/TexturePNG/swordTexture.png">
+                <img id="scroll-tex"    src="/assets/textures/scrollTexture/scroll_tex.png">
+                <img id="bow-tex"       src="/assets/textures/lanternTexture/menuBow-lantern_tex.png">
+                <img id="repeat-tex"    src="/assets/textures/lanternTexture/menuRepeat-lantern_tex.png">
+                <img id="cont-tex"      src="/assets/textures/lanternTexture/menuNew-lantern_tex.png">
 
                 <!-- Models -->
-                <a-asset-item id="dojo-obj" src="/assets/models/objFiles/dojo/dojo_structure.obj"></a-asset-item>
-                <a-asset-item id="windows-obj" src="/assets/models/objFiles/dojo/dojo_windows.obj"></a-asset-item>
+                <a-asset-item id="dojo-obj"             src="/assets/models/objFiles/dojo/dojo_structure.obj"></a-asset-item>
+                <a-asset-item id="windows-obj"          src="/assets/models/objFiles/dojo/dojo_windows.obj"></a-asset-item>
+                <a-asset-item id="shinai-obj"           src="/assets/models/objFiles/sword/sword_v003.obj"></a-asset-item>
+                <a-asset-item id="dummy-obj"            src="/assets/models/objFiles/dummy/trainingDummy.obj"></a-asset-item>
+                <a-asset-item id="mlgSword-obj"         src="/assets/models/objFiles/extraSwords/moonlightGreatsword.obj"></a-asset-item>
+                <a-asset-item id="gSword-obj"           src="/assets/models/objFiles/extraSwords/GreatSword.obj"></a-asset-item>
+                <a-asset-item id="sRack-obj"            src="/assets/models/objFiles/extraSwords/swordRack2.obj"></a-asset-item>
+                <a-asset-item id="lanternFrames-obj"    src="/assets/models/objFiles/lantern/lanterns_frames_lines.obj"></a-asset-item>
+                <a-asset-item id="lanternBodies-obj"    src="/assets/models/objFiles/lantern/lanterns_bodies.obj"></a-asset-item>
+                <a-asset-item id="lanternSingle-obj"    src="/assets/models/objFiles/lantern/lantern_menu.obj"></a-asset-item>
+                <a-asset-item id="bgSword-obj"          src="/assets/models/objFiles/bg_models/bg_sword.obj"></a-asset-item>
+                <a-asset-item id="scroll-obj"           src="/assets/models/objFiles/scroll/scroll.obj"></a-asset-item>
 
-
-                <a-asset-item id="shinai-obj" src="/assets/models/objFiles/sword/sword_v003.obj"></a-asset-item>
-                <a-asset-item id="dummy-obj" src="/assets/models/objFiles/dummy/trainingDummy.obj"></a-asset-item>
-
-                <a-asset-item id="lanternFrames-obj" src="/assets/models/objFiles/lantern/lanterns_frames_lines.obj"></a-asset-item>
-                <a-asset-item id="lanternBodies-obj" src="/assets/models/objFiles/lantern/lanterns_bodies.obj"></a-asset-item>
-
-                <a-asset-item id="bgSword-obj" src="/assets/models/objFiles/bg_models/bg_sword.obj"></a-asset-item>
-
-
-
-                <audio id='hit-sound' src='/assets/sounds/effects/hitSound.mp3'></audio>
-                <audio id="nature-sound" loop>
-                    <source  src="/assets/sounds/ambientSounds.mp3" type="audio/mp3">
-                </audio>
+                <!-- Audio -->
+                <audio  id='hit-sound'          src='/assets/sounds/effects/hitSound.mp3'></audio>
+                <audio  id="nature-sound"       src="/assets/sounds/ambientSounds.mp3"              type="audio/mp3"    loop></audio>
+                <audio  id="idle-track"         src="/assets/sounds/anEasternTale_kylePreston.mp3"  type="audio/mp3"    loop></audio>
+                <audio  id="action-track"       src="/assets/sounds/warDrums_kylePreston.mp3"       type="audio/mp3"    loop></audio>
+                <audio  id="cont-rpt-sound"     src="/assets/sounds/kotoHit_EDITED.mp3"></audio>
+                <audio  id="begin-sound"        src="/assets/sounds/gongHit.wav"></audio>
+                <audio  id="sequence-sound"     src="/assets/sounds/fluteSignal.wav"></audio>
+                <audio  id="brush-sound"        src="/assets/sounds/brushStroke_double.mp3"></audio>
+                <audio  id="whoosh-sound"       src="/assets/sounds/whoosh2.wav"></audio>
 
                 <!-- Mixins -->
+                <!--controller-->
                 <a-mixin id="controller"
                          super-hands="colliderEvent: collisions;
                                       colliderEventProperty: els;
@@ -78,13 +85,32 @@
                                            collidesWith: swords, objs;
                                            collisionForces: false;"
                 ></a-mixin>
-                
+                <!--lantern light-->
+                <a-mixin    id="lantern-light"
+                            light = "type: spot;
+                                     angle: 50;
+                                     distance: 5;
+                                     decay: 1;
+                                     penumbra: 1;
+                                     color: #ffd779;
+                                     intensity: 0.5;"
+                            rotation = "-90 0 0"
+                ></a-mixin>
+                <!--highlighter-->
+                <a-mixin    id="highlighter"
+                            material="color: #e74c3c;
+                                      emissive: #e74c3c;
+                                      emissiveIntensity: 0.5;
+                                      transparent: true;
+                                      opacity: 1;"
+                ></a-mixin>
             </a-assets>
 
             <!-- C A M E R A   &   V R   H A N D S -->
             <!--user POV = ~1.8m (6ft) base height + ~0.4m raised platform)-->
-            <a-entity   id="head"
+            <a-entity   id="player"
                         camera
+                        wasd-controls
                         look-controls
                         position="0 1.8 1.00"
             ></a-entity>
@@ -103,7 +129,7 @@
             
             <!-- L I G H T S -->
             <a-entity   light = "type: spot;
-                                 intensity: 0.5;
+                                 intensity: 0.7;
                                  angle: 60;
                                  penumbra: 0.9;
                                  color: #fff8e8;
@@ -111,35 +137,34 @@
                                  shadowBias: -0.000001;
                                  shadowMapWidth: 2048;
                                  shadowMapHeight: 2048;"
-                        position = "0 7.33 0"
+                        position = "0 7.03 0"
                         rotation = "-90 0 0"
             ></a-entity>
             <a-entity   light = "type: ambient;
                                  intensity: 0.23;
-                                 color: #f86605;"></a-entity>
+                                 color: #f86605;"
+            ></a-entity>
             <a-entity   light = "type: spot;
                                  angle: 25;
                                  penumbra: 1;
                                  color: #ffefca"
-                        position = "0 4.95 -14.27"
+                        position = "0 4.65 -14.27"
                         rotation = "-90 0 0"
             ></a-entity>
             
             <!-- M O D E L S -->
-            <!-- dojo -->
+            <!-- Dojo -->
             <a-entity   id="dojo"
                         obj-model="obj: #dojo-obj"
                         scale="1.0 1.0 1.0"
-                        position="0 0 0"
+                        position="0 -0.3 0"
                         material="src:#dojo-tex;
-                                  roughness:0.7;
-                                  metalness:0;
-                                  transparent:true;
-                                  opacity:1;"
-                        shadow="cast:true;
-                                receive:true;"
+                                  roughness: 0.7;
+                                  metalness: 0;
+                                  transparent: true;
+                                  opacity: 1;"
             >
-                <!-- environment hit boxes -->
+                <!-- Environment Hit Boxes -->
                 <!--platform-->
                 <a-entity   id="groundPlane-platform"
                             static-body
@@ -148,7 +173,7 @@
                                       width: 3.658;
                                       depth: 3.658;"
                             collision-filter="group: environment;
-                                              collidesWith: swords, objs;
+                                              collidesWith: swords, objs, dummy;
                                               collisionForces: true;"
                             material="color: #bdc3c7;
                                       roughness: 0.7;
@@ -157,7 +182,6 @@
                                       wireframe: false;"
                             position="0 0.35 0"
                 ></a-entity>
-
                 <!--ground-->
                 <a-entity   id="groundPlane-floor"
                             static-body
@@ -166,7 +190,7 @@
                                       width: 16.2;
                                       depth: 25.5;"
                             collision-filter="group: environment;
-                                              collidesWith: swords, objs;
+                                              collidesWith: swords, objs, dummy;
                                               collisionForces: true;"
                             material="color: #bdc3c7;
                                       roughness: 0.7;
@@ -175,117 +199,273 @@
                                       wireframe: false;"
                             position="0 -0.25 0"
                 ></a-entity>
+                <!--windows-->
+                <a-entity   id="windows"
+                            obj-model="obj:#windows-obj"
+                            scale="1.0 1.0 1.0"
+                            material="color: #fff9de;
+                                    roughness :0.7;
+                                    metalness: 0;
+                                    transparent: true;
+                                    opacity: 0.95;"
+                ></a-entity>
             </a-entity><!-- end of dojo-->
-            
-            <a-entity   id="windows"
-                        obj-model="obj:#windows-obj"
-                        scale="1.0 1.0 1.0"
-                        position="0 0 0"
-                        material="color: #fff9de;
-                                  roughness :0.7;
-                                  metalness: 0;
-                                  transparent: true;
-                                  opacity: 0.85;"
-                        shadow="cast: true;
-                                receive: true;"
-            ></a-entity>
 
             <!--Lanterns-->
+            <!--geometry-->
             <a-entity   id="lantern-frames"
                         obj-model="obj:#lanternFrames-obj"
                         scale="1.0 1.0 1.0"
-                        position="0 0 0"
-                        material="src:#lantern-tex; roughness:0.7; metalness:0; transparent:true; opacity:1;"
-                        shadow="cast:true; receive:true;"
+                        position="0 -0.3 0"
+                        material="src:#lantern-tex;
+                                  roughness:0.7;
+                                  metalness:0;
+                                  transparent:true;
+                                  opacity:1;"
             ></a-entity>
-
             <a-entity   id="lantern-bodies"
                         obj-model="obj:#lanternBodies-obj"
                         scale="1.0 1.0 1.0"
-                        position="0 0 0"
-                        material="src:#lantern-tex; roughness:0.7; metalness:0; transparent:true; opacity:0.95; emissive:#ffe3a4; emissiveIntensity:0.3;"
-                        shadow="cast:true; receive:true;"
+                        position="0 -0.3 0"
+                        material="src:#lantern-tex;
+                                  roughness: 0.7;
+                                  metalness: 0;
+                                  transparent: true;
+                                  opacity: 0.95;
+                                  emissive: #ffe3a4;
+                                  emissiveIntensity: 0.3;"
             ></a-entity>
-
-            <a-entity   id="lanternLight"
+            <!--lights-->
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
-                        position="-4.915 2.52 -10.0"
+                        position="-4.915 2.22 -10.0"
             ></a-entity>
-
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
-                        position="-4.915 2.52 -5.0"
+                        position="-4.915 2.22 -5.0"
             ></a-entity>
-
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
-                        position="-4.915 2.52 0.0"
+                        position="-4.915 2.22 0.0"
             ></a-entity>
-
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
-                        position="-4.915 2.52 5.01"
+                        position="-4.915 2.22 5.01"
             ></a-entity>
-
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
-                        position="-4.915 2.52 10.01"
+                        position="-4.915 2.22 10.01"
             ></a-entity>
-
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
-                        position="4.91 2.52 -10.01"
+                        position="4.91 2.22 -10.01"
             ></a-entity>
-
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
-                        position="4.91 2.52 -5.002"
+                        position="4.91 2.22 -5.002"
             ></a-entity>
-
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
-                        position="4.91 2.52 -0.001"
+                        position="4.91 2.22 -0.001"
             ></a-entity>
-
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
-                        position="4.91 2.52 4.997"
+                        position="4.91 2.22 4.997"
             ></a-entity>
-
-            <a-entity   id="lanternLight"
+            <a-entity   class="lanternLight"
                         mixin="lantern-light"
-                        position="4.91 2.52 10.0"
+                        position="4.91 2.22 10.0"
+            ></a-entity><!--End of Lanterns-->
+
+            <!--Scrolls-->
+            <a-entity   id="scroll-01"
+                        obj-model="obj: #scroll-obj"
+                        material="src: #scroll-tex;
+                                  roughness: 0.8;"
+                        position="-2 -0.3 -1.8"
+                        rotation="0 35 0"
+            ></a-entity>
+            <a-entity   id="scroll-02"
+                        obj-model="obj: #scroll-obj"
+                        material="src: #scroll-tex;
+                                  roughness: 0.8;"
+                        position="2 -0.3 -1.8"
+                        rotation="0 -215 0"
+            ></a-entity>
+            <!--Video Textures-->
+            <a-entity   id="rightScrollDisplay"
+                        geometry="primitive: plane;
+                                  height: 0.445;
+                                  width: 0.445;"
+                        material="src: #display-rightScroll;
+                                  roughness: 0.8;"
+                        position="1.747 1.81 -1.967"
+                        rotation="0 -35 0"
+            ></a-entity>
+            <a-entity   id="leftScrollDisplay"
+                        geometry="primitive: plane;
+                                  height: 0.445;
+                                  width: 0.445;"
+                        material="src: #display-leftScroll;
+                                  roughness: 0.8;"
+                        position="-1.747 1.81 -1.967"
+                        rotation="0 35 0"
             ></a-entity>
 
-            <!--dummy-->
-            <a-entity   id="dummy-rig"
-                        position="0 1.5 -1.0"
+            <!--Physical Menu-->
+            <!--Anchors-->
+            <a-box  id="anchorA"
+                    position="-0.95 8 -0.8"
+                    scale=" 0.5 0.5 0.5"
+                    static-body
+                    material="opacity: 0"
+            ></a-box>
+
+            <a-box  id="anchorB"
+                    position="0.95 8 -0.8"
+                    scale=" 0.5 0.5 0.5"
+                    static-body
+                    material="opacity: 0"
+            ></a-box>
+            <a-box  id="anchorC"
+                    position="-0.95 8 -0.2"
+                    scale=" 0.5 0.5 0.5"
+                    static-body
+                    material="opacity: 0"
+            ></a-box>
+            <!--Geometry-->
+            <!--"continue"-->
+            <a-entity   id="continue"
+                        menu-component
+                        spring="target: #anchorA;
+                                damping: 500;
+                                stiffness: 2000;
+                                restLength: 0.1;
+                                localAnchorA: 0 0.5 0;"
+                        position="-0.95 7 -0.8"
+                        body="type: dynamic;
+                              mass: 150;
+                              linearDamping: 0.4;
+                              angularDamping: 1;
+                              shape: none;"
+                        collision-filter="group: objs;
+                                          collidesWith: hands, swords, objs, environment;
+                                          collisionForces: true;"
+                        shape__core="shape: cylinder;
+                                     height: 0.5;
+                                     radiusTop: 0.25;
+                                     radiusBottom: 0.25;
+                                     offset: 0 0.3 0;
+                                     numSegments: 16;"
             >
-                <a-entity   id="dummy-box"
+                <a-entity   id="contLantern"
+                            obj-model="obj:#lanternSingle-obj"
+                            scale="1 1 1"
+                            rotation="0 -150 0"
+                            material="src:#cont-tex;
+                                      roughness:0.7;
+                                      metalness:0;
+                                      transparent:true;
+                                      opacity:0;"
+                            shadow="cast:false;
+                                    receive:false;"
+                ></a-entity>
+            </a-entity>
+            <!--"repeat"-->
+            <a-entity   id="repeat"
+                        menu-component
+                        spring="target: #anchorB;
+                                damping: 500;
+                                stiffness: 2000;
+                                restLength: 0.1;
+                                localAnchorA: 0 0.5 0;"
+                        position="0.95 7 -0.8"
+                        body="type: dynamic;
+                              mass: 150;
+                              linearDamping: 0.4;
+                              angularDamping: 1;
+                              shape: none;"
+                        collision-filter="group: objs;
+                                          collidesWith: hands, swords, objs, environment;
+                                          collisionForces: true;"
+                        shape__core="shape: cylinder;
+                                     height: 0.5;
+                                     radiusTop: 0.25;
+                                     radiusBottom: 0.25;
+                                     offset: 0 0.3 0;
+                                     numSegments: 16;"
+            >
+                <a-entity   id="repeatLantern"
+                            obj-model="obj:#lanternSingle-obj"
+                            scale="1 1 1"
+                            rotation="0 150 0"
+                            material="src:#repeat-tex;
+                                      roughness:0.7;
+                                      metalness:0;
+                                      transparent:true;
+                                      opacity:0;"
+                            shadow="cast:false;
+                                    receive:false;"
+                ></a-entity>
+            </a-entity>
+            <!--"bow"-->
+            <a-entity   id="bow"
+                        menu-component
+                        spring="target: #anchorC;
+                                damping: 500;
+                                stiffness: 2000;
+                                restLength: 0.1;
+                                localAnchorA: 0 0.5 0;"
+                        position="-0.95 7 -0.2"
+                        body="type: dynamic;
+                              mass: 150;
+                              linearDamping: 0.4;
+                              angularDamping: 1;
+                              shape: none;"
+                        collision-filter="group: objs;
+                                          collidesWith: hands, swords, objs, environment;
+                                          collisionForces: true;"
+                        shape__core="shape: cylinder;
+                                     height: 0.5;
+                                     radiusTop: 0.25;
+                                     radiusBottom: 0.25;
+                                     offset: 0 0.35 0;
+                                     numSegments: 16;"
+            >
+                <a-entity   id="bowLantern"
+                            obj-model="obj:#lanternSingle-obj"
+                            scale="1 1 1"
+                            rotation="0 -110 0"
+                            material="src:#bow-tex;
+                                      roughness:0.7;
+                                      metalness:0;
+                                      transparent:true;
+                                      opacity:0;"
+                            shadow="cast:false;
+                                    receive:true;"
+                ></a-entity>
+            </a-entity><!--End of Physical Menu-->
+
+            <!--Dummy-->
+            <a-entity   id="dummy-rig"
+                        position="0 1.1 -1.0"
+            >
+                <!--Base Collision Box-->
+                <a-entity   id="base"
+                            class="dummyBox"
+                            mixin="highlighter"
                             body="type: dynamic;
-                                  mass: 80;
-                                  linearDamping: 0.02;
+                                  mass: 50;
+                                  angularDamping: 1;
                                   shape: none;"
-                            collision-filter="group: objs;
+                            collision-filter="group: dummy;
                                               collidesWith: hands, swords, objs, environment;
                                               collisionForces: true;"
-                            shape__core="shape: cylinder;
-                                         height: 1.64;
-                                         radiusTop: 0.12;
-                                         radiusBottom: 0.12;
-                                         offset: 0 0.04 0;
-                                         numSegments: 16;"
-                            shape__face="shape: box;
-                                         height: 0.4;
-                                         halfExtents: 0.04 0.04 0.14;
-                                         offset: -0.01 0.75 0.255;"
-                            shape__arms="shape: box;
-                                         height: 0.4;
-                                         halfExtents: 0.54 0.05 0.05;
-                                         offset: 0 0.4 -0.02;"
-                            shape__leg="shape: box;
-                                         halfExtents: 0.03 0.3 0.2;
-                                         offset: 0 -0.5 0.3;"
+                            constraint="type: hinge;
+                                        target: #groundPlane-platform;
+                                        pivot: 0 -0.848 0;
+                                        targetPivot: 0.025 0.25 -1;
+                                        maxForce: 1e7;"
                             shape__base="shape: box;
                                          halfExtents: 0.3 0.016 0.3;
                                          offset: 0 -0.84 0;"
@@ -293,7 +473,163 @@
                                          halfExtents: 0.17 0.016 0.17;
                                          offset: 0 -0.84 0.623;"
                 >
-                    <a-entity   id="dummy"
+                    <!--Highlighters-->
+                    <!--head-->
+                    <a-entity   id="headHighlight"
+                                geometry="primitive: cylinder;
+                                          radius: 0.055;
+                                          height: 0.27;
+                                          segmentsRadial: 8;
+                                          segmentsHeight: 1;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="-0.008 0.746 0.255"
+                                rotation="90 -2 0"
+                    ></a-entity>
+                    <!--neck-->
+                    <a-entity   id="neckHighlight"
+                                geometry="primitive: cylinder;
+                                          radius: 0.13;
+                                          height: 0.22;
+                                          segmentsRadial: 8;
+                                          segmentsHeight: 1;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="0 0.572 0"
+                    ></a-entity>
+                    <!--left arm-->
+                    <a-entity   id="leftArmHighlight"
+                                geometry="primitive: cylinder;
+                                          radius: 0.055;
+                                          height: 0.4;
+                                          segmentsRadial: 8;
+                                          segmentsHeight: 1;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="0.337 0.406 -0.019"
+                                rotation="0 3 90"
+                    ></a-entity>
+                    <!--right arm-->
+                    <a-entity   id="rightArmHighlight"
+                                geometry="primitive: cylinder;
+                                          radius: 0.055;
+                                          height: 0.4;
+                                          segmentsRadial: 8;
+                                          segmentsHeight: 1;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="-0.336 0.406 -0.025"
+                                rotation="0 -4 90"
+                    ></a-entity>
+                    <!--abdomen-->
+                    <a-entity   id="abdomenHighlight"
+                                geometry="primitive: cylinder;
+                                          radius: 0.13;
+                                          height: 0.22;
+                                          segmentsRadial: 8;
+                                          segmentsHeight: 1;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="0 0.22 0"
+                    ></a-entity>
+                    <!--left hand-->
+                    <a-entity   id="leftHandHighlight"
+                                geometry="primitive: cylinder;
+                                          radius: 0.055;
+                                          height: 0.48;
+                                          segmentsRadial: 8;
+                                          segmentsHeight: 1;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="0.258 -0.001 0.279"
+                                rotation="0 -47.4 90"
+                    ></a-entity>
+                    <!--right hand-->
+                    <a-entity   id="rightHandHighlight"
+                                geometry="primitive: cylinder;
+                                          radius: 0.055;
+                                          height: 0.44;
+                                          segmentsRadial: 8;
+                                          segmentsHeight: 1;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="-0.341 0.038 0.101"
+                                rotation="0 -163.652 90"
+                    ></a-entity>
+                    <!--leg-->
+                    <a-entity   id="legHighlight1"
+                                geometry="primitive: box;
+                                          height: 0.08;
+                                          width: 0.08;
+                                          depth: 0.45;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="0 -0.150 0.222"
+                                rotation="21.218 0 90"
+                    ></a-entity>
+                    <a-entity   id="legHighlight2"
+                                geometry="primitive: box;
+                                          height: 0.08;
+                                          width: 0.09;
+                                          depth: 0.12;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="0 -0.269 0.446"
+                                rotation="53.408 0 90"
+                    ></a-entity>
+                    <a-entity   id="legHighlight3"
+                                geometry="primitive: box;
+                                          height: 0.08;
+                                          width: 0.09;
+                                          depth: 0.55;"
+                                material="color: #e74c3c;
+                                          emissive: #e74c3c;
+                                          emissiveIntensity: 1;
+                                          transparent: true;
+                                          opacity: 0.5;
+                                          visible: false"
+                                position="0 -0.568 0.543"
+                                rotation="75.582 0 90"
+                    ></a-entity><!--End of Highlighters-->
+
+                    <!--Geometry-->
+                    <a-entity   id="dummy-geo"
                                 obj-model="obj:#dummy-obj"
                                 position="0 -0.85 0"
                                 scale="1.0 1.0 1.0"
@@ -301,24 +637,178 @@
                                 material="src: #dummyMap;
                                           roughness: 0.7;
                                           metalness: 0;"
+                    ></a-entity><!--End of Geometry-->
+
+                    <!--Hit Boxes-->
+                    <!--Head Collision Box-->
+                    <a-entity   id="head"
+                                class="dummyBox"
+                                mixin="highlighter"
+                                body="type: dynamic;
+                                      shape: none;"
+                                collision-filter="group: dummy;
+                                                  collidesWith: hands, swords, objs, environment;
+                                                  collisionForces: true;"
+                                constraint="type: lock;
+                                            target: #base;"
+                                shape__face="shape: box;
+                                             height: 0.4;
+                                             halfExtents: 0.04 0.04 0.14;
+                                             offset: -0.01 0.73 0.255;"
                     ></a-entity>
-                </a-entity>
-            </a-entity>
-            
-            <!--shinai-->
+                    <!--Neck Collision Box-->
+                    <a-entity   id="neck"
+                                class="dummyBox"
+                                mixin="highlighter"
+                                body="type: dynamic;
+                                      shape: none;"
+                                collision-filter="group: dummy;
+                                                  collidesWith: hands, swords, objs, environment;
+                                                  collisionForces: true;"
+                                constraint="type: lock;
+                                            target: #base;"
+                                shape__neck="shape: cylinder;
+                                             height: 0.2;
+                                             radiusTop: 0.12;
+                                             radiusBottom: 0.12;
+                                             offset: 0 0.57 0;
+                                             numSegments: 16;"
+                    ></a-entity>
+                    <!--Left Arm Collision Box-->
+                    <a-entity   id="leftArm"
+                                class="dummyBox"
+                                mixin="highlighter"
+                                body="type: dynamic;
+                                      shape: none;"
+                                collision-filter="group: dummy;
+                                                collidesWith: hands, swords, objs, environment;
+                                                collisionForces: true;"
+                                constraint="type: lock;
+                                            target: #base;"
+                                shape__leftArm="shape: box;
+                                                height: 0.4;
+                                                halfExtents: 0.27 0.04 0.04;
+                                                offset: 0.274 0.4 0;"
+                                rotation="0 3 0"
+                    ></a-entity>
+                    <!--Right Arm Collision Box-->
+                    <a-entity   id="rightArm"
+                                class="dummyBox"
+                                mixin="highlighter"
+                                body="type: dynamic;
+                                      shape: none;"
+                                collision-filter="group: dummy;
+                                                  collidesWith: hands, swords, objs, environment;
+                                                  collisionForces: true;"
+                                constraint="type: lock;
+                                            target: #base;"
+                                shape__rightArm="shape: box;
+                                                 height: 0.4;
+                                                 halfExtents: 0.27 0.04 0.04;
+                                                 offset: -0.274 0.4 0;"
+                                rotation="0 -4 0"
+                    ></a-entity>
+                    <!--Abdomen Collision Box-->
+                    <a-entity   id="abdomen"
+                                class="dummyBox"
+                                mixin="highlighter"
+                                body="type: dynamic;
+                                      shape: none;"
+                                collision-filter="group: dummy;
+                                                  collidesWith: hands, swords, objs, environment;
+                                                  collisionForces: true;"
+                                constraint="type: lock;
+                                            target: #base;"
+                                shape__abdomen="shape: cylinder;
+                                                height: 0.2;
+                                                radiusTop: 0.12;
+                                                radiusBottom: 0.12;
+                                                offset: 0 0.215 0;
+                                                numSegments: 16;"
+                    ></a-entity>
+                    <!--Left Hand Collision Box-->
+                    <a-entity   id="leftHand"
+                                class="dummyBox"
+                                mixin="highlighter"
+                                body="type: dynamic;
+                                    shape: none;"
+                                collision-filter="group: dummy;
+                                                collidesWith: hands, swords, objs, environment;
+                                                collisionForces: true;"
+                                constraint="type: lock;
+                                            target: #base;"
+                                shape__leftHand="shape: box;
+                                                    height: 0.4;
+                                                    halfExtents: 0.27 0.04 0.04;
+                                                    offset: 0.35 -0.01 0;"
+                                rotation="0 -47 0"
+                    ></a-entity>
+                    <!--Right Hand Collision Box-->
+                    <a-entity   id="rightHand"
+                                class="dummyBox"
+                                mixin="highlighter"
+                                body="type: dynamic;
+                                      shape: none;"
+                                collision-filter="group: dummy;
+                                                  collidesWith: hands, swords, objs, environment;
+                                                  collisionForces: true;"
+                                constraint="type: lock;
+                                            target: #base;"
+                                shape__rightHand="shape: box;
+                                                  height: 0.4;
+                                                  halfExtents: 0.24 0.04 0.04;
+                                                  offset: 0.34 0.03 0;"
+                                rotation="0 -163 0"
+                    ></a-entity>
+                    <!--Leg Collision Boxes-->
+                    </a-entity>
+                        <a-entity   id="leg1"
+                                    class="dummyBox"
+                                    mixin="highlighter"
+                                    body="type: dynamic;
+                                          shape: none;"
+                                    collision-filter="group: dummy;
+                                                      collidesWith: hands, swords, objs, environment;
+                                                      collisionForces: true;"
+                                    constraint="type: lock;
+                                                target: #base;"
+                                    shape__legTop="shape: box;
+                                                   halfExtents: 0.03 0.02 0.34;
+                                                   offset: 0 -0.057 0.19;"
+                                    rotation="21 0 0"
+                        ></a-entity>
+                        <a-entity   id="leg2"
+                                    class="dummyBox"
+                                    mixin="highlighter"
+                                    body="type: dynamic;
+                                        shape: none;"
+                                    collision-filter="group: dummy;
+                                                      collidesWith: hands, swords, objs, environment;
+                                                      collisionForces: true;"
+                                    constraint="type: lock;
+                                                target: #base;"
+                                    shape__legBottom="shape: box;
+                                                      halfExtents: 0.03 0.02 0.25;
+                                                      offset: 0 0.39 0.64;"
+                                    rotation="75 0 0"
+                        ></a-entity>
+                    </a-entity>
+                </a-entity><!--End of Hit Boxes-->
+            </a-entity><!-- End of Dummy Rig-->
+
+            <!-- Swords -->
+            <!--Shinai-->
             <a-entity   id="shinai"
+                        class="sword"
                         obj-model="obj:#shinai-obj"
                         hit-sound-component
                         hoverable
                         body="type: dynamic;
                               mass: 100;
                               shape: none;"
-                        shape__blade="shape: cylinder;
-                                      height: 1.05;
+                        shape__blade="shape: box;
                                       offset: 0 0.12 0;
-                                      radiusTop: 0.02;   
-                                      radiusBottom: 0.016;
-                                      numSegments: 16;"
+                                      halfExtents: 0.01 0.525 0.01;"
                         shape__guard="shape: cylinder;
                                       height: 0.017;
                                       offset: 0 -0.399 0;
@@ -332,27 +822,137 @@
                                        radiusBottom: 0.018;
                                        numSegments: 8;"
                         collision-filter="group: swords;
-                                          collidesWith: hands, objs, environment;
+                                          collidesWith: hands, objs, environment, dummy, swords;
                                           collisionForces: true;"
                         material="src: #shinai-tex;
                                   roughness: 0.7;
                                   metalness: 0.2;
                                   visible: true;"
-                        position="0 2 0"
+                        
+                        position="0.95 1.3 0.8"
+                        rotation="90 0 0"
             >
                 <!--sounds-->
-                <a-entity id="hitSnd" sound="src:#hit-sound"></a-entity>
+                <a-entity id="hitSnd"
+                          sound="src:#hit-sound"
+                ></a-entity>
             </a-entity>
 
+            <!--Moonlight GreatSword-->
+            <a-entity   id="mlgSword"
+                        class="sword"
+                        obj-model="obj:#mlgSword-obj"
+                        hit-sound-component
+                        hoverable
+                        body="type: dynamic;
+                              mass: 110;
+                              shape: none;"
+                        shape__blade="shape: box;
+                                      offset: 0 0.18 0;
+                                      halfExtents: 0.03 0.575 0.009;"
+                        shape__guard="shape: box;
+                                      halfExtents: 0.12 0.025 0.012;
+                                      offset: 0 -0.42 0;"
+                        shape__handle="shape: cylinder;
+                                       height: 0.32;
+                                       offset: 0 -0.608 0;
+                                       radiusTop: 0.018;
+                                       radiusBottom: 0.018;
+                                       numSegments: 8;"
+                        collision-filter="group: swords;
+                                          collidesWith: hands, objs, environment, dummy, swords;
+                                          collisionForces: true;"
+                        material="src: #mlgSword-tex;
+                                  roughness: 0.7;
+                                  metalness: 0.2;
+                                  visible: true;"
+                        position="0.95 1 0.8"
+                        rotation="90 0 0"
+            ></a-entity>
+
+            <!--GreatSword-->
+            <a-entity   id="gSword"
+                        class="sword"
+                        obj-model="obj:#gSword-obj"
+                        hit-sound-component
+                        hoverable
+                        body="type: dynamic;
+                              mass: 120;
+                              shape: none;"
+                        shape__blade="shape: box;
+                                      offset: 0 0.21 0;
+                                      halfExtents: 0.04 0.575 0.009;"
+                        shape__guard="shape: box;
+                                      halfExtents: 0.12 0.025 0.02;
+                                      offset: 0 -0.4 0;"
+                        shape__handle="shape: cylinder;
+                                       height: 0.37;
+                                       offset: 0 -0.618 0;
+                                       radiusTop: 0.018;
+                                       radiusBottom: 0.018;
+                                       numSegments: 8;"
+                        collision-filter="group: swords;
+                                          collidesWith: hands, objs, environment, dummy, swords;
+                                          collisionForces: true;"
+                        material="src: #gSword-tex;
+                                  roughness: 0.7;
+                                  metalness: 0.2;
+                                  visible: true;"
+                        position="0.89 0.6 0.75"
+                        rotation="90 0 0"
+            ></a-entity>
+
+            <!--Sword Rack-->
+            <a-entity   id="swordRack"
+                        obj-model="obj:#sRack-obj"
+                        body="type: static;
+                              mass: 100;
+                              shape: none;"
+                        shape__back="shape: box;
+                                     halfExtents: 0.15 0.5 0.05;
+                                     offset: 0 0.5 -0.04"
+                        shape__rack1="shape: box;
+                                     halfExtents: 0.15 0.02 0.1;
+                                     offset: 0 0.25 0.1"
+                        shape__rack1Lip="shape: box;
+                                         halfExtents: 0.15 0.02 0.01;
+                                         offset: 0 0.285 0.19"
+                        shape__rack2="shape: box;
+                                      halfExtents: 0.15 0.02 0.1;
+                                      offset: 0 0.48 0.1"
+                        shape__rack2Lip="shape: box;
+                                         halfExtents: 0.15 0.02 0.01;
+                                         offset: 0 0.515 0.19"      
+                        shape__rack3="shape: box;
+                                      halfExtents: 0.15 0.02 0.1;
+                                      offset: 0 0.73 0.06"
+                        shape__rack3Lip="shape: box;
+                                         halfExtents: 0.15 0.02 0.01;
+                                         offset: 0 0.765 0.15"        
+                        collision-filter="group: objs;
+                                          collidesWith: hands, swords, environment;
+                                          collisionForces: true;"
+                        material="src: #sRack-tex;
+                                  roughness: 0.7;
+                                  metalness: 0.2;
+                                  visible: true;"
+                        position="1 0.28 0.72"  
+                        scale="1.2 1.2 1.2"
+                        rotation=" 0 270 0"
+            ></a-entity><!--End of Swords-->
+
+            <!--Sword Decoration-->
             <a-entity   id="bgSword"
                         obj-model="obj:#bgSword-obj"
                         scale="1.0 1.0 1.0"
-                        position="0 0.5 -4"
-                        material="src:#bgSword-tex; roughness:0.7;"
-                        shadow="cast:true; receive:true;"
+                        position="0 0.2 -4"
+                        material="src:#bgSword-tex;
+                                  roughness:0.7;"
+                        shadow="cast:true;
+                                receive:true;"
             ></a-entity>
 
-            <!-- Sky Dome -->
+            <!--Sky Dome-->
             <a-entity   id = "sky"
                         geometry = "primitive: sphere;
                                     radius: 500;"
@@ -364,26 +964,121 @@
                                     fog: false;"
             ></a-entity>
             
-            <!-- Event Handler -->
+            <!--Event Handler-->
             <a-entity   id="Chandler"
                         event-manager
             ></a-entity>
        </a-scene>
+       <!-- SCRIPT -->
        <script>
             let socket = io();
 
+            let passed = 0;
+            let failed = 0;
+
+            let anchorA = document.querySelector('#anchorA');
+            let anchorB = document.querySelector('#anchorB');
+            let anchorC = document.querySelector('#anchorC');
+
+            let rBox = document.querySelector('#repeat');
+            let cBox = document.querySelector('#continue');
+            let bBox = document.querySelector('#bow');
+
+            let rLantern = document.querySelector('#repeatLantern');
+            let cLantern = document.querySelector('#contLantern');
+            let bLantern = document.querySelector('#bowLantern');
+
+            let chandler = document.querySelector('#Chandler');
+
+            let whoosh = document.querySelector('#whoosh-sound');
+
             socket.on('connect', function(userData){
-                console.log('connected');
+                console.log('Student Connected');
+                chandler.addState('idle');
             });
 
-            socket.on('send_instruction', function(data){
-                console.log('Sequence: ' + data.sequence);
+            socket.on('complete', function(){
+                setTimeout(function() {
+                    //drop lanterns
+                    cBox.setAttribute('spring', {restLength:5.5});
+                    cBox.setAttribute('rotation', {y: -150});
+                    rBox.setAttribute('spring', {restLength:5.5});
+                    rBox.setAttribute('rotation', {y: 150});
+                    //reset opacity to 1
+                    rLantern.setAttribute('material', {src:'#repeat-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
+                    cLantern.setAttribute('material', {src:'#cont-tex', roughness:0.7, metalness:0, transparent:true, opacity:1});
+                    //play sounds
+                    setTimeout(function() {
+                        whoosh.volume = 0.1;
+                        whoosh.currentTime = 0;
+                        whoosh.play();
+                    }, 700);
+                }, 1500);
+            });
+            socket.on('seqContinue', function(){
+                    resetSeq();
+                });
+            socket.on('seqRepeat', function(){
+                resetSeq();
+            });
+         
+            socket.on('percResp', function(data){
+                console.log('percentCheck');
+                for (let i =0; i < data.numResponseSeq; i++){
+                    if (data.responseSeq[i] == true){
+                        passed++;
+                    }
+                    else{
+                        failed++;
+                    }
+                }
+                passed = 100 * ( passed/(data.numResponseSeq) );
+                failed = 100 * ( failed/(data.numResponseSeq) );
+                console.log("Passed:", passed, "%");
+                console.log("Failed:", failed, "%");
+                passed = 0;
+                failed = 0;
+            });
+            
+            //Drop "Bow/Begin" lantern
+            function dropBow(){
+                bBox.setAttribute('spring', {restLength:5.5});
+                bBox.setAttribute('rotation', {y: -150});
+                bLantern.setAttribute('material', {opacity:1});
+                //play sounds
+                setTimeout(function() {
+                    whoosh.volume = 0.1;
+                    whoosh.currentTime = 0;
+                    whoosh.play();
+                }, 700);
+            }
+
+            socket.on('bow', function(){
+                bBox.setAttribute('spring', {restLength:0.1});
+                setTimeout(function(){
+                    bLantern.setAttribute('material', {opacity:0});
+                }, 1000);
             });
 
             window.onload = function(){
                 let ambient = document.querySelector('#nature-sound');
                 ambient.volume = 0.01;
                 ambient.play();
+
+                let idleTrack = document.querySelector('#idle-track');
+                idleTrack.volume = 0.06;
+                idleTrack.play();
+            }
+            function resetSeq(){
+                cBox.setAttribute('spring', {damping:500, restLength:0.1});
+                cBox.setAttribute('rotation', {y: -150});
+                rBox.setAttribute('spring', {damping:500, restLength:0.1});
+                rBox.setAttribute('rotation', {y: 150});
+
+                setTimeout(function(){
+                    rLantern.setAttribute('material', {src:'#repeat-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
+                    cLantern.setAttribute('material', {src:'#cont-tex', roughness:0.7, metalness:0, transparent:true, opacity:0});
+                }, 1000);
             }
         </script>
     </body>

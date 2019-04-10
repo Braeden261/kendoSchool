@@ -2,7 +2,7 @@ function deviceDispatch(){
     if (AFRAME.utils.isMobile()){
         //Mobile
         console.log("Mobile");
-        window.location.href = '/master.html';
+        window.location.href = '/MobilePages/sequence.html';
     }
     else if (AFRAME.utils.checkHeadsetConnected()){
         //Headset
@@ -13,7 +13,7 @@ function deviceDispatch(){
     else if (!AFRAME.utils.checkHeadsetConnected()){
         //Headset
         console.log("Desktop");
-        window.location.href = '/student-test.html';
+        window.location.href = '/MobilePages/sequence.html';
 
     }
 }
@@ -23,7 +23,7 @@ function detectDevice(){
     if (AFRAME.utils.isMobile()){
         //Mobile
         console.log("Mobile");
-
+        document.querySelector(".title-img").setAttribute('src', "/assets/lander-images/Title-Katanas-mobile.png");
         let playerImg = document.querySelectorAll(".player-img");
         let masterInstruction =  document.querySelectorAll(".master-instruction");
         let masterInstructionImg = document.querySelectorAll(".master-instruction-img");
@@ -64,6 +64,7 @@ function detectDevice(){
     else if (!AFRAME.utils.checkHeadsetConnected()){
         //Headset
         console.log("Desktop");
+        document.querySelector(".title-img").setAttribute('src', "/assets/lander-images/Title-Katanas.png");
 
     }
 }

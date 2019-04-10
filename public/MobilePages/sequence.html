@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Kendo Gakko</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="HandheldFriendly" content="true" />
+        <link href="style.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400" rel="stylesheet">
+        <script src="../js/aframe-v0.8.2.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+    </head>
+    <body>
+        <div class="top-left">
+            <img src="images/logokendo.png" class="small-image"> 
+        </div>
+        <div class="right-icon">
+            <img src="images/sendicon.png" class="send-image" onclick="sendSequence()">
+        </div>
+        <div class="bottom-left">
+            <img src="images/clearicon.png" class="clear-image" onclick="clearSequence()">
+        </div>
+        <div class="center-screen">
+            <h2> SELECT THE DESIRED SEQUENCE<br>FOR YOUR STUDENT </h2>
+            <table id="tableID" class="sequence">
+                <tr>
+                    <td id="head">
+                        <div id="headNotif" class="notification">1</div>
+                        <img src="images/head_text.png" class="sequence-image"> 
+                    </td>
+                    <td id="neck">
+                        <div id="neckNotif" class="notification">1</div>
+                        <img src="images/neck_text.png" class="sequence-image"> 
+                    </td>
+                    <td id="leftArm">
+                        <div id="leftArmNotif" class="notification">1</div>
+                        <img src="images/leftarm_text.png" class="sequence-image">
+                    </td>
+                    <td id="rightArm">
+                        <div id="rightArmNotif" class="notification">1</div>
+                        <img src="images/rightarm_text.png" class="sequence-image"> 
+                    </td>
+                </tr>
+
+                <tr>
+                    <td id="abdomen">
+                        <div id="abdomenNotif" class="notification">1</div>
+                        <img src="images/abdomen_text.png" class="sequence-image">
+                    </td>
+                    <td id="leftHand">
+                        <div id="leftHandNotif" class="notification">1</div>
+                        <img src="images/lefthand_text.png" class="sequence-image">
+                    </td>
+                    <td id="rightHand">
+                        <div id="rightHandNotif" class="notification">1</div>
+                        <img src="images/righthand_text.png" class="sequence-image"> 
+                    </td>
+                    <td id="leg">
+                        <div id="legNotif" class="notification">1</div>
+                        <img src="images/leg_text.png" class="sequence-image"> 
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <script>
+            //socketio networking
+            let socket = io();
+            let length = 0;
+            let sendButton = document.querySelector('.send-image');
+            let clearButton = document.querySelector('.clear-image');
+            let table = document.querySelector("#tableID");
+            let logo = document.querySelector('.top-left');
+            let clr = document.querySelector('.bottom-left');
+            let snd = document.querySelector('.right-icon');
+
+            window.onload = function () {
+                socket.emit('clear');
+                socket.emit('masterConnected');
+                console.log('load');
+                // send and clear buttons can't be clicked if the sequence is empty
+                sendButton.style.opacity = '0.5';
+                clearButton.style.opacity = '0.5';
+                if (table != null) {
+                    for (let i = 0; i < table.rows.length; i++) {
+                        for (let j = 0; j < table.rows[i].cells.length; j++) {
+                            table.rows[i].cells[j].onclick = function () {
+                                if (length != 10){
+                                    // send and clear buttons can be clicked if the sequence is not empty
+                                    sendButton.style.opacity = '1.0';
+                                    clearButton.style.opacity = '1.0';
+                                    socket.emit(this.id);
+                                    mark(this);
+                                    length++;
+                                }
+                            };
+                        } 
+                    }
+                }            
+            }
+
+            function mark(tableCell) {
+                let img = document.getElementById(tableCell.id+'Notif');
+                if (img.style.visibility === "visible" && img.innerHTML !== "10") {
+                    img.innerHTML = parseInt(img.innerHTML) + 1;
+                } else  {
+                    img.style.visibility = "visible";
+                }
+            };
+
+            function clearSequence() {
+                if (length != 0) {
+                    console.log('clear button pressed');
+                    length = 0;
+                    socket.emit('clear');
+
+                    // send and clear buttons can't be clicked if the sequence is empty
+                    sendButton.style.opacity = '0.5';
+                    clearButton.style.opacity = '0.5';
+
+                    //Remove red counter dots from buttons
+                    if (table != null) {
+                        for (i = 0; i < table.rows.length; i++) {
+                            for (j = 0; j < table.rows[i].cells.length; j++) {
+                                let cell = table.rows[i].cells[j];
+                                let notif = document.getElementById(cell.id+'Notif');
+                                notif.style.visibility = "hidden";
+                                notif.innerHTML = "1";
+                            }
+                        }
+                    }
+                }
+                else if (length == 0) {
+                    console.log('Cannot clear empty sequence');
+                }
+            }
+
+            function sendSequence() {
+                if (length != 0) {
+                    console.log('send button pressed');
+                    socket.emit('send');
+                    window.location.href='waiting.html';
+                }
+                else {
+                    console.log('Cannot send empty sequence');
+                }
+            }
+
+            //built in event
+            socket.on('connect', function(userData){
+                console.log('connected');
+            });
+
+        </script>
+    </body>
+</html>
