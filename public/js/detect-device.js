@@ -13,7 +13,7 @@ function deviceDispatch(){
     else if (!AFRAME.utils.checkHeadsetConnected()){
         //Headset
         console.log("Desktop");
-        window.location.href = '/student-test.html';
+        window.location.href = '/MobilePages/sequence.html';
 
     }
 }
